@@ -1,0 +1,14 @@
+-- Project Europa: city-states, front-end (game setup) rows.
+-- Runs against the Configuration database, not the gameplay one.
+--
+-- These rows put the city-states in the Gathering Storm city-state picker and, through
+-- it, in the pool the game draws from. Gathering Storm ruleset only: Dams, Military
+-- Engineer charges and the envoy-bonus table the gameplay rows use all need it.
+
+INSERT OR REPLACE INTO CityStates (Domain, CivilizationType, CityStateCategory, Name, Icon, Bonus) VALUES
+	('Expansion2CityStates', 'CIVILIZATION_EUROPA_SYRACUSE',  'SCIENTIFIC',   'LOC_CIVILIZATION_EUROPA_SYRACUSE_NAME',  'ICON_CIVILIZATION_EUROPA_SYRACUSE',  'LOC_MINOR_CIV_EUROPA_SYRACUSE_TRAIT_DESCRIPTION'),
+	('Expansion2CityStates', 'CIVILIZATION_EUROPA_UBUD',      'CULTURAL',     'LOC_CIVILIZATION_EUROPA_UBUD_NAME',      'ICON_CIVILIZATION_EUROPA_UBUD',      'LOC_MINOR_CIV_EUROPA_UBUD_TRAIT_DESCRIPTION'),
+	('Expansion2CityStates', 'CIVILIZATION_EUROPA_SHEFFIELD', 'INDUSTRIAL',   'LOC_CIVILIZATION_EUROPA_SHEFFIELD_NAME', 'ICON_CIVILIZATION_EUROPA_SHEFFIELD', 'LOC_MINOR_CIV_EUROPA_SHEFFIELD_TRAIT_DESCRIPTION'),
+	('Expansion2CityStates', 'CIVILIZATION_EUROPA_RAVENNA',   'MILITARISTIC', 'LOC_CIVILIZATION_EUROPA_RAVENNA_NAME',   'ICON_CIVILIZATION_EUROPA_RAVENNA',   'LOC_MINOR_CIV_EUROPA_RAVENNA_TRAIT_DESCRIPTION'),
+	('Expansion2CityStates', 'CIVILIZATION_EUROPA_LHASA',     'RELIGIOUS',    'LOC_CIVILIZATION_EUROPA_LHASA_NAME',     'ICON_CIVILIZATION_EUROPA_LHASA',     'LOC_MINOR_CIV_EUROPA_LHASA_TRAIT_DESCRIPTION'),
+	('Expansion2CityStates', 'CIVILIZATION_EUROPA_BRUGES',    'TRADE',        'LOC_CIVILIZATION_EUROPA_BRUGES_NAME',    'ICON_CIVILIZATION_EUROPA_BRUGES',    'LOC_MINOR_CIV_EUROPA_BRUGES_TRAIT_DESCRIPTION');

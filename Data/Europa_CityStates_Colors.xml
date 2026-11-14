@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Project Europa: city-states use the stock colours of their type, as every city-state does. -->
+<GameInfo>
+	<PlayerColors>
+		<Row>
+			<Type>CIVILIZATION_EUROPA_SYRACUSE</Type>
+			<Usage>Minor</Usage>
+			<PrimaryColor>COLOR_PLAYER_CITY_STATE_PRIMARY</PrimaryColor>
+			<SecondaryColor>COLOR_PLAYER_CITY_STATE_SCIENCE_SECONDARY</SecondaryColor>
+		</Row>
+		<Row>
+			<Type>CIVILIZATION_EUROPA_UBUD</Type>
+			<Usage>Minor</Usage>
+			<PrimaryColor>COLOR_PLAYER_CITY_STATE_PRIMARY</PrimaryColor>
+			<SecondaryColor>COLOR_PLAYER_CITY_STATE_CULTURAL_SECONDARY</SecondaryColor>
+		</Row>
+		<Row>
+			<Type>CIVILIZATION_EUROPA_SHEFFIELD</Type>
+			<Usage>Minor</Usage>
+			<PrimaryColor>COLOR_PLAYER_CITY_STATE_PRIMARY</PrimaryColor>
+			<SecondaryColor>COLOR_PLAYER_CITY_STATE_INDUSTRIAL_SECONDARY</SecondaryColor>
+		</Row>
+		<Row>
+			<Type>CIVILIZATION_EUROPA_RAVENNA</Type>
+			<Usage>Minor</Usage>
+			<PrimaryColor>COLOR_PLAYER_CITY_STATE_PRIMARY</PrimaryColor>
+			<SecondaryColor>COLOR_PLAYER_CITY_STATE_MILITARISTIC_SECONDARY</SecondaryColor>
+		</Row>
+		<Row>
+			<Type>CIVILIZATION_EUROPA_LHASA</Type>
+			<Usage>Minor</Usage>
+			<PrimaryColor>COLOR_PLAYER_CITY_STATE_PRIMARY</PrimaryColor>
+			<SecondaryColor>COLOR_PLAYER_CITY_STATE_RELIGIOUS_SECONDARY</SecondaryColor>
+		</Row>
+		<Row>
+			<Type>CIVILIZATION_EUROPA_BRUGES</Type>
+			<Usage>Minor</Usage>
+			<PrimaryColor>COLOR_PLAYER_CITY_STATE_PRIMARY</PrimaryColor>
+			<SecondaryColor>COLOR_PLAYER_CITY_STATE_TRADE_SECONDARY</SecondaryColor>
+		</Row>
+	</PlayerColors>
+</GameInfo>

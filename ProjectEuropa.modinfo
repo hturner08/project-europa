@@ -2,8 +2,8 @@
 <Mod id="7fe8ff0a-8385-4631-b121-6032c7cce1f5" version="1">
 	<Properties>
 		<Name>Project Europa</Name>
-		<Description>Seven luxury resources (Topaz, Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Discus Fish, Capybaras), the Fish Weir, bigger deserts, and eight custom leaders balanced against Better Balanced Game: Golden Expansion (Mali), Imperial Gardens (China), Highland Empire (Ethiopia), Living Paradise (Brazil), Borderless Empire (Cree), Endless Continent (Russia), Scenic Genius (America) and Palace Designer (France).</Description>
-		<Teaser>New luxuries, bigger deserts, eight custom leaders.</Teaser>
+		<Description>Seven luxury resources (Topaz, Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Discus Fish, Capybaras), the Fish Weir, bigger deserts, six city-states (Syracuse, Ubud, Sheffield, Ravenna, Lhasa, Bruges) and eight custom leaders balanced against Better Balanced Game: Golden Expansion (Mali), Imperial Gardens (China), Highland Empire (Ethiopia), Living Paradise (Brazil), Borderless Empire (Cree), Endless Continent (Russia), Scenic Genius (America) and Palace Designer (France).</Description>
+		<Teaser>New luxuries, bigger deserts, six city-states, eight custom leaders.</Teaser>
 		<Authors>Project Europa</Authors>
 		<AffectsSavedGames>1</AffectsSavedGames>
 		<CompatibleVersions>1.2,2.0</CompatibleVersions>
@@ -39,6 +39,52 @@
 			<File>Data/Europa_Leader_America.sql</File>
 			<File>Data/Europa_Leader_France.sql</File>
 		</UpdateDatabase>
+		<!-- City-states. Gathering Storm only. Europa_CityStateCommon.sql must stay first; each
+		     city-state is its own file so one bad row only drops that city-state. -->
+		<UpdateDatabase id="EuropaCityStates" criteria="Expansion2">
+			<Properties>
+				<LoadOrder>100000100</LoadOrder>
+			</Properties>
+			<File>Data/Europa_CityStateCommon.sql</File>
+			<File>Data/Europa_CityState_Syracuse.sql</File>
+			<File>Data/Europa_CityState_Ubud.sql</File>
+			<File>Data/Europa_CityState_Sheffield.sql</File>
+			<File>Data/Europa_CityState_Ravenna.sql</File>
+			<File>Data/Europa_CityState_Lhasa.sql</File>
+			<File>Data/Europa_CityState_Bruges.sql</File>
+		</UpdateDatabase>
+		<!-- Copies the per-city-state rows Better Balanced Game makes for the stock city-states,
+		     so it must run after BBG (last gameplay action 100000000) and after the files above. -->
+		<UpdateDatabase id="EuropaCityStatesBBG" criteria="Expansion2">
+			<Properties>
+				<LoadOrder>100000200</LoadOrder>
+			</Properties>
+			<File>Data/Europa_CityStates_BBG.sql</File>
+		</UpdateDatabase>
+		<UpdateColors id="EuropaCityStateColors" criteria="Expansion2">
+			<File>Data/Europa_CityStates_Colors.xml</File>
+		</UpdateColors>
+		<UpdateIcons id="EuropaCityStateIcons" criteria="Expansion2">
+			<File>Data/Europa_CityStates_Icons.xml</File>
+		</UpdateIcons>
+		<ImportFiles id="EuropaCityStateTextures" criteria="Expansion2">
+			<File>Textures/Europa_CityStates22.dds</File>
+			<File>Textures/Europa_CityStates30.dds</File>
+			<File>Textures/Europa_CityStates32.dds</File>
+			<File>Textures/Europa_CityStates36.dds</File>
+			<File>Textures/Europa_CityStates44.dds</File>
+			<File>Textures/Europa_CityStates45.dds</File>
+			<File>Textures/Europa_CityStates48.dds</File>
+			<File>Textures/Europa_CityStates50.dds</File>
+			<File>Textures/Europa_CityStates64.dds</File>
+			<File>Textures/Europa_CityStates80.dds</File>
+			<File>Textures/Europa_CityStates128.dds</File>
+			<File>Textures/Europa_CityStates200.dds</File>
+			<File>Textures/Europa_CityStates256.dds</File>
+		</ImportFiles>
+		<AddGameplayScripts id="EuropaCityStateScripts" criteria="Expansion2">
+			<File>Scripts/Europa_CityStates.lua</File>
+		</AddGameplayScripts>
 		<UpdateColors id="EuropaLeaderColors" criteria="Expansion2">
 			<File>Data/Europa_Leaders_Colors.xml</File>
 		</UpdateColors>
@@ -57,6 +103,7 @@
 		<UpdateText id="EuropaText">
 			<File>Text/Europa_Text_en_US.xml</File>
 			<File>Text/Europa_Leaders_Text_en_US.xml</File>
+			<File>Text/Europa_CityStates_Text_en_US.xml</File>
 		</UpdateText>
 		<ImportFiles id="EuropaTextures">
 			<File>Textures/Europa_Resources32.dds</File>
@@ -96,6 +143,31 @@
 			</Properties>
 			<File>Config/Europa_Leaders_Config.sql</File>
 		</UpdateDatabase>
+		<!-- City-state picker rows, with the names, icons and icon textures the picker shows. -->
+		<UpdateDatabase id="EuropaCityStatesConfig">
+			<File>Config/Europa_CityStates_Config.sql</File>
+		</UpdateDatabase>
+		<UpdateColors id="EuropaCityStateColorsFrontEnd">
+			<File>Data/Europa_CityStates_Colors.xml</File>
+		</UpdateColors>
+		<UpdateIcons id="EuropaCityStateIconsFrontEnd">
+			<File>Data/Europa_CityStates_Icons.xml</File>
+		</UpdateIcons>
+		<ImportFiles id="EuropaCityStateTexturesFrontEnd">
+			<File>Textures/Europa_CityStates22.dds</File>
+			<File>Textures/Europa_CityStates30.dds</File>
+			<File>Textures/Europa_CityStates32.dds</File>
+			<File>Textures/Europa_CityStates36.dds</File>
+			<File>Textures/Europa_CityStates44.dds</File>
+			<File>Textures/Europa_CityStates45.dds</File>
+			<File>Textures/Europa_CityStates48.dds</File>
+			<File>Textures/Europa_CityStates50.dds</File>
+			<File>Textures/Europa_CityStates64.dds</File>
+			<File>Textures/Europa_CityStates80.dds</File>
+			<File>Textures/Europa_CityStates128.dds</File>
+			<File>Textures/Europa_CityStates200.dds</File>
+			<File>Textures/Europa_CityStates256.dds</File>
+		</ImportFiles>
 		<UpdateColors id="EuropaLeaderColorsFrontEnd">
 			<File>Data/Europa_Leaders_Colors.xml</File>
 		</UpdateColors>
@@ -107,6 +179,7 @@
 		</UpdateIcons>
 		<UpdateText id="EuropaLeaderTextFrontEnd">
 			<File>Text/Europa_Leaders_Text_en_US.xml</File>
+			<File>Text/Europa_CityStates_Text_en_US.xml</File>
 		</UpdateText>
 		<UpdateArt id="EuropaArtFrontEnd">
 			<File>ProjectEuropa.dep</File>
@@ -114,6 +187,32 @@
 	</FrontEndActions>
 	<Files>
 		<File>ProjectEuropa.dep</File>
+		<File>Config/Europa_CityStates_Config.sql</File>
+		<File>Data/Europa_CityStateCommon.sql</File>
+		<File>Data/Europa_CityState_Syracuse.sql</File>
+		<File>Data/Europa_CityState_Ubud.sql</File>
+		<File>Data/Europa_CityState_Sheffield.sql</File>
+		<File>Data/Europa_CityState_Ravenna.sql</File>
+		<File>Data/Europa_CityState_Lhasa.sql</File>
+		<File>Data/Europa_CityState_Bruges.sql</File>
+		<File>Data/Europa_CityStates_BBG.sql</File>
+		<File>Data/Europa_CityStates_Colors.xml</File>
+		<File>Data/Europa_CityStates_Icons.xml</File>
+		<File>Text/Europa_CityStates_Text_en_US.xml</File>
+		<File>Scripts/Europa_CityStates.lua</File>
+		<File>Textures/Europa_CityStates22.dds</File>
+		<File>Textures/Europa_CityStates30.dds</File>
+		<File>Textures/Europa_CityStates32.dds</File>
+		<File>Textures/Europa_CityStates36.dds</File>
+		<File>Textures/Europa_CityStates44.dds</File>
+		<File>Textures/Europa_CityStates45.dds</File>
+		<File>Textures/Europa_CityStates48.dds</File>
+		<File>Textures/Europa_CityStates50.dds</File>
+		<File>Textures/Europa_CityStates64.dds</File>
+		<File>Textures/Europa_CityStates80.dds</File>
+		<File>Textures/Europa_CityStates128.dds</File>
+		<File>Textures/Europa_CityStates200.dds</File>
+		<File>Textures/Europa_CityStates256.dds</File>
 		<File>ArtDefs/Resources.artdef</File>
 		<File>ArtDefs/Improvements.artdef</File>
 		<File>ArtDefs/Leaders.artdef</File>

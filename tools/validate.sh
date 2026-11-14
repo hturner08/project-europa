@@ -25,7 +25,7 @@ for f in Config/* Data/* Text/* Scripts/* Textures/* ArtDefs/* Maps/*.lua Maps/U
 done
 
 echo "== icon atlases referenced by the icon database exist"
-for f in $(grep -o 'Filename="[^"]*"' Data/Europa_Icons.xml | cut -d'"' -f2 | sort -u); do
+for f in $(grep -ho 'Filename="[^"]*"' Data/Europa_Icons.xml Data/Europa_CityStates_Icons.xml | cut -d'"' -f2 | sort -u); do
 	[ -f "Textures/$f" ] || { echo "MISSING TEXTURE: $f"; fail=1; }
 done
 
@@ -43,12 +43,13 @@ db.create_function("Make_Hash", 1, lambda s: zlib.crc32(s.encode()))  # stand-in
 db.execute("PRAGMA foreign_keys=ON")
 # Drop rows from a previous run of this mod so the check is repeatable.
 db.execute("DELETE FROM Types WHERE Type LIKE 'RESOURCE_EUROPA_%' OR Type LIKE 'IMPROVEMENT_EUROPA_%'"
-           " OR Type LIKE 'LEADER_EUROPA_%' OR Type LIKE 'TRAIT_LEADER_EUROPA_%' OR Type LIKE 'EUROPA_MODIFIER_%'")
+           " OR Type LIKE 'LEADER_EUROPA_%' OR Type LIKE 'TRAIT_LEADER_EUROPA_%' OR Type LIKE 'EUROPA_MODIFIER_%'"
+           " OR Type LIKE 'CIVILIZATION_EUROPA_%' OR Type LIKE 'LEADER_MINOR_CIV_EUROPA_%' OR Type LIKE 'MINOR_CIV_EUROPA_%'")
 db.execute("DELETE FROM LoadingInfo WHERE LeaderType LIKE 'LEADER_EUROPA_%'")
 for t, c in (("TraitModifiers", "ModifierId"), ("ModifierArguments", "ModifierId"), ("Modifiers", "ModifierId"),
              ("RequirementSetRequirements", "RequirementSetId"), ("RequirementSets", "RequirementSetId"),
              ("RequirementArguments", "RequirementId"), ("Requirements", "RequirementId")):
-    db.execute(f"DELETE FROM {t} WHERE {c} LIKE 'EUROPA_%'")
+    db.execute(f"DELETE FROM {t} WHERE {c} LIKE 'EUROPA_%' OR {c} LIKE '%LEADER_MINOR_CIV_EUROPA_%'")
 ok = True
 # The game rewrites this cache at every launch, from the base rules until a game is started.
 # The leaders need Gathering Storm rows, so they can only be checked against a cache left
@@ -57,7 +58,8 @@ paths = sys.argv[2:]
 if not db.execute("SELECT 1 FROM Civilizations WHERE CivilizationType='CIVILIZATION_MALI'").fetchone():
     print("SKIPPED leader SQL: the cached database is base rules only (the game was launched but no")
     print("  Gathering Storm game started since). Start one, quit, and re-run to check the leaders.")
-    paths = [p for p in paths if "Leader" not in p]
+    print("SKIPPED city-state SQL for the same reason.")
+    paths = [p for p in paths if "Leader" not in p and "CityState" not in p]
 for path in paths:
     try:
         db.executescript(open(path).read())
@@ -107,12 +109,56 @@ for (leader,) in leaders:
             if not db.execute("SELECT 1 FROM DynamicModifiers WHERE ModifierType=?", (row[0],)).fetchone():
                 print(f"UNKNOWN MODIFIER TYPE: {row[0]}"); ok = False
 # Every EUROPA_ modifier must be attached to something, and every requirement set used.
-for (mid,) in db.execute("SELECT ModifierId FROM Modifiers WHERE ModifierId LIKE 'EUROPA_%' AND ModifierId NOT IN (SELECT ModifierId FROM TraitModifiers)"):
+for (mid,) in db.execute("SELECT ModifierId FROM Modifiers WHERE ModifierId LIKE 'EUROPA_%' AND ModifierId NOT IN (SELECT ModifierId FROM TraitModifiers)"
+                         " AND ModifierId NOT IN (SELECT Value FROM ModifierArguments WHERE Name='ModifierId')"):
     print(f"UNATTACHED MODIFIER: {mid}"); ok = False
-for (rs,) in db.execute("SELECT RequirementSetId FROM RequirementSets WHERE RequirementSetId LIKE 'EUROPA_%' AND RequirementSetId NOT IN (SELECT SubjectRequirementSetId FROM Modifiers WHERE SubjectRequirementSetId IS NOT NULL) AND RequirementSetId NOT IN (SELECT Value FROM RequirementArguments WHERE Name='RequirementSetId')"):
+for (rs,) in db.execute("SELECT RequirementSetId FROM RequirementSets WHERE RequirementSetId LIKE 'EUROPA_%' AND RequirementSetId NOT IN (SELECT SubjectRequirementSetId FROM Modifiers WHERE SubjectRequirementSetId IS NOT NULL) AND RequirementSetId NOT IN (SELECT OwnerRequirementSetId FROM Modifiers WHERE OwnerRequirementSetId IS NOT NULL) AND RequirementSetId NOT IN (SELECT Value FROM RequirementArguments WHERE Name='RequirementSetId')"):
     print(f"UNUSED REQUIREMENT SET: {rs}"); ok = False
 for (rs,) in db.execute("SELECT RequirementSetId FROM RequirementSets WHERE RequirementSetId LIKE 'EUROPA_%' AND RequirementSetId NOT IN (SELECT RequirementSetId FROM RequirementSetRequirements)"):
     print(f"EMPTY REQUIREMENT SET: {rs}"); ok = False
+# ---- city-states ------------------------------------------------------------
+# Each Suzerain bonus is a trait modifier that attaches a second modifier to the Suzerain;
+# print the attached one, with what it needs, to read against the design.
+states = db.execute("SELECT c.CivilizationType, cl.LeaderType FROM Civilizations c JOIN CivilizationLeaders cl USING (CivilizationType)"
+                    " WHERE c.CivilizationType LIKE 'CIVILIZATION_EUROPA_%' ORDER BY 1").fetchall()
+lua = open("Scripts/Europa_CityStates.lua").read()
+for civ, leader in states:
+    cat = db.execute("SELECT Value FROM TypeProperties WHERE Type=? AND Name='CityStateCategory'", (civ,)).fetchone()
+    inherit, = db.execute("SELECT InheritFrom FROM Leaders WHERE LeaderType=?", (leader,)).fetchone()
+    bonus = db.execute("SELECT MinorCivBonusType FROM Leaders_XP2 WHERE LeaderType=?", (leader,)).fetchone()
+    level, = db.execute("SELECT StartingCivilizationLevelType FROM Civilizations WHERE CivilizationType=?", (civ,)).fetchone()
+    print(f"  {civ}: {cat[0] if cat else 'NO CATEGORY'}, inherits {inherit}, envoy bonuses {bonus[0] if bonus else 'NONE'}")
+    if not cat or not bonus or level != "CIVILIZATION_LEVEL_CITY_STATE" or inherit != f"LEADER_MINOR_CIV_{cat[0]}" or bonus[0] != f"MINOR_CIV_BONUS_{cat[0]}":
+        print(f"CITY-STATE INCOMPLETE OR INCONSISTENT: {civ}"); ok = False
+    mods = db.execute("SELECT tm.ModifierId FROM TraitModifiers tm JOIN LeaderTraits lt USING (TraitType) WHERE lt.LeaderType=? AND tm.ModifierId LIKE 'EUROPA_%' ORDER BY 1", (leader,)).fetchall()
+    if not mods:
+        print(f"CITY-STATE HAS NO SUZERAIN BONUS: {civ}"); ok = False
+    for (outer,) in mods:
+        otype, oreq = db.execute("SELECT ModifierType, SubjectRequirementSetId FROM Modifiers WHERE ModifierId=?", (outer,)).fetchone()
+        inner = db.execute("SELECT Value FROM ModifierArguments WHERE ModifierId=? AND Name='ModifierId'", (outer,)).fetchone()
+        if otype != "MODIFIER_ALL_PLAYERS_ATTACH_MODIFIER" or oreq != "PLAYER_IS_SUZERAIN" or not inner:
+            print(f"NOT A SUZERAIN ATTACH MODIFIER: {outer}"); ok = False; continue
+        row = db.execute("SELECT ModifierType, SubjectRequirementSetId, OwnerRequirementSetId, Permanent FROM Modifiers WHERE ModifierId=?", (inner[0],)).fetchone()
+        if not row:
+            print(f"ATTACHED MODIFIER MISSING: {inner[0]}"); ok = False; continue
+        if not db.execute("SELECT 1 FROM DynamicModifiers WHERE ModifierType=?", (row[0],)).fetchone():
+            print(f"UNKNOWN MODIFIER TYPE: {row[0]}"); ok = False
+        args = ", ".join(f"{n}={v}" for n, v in db.execute("SELECT Name, Value FROM ModifierArguments WHERE ModifierId=?", (inner[0],)))
+        print(f"    {inner[0].replace('EUROPA_', '')}: {row[0].replace('MODIFIER_', '')} {{{args}}}" + (" permanent" if row[3] else "")
+              + (f" if {reqset(row[1])}" if row[1] else "") + (f" when owner {reqset(row[2])}" if row[2] else ""))
+    copied = db.execute("SELECT count(*) FROM Modifiers WHERE ModifierId LIKE ?", (f"BBG%{leader}",)).fetchone()[0]
+    fez = db.execute("SELECT count(*) FROM Modifiers WHERE ModifierId LIKE 'BBG%LEADER_MINOR_CIV_FEZ'").fetchone()[0]
+    print(f"    BBG per-city-state modifiers: {copied} (Fez has {fez})")
+    if copied != fez:
+        print(f"BBG ROWS NOT COPIED FOR {leader}"); ok = False
+if len(states) != 6 and db.execute("SELECT 1 FROM Civilizations WHERE CivilizationType='CIVILIZATION_FEZ'").fetchone():
+    print(f"EXPECTED 6 CITY-STATES, GOT {len(states)}"); ok = False
+for (prop,) in db.execute("SELECT DISTINCT Value FROM RequirementArguments WHERE Name='PropertyName' AND Value LIKE 'EUROPA_CS_%'"):
+    if f'"{prop}"' not in lua:
+        print(f"PLOT PROPERTY NEVER WRITTEN BY LUA: {prop}"); ok = False
+for (rid,) in db.execute("SELECT RequirementId FROM Requirements WHERE RequirementId LIKE 'EUROPA_REQ_CS_%' AND RequirementId NOT IN"
+                         " (SELECT RequirementId FROM RequirementArguments WHERE Name='PropertyName' AND Value LIKE 'EUROPA_CS_%')"):
+    print(f"PROPERTY REQUIREMENT WITHOUT A PROPERTY NAME: {rid}"); ok = False
 # BBG switches leader-specific district adjacencies off by trait, so a new leader inherits every
 # sibling's unless it opts out. KEEP lists the ones a leader is meant to have; anything else
 # left over is a mistake.
@@ -148,6 +194,7 @@ import sqlite3, sys
 db = sqlite3.connect(sys.argv[1])
 db.execute("DELETE FROM Players WHERE LeaderType LIKE 'LEADER_EUROPA_%'")
 db.execute("DELETE FROM PlayerItems WHERE LeaderType LIKE 'LEADER_EUROPA_%'")
+db.execute("DELETE FROM CityStates WHERE CivilizationType LIKE 'CIVILIZATION_EUROPA_%'")
 ok = True
 for path in sys.argv[2:]:
     try:
@@ -160,6 +207,11 @@ for leader, domain, civ, portrait, civ_ability in rows:
     print(f"  {leader}: {civ} in {domain}, portrait {portrait}, items {', '.join(items) or 'NONE'}")
     if not items or not portrait or not civ_ability:
         print(f"SETUP ROW INCOMPLETE: {leader}"); ok = False
+states = db.execute("SELECT CivilizationType, Domain, CityStateCategory, Name, Icon, Bonus FROM CityStates WHERE CivilizationType LIKE 'CIVILIZATION_EUROPA_%' ORDER BY 1").fetchall()
+for civ, domain, category, name, icon, bonus in states:
+    print(f"  {civ}: {category} in {domain}, icon {icon}")
+if len(states) != 6:
+    print(f"EXPECTED 6 CITY-STATES IN THE PICKER, GOT {len(states)}"); ok = False
 if len(rows) != 8:
     print(f"EXPECTED 8 SELECTABLE LEADERS, GOT {len(rows)}"); ok = False
 sys.exit(0 if ok else 1)
@@ -178,12 +230,30 @@ for l in $(grep -h "KIND_LEADER" Data/*.sql | grep -o "LEADER_EUROPA_[A-Z_]*" | 
 	grep -q "m_Name text=\"${l}\"" ArtDefs/FallbackLeaders.artdef || { echo "NO FALLBACK ARTDEF: $l"; fail=1; }
 	grep -q "'${l}'" Config/*.sql                                 || { echo "NO SETUP ROW: $l"; fail=1; }
 done
-for k in $(grep -ho "LOC_[A-Z0-9_]*EUROPA[A-Z0-9_]*" Data/Europa_Leader*.sql Config/*.sql | sort -u); do
+for k in $(grep -ho "LOC_[A-Z0-9_]*EUROPA[A-Z0-9_]*" Data/Europa_Leader*.sql Data/Europa_CityState*.sql Config/*.sql | sort -u); do
 	grep -q "Tag=\"${k}\"" Text/*.xml || { echo "TEXT KEY NOT DEFINED: $k"; fail=1; }
 done
 for prop in $(grep -ho "'EUROPA_[A-Z_]*'" Data/Europa_Leader*.sql | tr -d "'" | sort -u | while read v; do grep -q "'PropertyName', *'$v'" Data/Europa_Leader*.sql && echo "$v"; done); do
 	grep -q "\"${prop}\"" Scripts/Europa_Leaders.lua || { echo "PLOT PROPERTY NEVER WRITTEN BY LUA: $prop"; fail=1; }
 done
+
+echo "== every city-state has a name, bonus text, pedia text, icon, colours and picker row"
+for c in $(grep -h "KIND_CIVILIZATION" Data/Europa_CityState*.sql | grep -o "CIVILIZATION_EUROPA_[A-Z_]*" | sort -u); do
+	k=${c#CIVILIZATION_}
+	grep -q "LOC_${c}_NAME\"" Text/*.xml                              || { echo "NO NAME TEXT: $c"; fail=1; }
+	grep -q "LOC_MINOR_CIV_${k}_TRAIT_DESCRIPTION\"" Text/*.xml       || { echo "NO BONUS TEXT: $c"; fail=1; }
+	grep -q "LOC_PEDIA_CITYSTATES_PAGE_${c}_CHAPTER_HISTORY_PARA_1\"" Text/*.xml || { echo "NO PEDIA TEXT: $c"; fail=1; }
+	grep -q "Name=\"ICON_${c}\"" Data/Europa_CityStates_Icons.xml    || { echo "NO ICON: $c"; fail=1; }
+	grep -q "<Type>${c}</Type>" Data/Europa_CityStates_Colors.xml     || { echo "NO COLOURS: $c"; fail=1; }
+	grep -q "'${c}'" Config/Europa_CityStates_Config.sql              || { echo "NO PICKER ROW: $c"; fail=1; }
+	grep -q "\"${c}\"" Scripts/Europa_CityStates.lua                 || { echo "NOT IN THE SCRIPT'S LIST: $c"; fail=1; }
+done
+
+echo "== city-state icon atlases are up to date with the generator"
+python3 tools/make_citystate_icons.py --check || fail=1
+
+echo "== city-state script logic (needs the 'lupa' Python package; skipped without it)"
+python3 tools/test_citystates.py || fail=1
 
 echo "== leader icons use atlases the installed game defines, and load after them"
 for a in $(grep -o 'Atlas="[^"]*"' Data/Europa_Leaders_Icons.xml | cut -d'"' -f2 | sort -u); do

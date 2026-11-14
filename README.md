@@ -1,7 +1,7 @@
 # Project Europa
 
-A Civilization VI mod: seven luxury resources, the Fish Weir, bigger deserts, and
-eight custom leaders balanced against Better Balanced Game 7.5.1.
+A Civilization VI mod: seven luxury resources, the Fish Weir, bigger deserts, six
+city-states, and eight custom leaders balanced against Better Balanced Game 7.5.1.
 
 Every change is listed, BBG-style, at https://hturner08.github.io/project-europa/
 (GitHub Pages serves the `docs/` folder of `main`; edit `docs/index.html` and push).
@@ -67,6 +67,38 @@ script writes a number onto a city-centre plot and modifiers read it back; the
 tile claim it does itself. It only uses simulation-side events, so values
 refresh at the start of the owner's turn.
 
+## City-states
+
+Six new city-states, one of each type. They join the pool the game draws from and
+appear in the city-state picker; each gives its type's usual envoy bonuses plus a
+Suzerain bonus. Gathering Storm ruleset only. BBG is optional; with it they also
+count toward BBG's per-city-state bonuses (Pericles, Huszar, Varangian longship).
+
+| City-state | Type | Suzerain bonus |
+|---|---|---|
+| Syracuse | Scientific | Campuses: +1 Science per adjacent Aqueduct or Dam. Workshops: +1 Science in cities with a Campus. |
+| Ubud | Cultural | Theater Squares: +1 Culture per adjacent unimproved Woods or Rainforest (max +2); with two such tiles, +2 Tourism after Flight. |
+| Sheffield | Industrial | Mines and Quarries next to your Industrial Zones: +1 Production. Industrial Zones with a Workshop and three adjacent Mines or Quarries: +1 Great Engineer point each. |
+| Ravenna | Militaristic | Military Engineers trained or bought: +1 build charge. Cities with a Harbor and an Encampment: +2 Production while constructing a building of either. |
+| Lhasa | Religious | Holy Sites next to two Mountains: +2 Culture, and Shrines in those cities +1 Production. |
+| Bruges | Trade | Commercial Hubs: +1 Gold per adjacent Theater Square, and the reverse for Culture. Cities with both: +1 Culture per Trade Route sent (max +2 per city). |
+
+**How they work.** Each bonus is an ordinary modifier that the city-state's trait
+attaches to whoever is Suzerain, so suzerainty changes apply at once. Anything that
+needs counting is worked out by `Scripts/Europa_CityStates.lua` for every major
+player and written onto a plot (the district's own plot, a Mine or Quarry, or the
+city centre); the modifiers read it back. The script uses simulation-side events
+only, so counts refresh at the start of the owner's turn, when a district is
+finished, when something is pillaged and when a city is founded or captured.
+
+**Where they differ from the design brief.** The district-to-district and
+feature bonuses (Syracuse, Ubud, Bruges) were specified as true adjacency. Civ VI's
+district-adjacency modifier cannot name the neighbouring district and its
+feature-adjacency modifier can neither skip improved tiles nor cap the total, so
+these are added to the district as a yield instead. Ravenna's +2 is city Production
+switched on while a Harbor or Encampment building is being made, because the
+engine only has percentage bonuses toward buildings.
+
 ## Layout
 
 | Path | Purpose |
@@ -79,6 +111,11 @@ refresh at the start of the owner's turn.
 | `Config/Europa_Leaders_Config.sql` | Game-setup rows (what makes the leaders selectable); copies civilization columns from the stock leader |
 | `Data/Europa_Leaders_Icons.xml`, `Data/Europa_Leaders_Colors.xml` | Leader icons (reusing stock atlases) and jersey colours |
 | `Text/Europa_Leaders_Text_en_US.xml` | Leader names, ability text, loading-screen text |
+| `Data/Europa_CityStateCommon.sql`, `Data/Europa_CityState_<Name>.sql` | City-state gameplay rows, one file per city-state; the common file (loaded first) holds the plot-property requirements |
+| `Data/Europa_CityStates_BBG.sql` | Copies BBG's per-city-state rows (made for Fez) under our city-states' names; does nothing without BBG |
+| `Config/Europa_CityStates_Config.sql` | City-state picker rows |
+| `Data/Europa_CityStates_Icons.xml`, `Data/Europa_CityStates_Colors.xml`, `Text/Europa_CityStates_Text_en_US.xml` | City-state icons, type colours, names and bonus text |
+| `Scripts/Europa_CityStates.lua` | Counts neighbours, Trade Routes and current production for the Suzerain bonuses |
 | `Scripts/Europa_Leaders.lua` | Continents (Mali), Wonder sites (China, America, France), city improvement flags (France, Cree), Cree tile claims |
 | `ArtDefs/Leaders.artdef`, `ArtDefs/FallbackLeaders.artdef` | Generated: stock leaders' art entries under our names (do not edit; run `tools/make_leader_art.py`) |
 | `docs/index.html` | The changes page |
@@ -86,8 +123,8 @@ refresh at the start of the owner's turn.
 | `Maps/Europa_DesertGrowth.lua` | Desert growth logic |
 | `Maps/Utility/TerrainGenerator.lua` | Generated: the stock Gathering Storm file plus a hook (do not edit; run `tools/make_terrain_override.py`) |
 | `ArtDefs/*.artdef`, `ProjectEuropa.dep` | Map models, borrowed from existing resources and Fishing Boats |
-| `Textures/*.dds` | Generated icon atlases (do not edit; run `tools/make_icons.py`) |
-| `tools/` | `make_icons.py`, `make_terrain_override.py`, `make_leader_art.py`, `test_desert_growth.py`, `test_leaders.py`, `validate.sh`, `install.sh` |
+| `Textures/*.dds` | Generated icon atlases (do not edit; run `tools/make_icons.py` and `tools/make_citystate_icons.py`) |
+| `tools/` | `make_icons.py`, `make_citystate_icons.py`, `make_terrain_override.py`, `make_leader_art.py`, `test_desert_growth.py`, `test_leaders.py`, `test_citystates.py`, `validate.sh`, `install.sh` |
 
 ## Use
 
@@ -124,6 +161,22 @@ and cropped (`docs/img/`). Each card on the page links to the original.
   scripts use the neighbouring functions, but not these exact calls, so the
   script checks each one and prints a single `Europa leaders:` line to `Lua.log`
   if one is missing instead of failing.
+- **The city-states have not been run in the game yet.** Offline checks pass, and
+  the script's counting is tested against stubbed game functions
+  (`tools/test_citystates.py`), but only a game shows whether they appear in the
+  picker and on the map and whether each modifier pays out. After a first game,
+  check `Lua.log` for lines starting `Europa city-states:`; the script prints one
+  line, once, for any game function it could not find and switches that part off.
+- **City-state bonuses that were specified as adjacency are district yields.**
+  They do not show on the adjacency line of the district tooltip, and whether
+  adjacency-doubling policy cards multiply them is untested.
+- **Ravenna's +2 Production can lag a turn.** The script reads what a city is
+  producing at the start of the turn, so after a mid-turn change the bonus follows
+  one turn later.
+- **City-states have placeholder icons and no art definitions.** The icons are
+  generated emblems (drop a 512x512 `art/<name>.png` and re-run
+  `tools/make_citystate_icons.py` to replace one). No culture is assigned, so
+  their cities should use the game's default building style.
 - **Leaders borrow stock art.** Portrait, 3D scene, icon, colours and agenda come
   from Mansa Musa, Qin Shi Huang, Menelik II, Pedro II, Poundmaker, Peter, Teddy
   Roosevelt (Bull Moose) and Catherine de Medici (Black Queen).
