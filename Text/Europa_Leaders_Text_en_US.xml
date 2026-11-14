@@ -80,7 +80,7 @@
 			<Text>+30% [ICON_Production] Production toward Preserves. +10% [ICON_Production] Production toward a Wonder that is adjacent to a Breathtaking tile (counted at the start of your turn). Unimproved Breathtaking tiles adjacent to a Wonder provide +1 [ICON_Culture] Culture. Every tile of a city that holds a National Park has +1 Appeal.</Text>
 		</Replace>
 		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_PALACE_DESIGNER_DESCRIPTION" Language="en_US">
-			<Text>Every tile of a city that has at least one Château has +1 Appeal. Châteaux adjacent to a Wonder or a Preserve provide +1 [ICON_Production] Production. +10% [ICON_Production] Production toward a Wonder that is adjacent to a Château (counted at the start of your turn).</Text>
+			<Text>Every tile of a city in which a Château is adjacent to a Wonder or a Preserve has +1 Appeal (checked at the start of your turn). Châteaux adjacent to a Wonder or a Preserve provide +1 [ICON_Production] Production. +10% [ICON_Production] Production toward a Wonder that is adjacent to a Château (counted at the start of your turn).</Text>
 		</Replace>
 		<!-- ===== Loading screen ===== -->
 		<Replace Tag="LOC_LOADING_INFO_LEADER_EUROPA_GOLDEN_EXPANSION" Language="en_US">

@@ -12,8 +12,8 @@
 --       capped at 4; 0 when no Wonder is under construction there
 --   EUROPA_CHATEAU_WONDER    (France, on each city's plot)
 --       1 while the Wonder that city has under construction touches a Chateau
---   EUROPA_CHATEAU_CITY      (France, on each city's plot)
---       1 while the city owns at least one Chateau
+--   EUROPA_CHATEAU_COMPLEX   (France, on each city's plot)
+--       1 while one of the city's Chateaux touches a finished Wonder or a Preserve
 --   EUROPA_HERD_CITY         (Cree, on each city's plot)
 --       1 while the city owns at least one Camp or Pasture
 --   EUROPA_TRADE_CLAIM       (Cree, on each city's plot)
@@ -35,7 +35,7 @@ local LEADER_CREE          = "LEADER_EUROPA_BORDERLESS_EMPIRE";
 local PROP_ROUTES          = "EUROPA_CONTINENT_ROUTES";
 local PROP_GARDEN          = "EUROPA_GARDEN_TILES";
 local PROP_CHATEAU_WONDER  = "EUROPA_CHATEAU_WONDER";
-local PROP_CHATEAU_CITY    = "EUROPA_CHATEAU_CITY";
+local PROP_CHATEAU_COMPLEX = "EUROPA_CHATEAU_COMPLEX";
 local PROP_HERD_CITY       = "EUROPA_HERD_CITY";
 local PROP_TRADE_CLAIM     = "EUROPA_TRADE_CLAIM";
 local CITIES_PER_CONTINENT = 3;
@@ -186,13 +186,36 @@ local function UpdateGardens(iPlayer)
 	end);
 end
 
+-- True when one of the city's Chateaux has a finished Wonder or a Preserve beside it.
+local function CityHasPalaceComplex(pCity, eChateau, ePreserve)
+	for _, pPlot in ipairs(pCity:GetOwnedPlots()) do
+		if pPlot:GetImprovementType() == eChateau then
+			for eDirection = 0, DirectionTypes.NUM_DIRECTION_TYPES - 1 do
+				local pAdjacent = Map.GetAdjacentPlot(pPlot:GetX(), pPlot:GetY(), eDirection);
+				if pAdjacent ~= nil then
+					if pAdjacent.GetDistrictType ~= nil and pAdjacent:GetDistrictType() == ePreserve then
+						return true;
+					end
+					if pAdjacent.GetWonderType ~= nil and pAdjacent.IsWonderComplete ~= nil
+						and pAdjacent:GetWonderType() ~= -1 and pAdjacent:IsWonderComplete() then
+						return true;
+					end
+				end
+			end
+		end
+	end
+	return false;
+end
+
 local function UpdateChateaux(iPlayer)
 	local eChateau = GetImprovementIndex("IMPROVEMENT_CHATEAU");
+	local kPreserve = GameInfo.Districts["DISTRICT_PRESERVE"];
+	local ePreserve = (kPreserve ~= nil) and kPreserve.Index or -2;
 	ForEachCity(iPlayer, function(pCity)
 		local iBeside = BestWonderSite(pCity, function(pPlot) return CountNeighboursWithImprovement(pPlot, eChateau); end);
 		local pCityPlot = GetCityPlot(pCity);
 		SetPlotProperty(pCityPlot, PROP_CHATEAU_WONDER, (iBeside > 0) and 1 or 0);
-		SetPlotProperty(pCityPlot, PROP_CHATEAU_CITY, CityOwnsImprovement(pCity, { [eChateau] = true }) and 1 or 0);
+		SetPlotProperty(pCityPlot, PROP_CHATEAU_COMPLEX, CityHasPalaceComplex(pCity, eChateau, ePreserve) and 1 or 0);
 	end);
 end
 
@@ -309,7 +332,7 @@ local function OnCityConquered(iNewOwner, iOldOwner, iCityID, iX, iY)
 	-- A captured city must not carry its old owner's values to the new one.
 	-- EUROPA_TRADE_CLAIM is left alone: it records that the tiles were already given.
 	local pPlot = Map.GetPlot(iX, iY);
-	for _, sProperty in ipairs({ PROP_ROUTES, PROP_GARDEN, PROP_CHATEAU_WONDER, PROP_CHATEAU_CITY, PROP_HERD_CITY }) do
+	for _, sProperty in ipairs({ PROP_ROUTES, PROP_GARDEN, PROP_CHATEAU_WONDER, PROP_CHATEAU_COMPLEX, PROP_HERD_CITY }) do
 		SetPlotProperty(pPlot, sProperty, 0);
 	end
 	UpdatePlayer(iNewOwner);

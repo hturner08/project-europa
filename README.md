@@ -51,7 +51,7 @@ BBG) defines. Gathering Storm ruleset only. BBG is optional.
 | Borderless Empire | Cree | Settlers +1 sight. The first Trade Route from each city you found claims up to two unowned tiles near it. International Trade Routes from a city with a Camp or Pasture: +2 Food, +1 Production. |
 | Endless Continent | Russia | Lavra cities: +20% toward Settlers. Cities founded on Tundra or Tundra Hills get a free Builder. Tundra Woods: +1 Food. |
 | Scenic Genius | America | +30% toward Preserves. +10% toward a Wonder next to a Breathtaking tile. Unimproved Breathtaking tiles next to a Wonder: +1 Culture. +1 Appeal on every tile of a city with a National Park. |
-| Palace Designer | France | +1 Appeal on every tile of a city with a Château. Châteaux next to a Wonder or Preserve: +1 Production. +10% toward a Wonder next to a Château. |
+| Palace Designer | France | +1 Appeal on every tile of a city where a Château is next to a Wonder or Preserve. Châteaux next to a Wonder or Preserve: +1 Production. +10% toward a Wonder next to a Château. |
 
 Where these differ from the original design brief, and why, is on the changes
 page. In short: Civ VI has no per-tile Appeal modifier (so Appeal effects are
@@ -62,7 +62,7 @@ per city), and domestic trade route yields go to the sending city.
 
 **Some effects are worked out by script** (`Scripts/Europa_Leaders.lua`): Mali's
 continents, the Wonder-site checks (China, America, France), whether a city has
-a Château (France) or a Camp or Pasture (Cree), and the Cree tile claim. The
+a Château beside a Wonder or Preserve (France) or a Camp or Pasture (Cree), and the Cree tile claim. The
 script writes a number onto a city-centre plot and modifiers read it back; the
 tile claim it does itself. It only uses simulation-side events, so values
 refresh at the start of the owner's turn.

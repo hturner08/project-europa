@@ -13,8 +13,8 @@ Checks:
     the value sits on the capital only, follows the capital, and is capped at 4
   * China and America: the value is the number of Breathtaking tiles around an
     unfinished Wonder, 0 with no Wonder or a finished one, capped at 4, best site wins
-  * France: a city with a Chateau is flagged, and so is an unfinished Wonder
-    that touches a Chateau
+  * France: a city is flagged while one of its Chateaux touches a finished Wonder
+    or a Preserve, and separately while an unfinished Wonder touches a Chateau
   * Cree: a city with a Camp or Pasture is flagged; the first Trade Route from a
     founded city claims the two nearest unowned tiles (land first), once only,
     never for a captured city, and degrades when the trade API is missing
@@ -35,7 +35,7 @@ SCRIPT = (ROOT / "Scripts" / "Europa_Leaders.lua").read_text(encoding="utf-8")
 
 STUBS = r"""
 DirectionTypes = { NUM_DIRECTION_TYPES = 6 }
-GameInfo = { Improvements = {
+GameInfo = { Districts = { DISTRICT_PRESERVE = { Index = 21 } }, Improvements = {
 	IMPROVEMENT_CHATEAU = { Index = 7 }, IMPROVEMENT_CAMP = { Index = 3 }, IMPROVEMENT_PASTURE = { Index = 4 } } }
 CLAIMS = {}
 NO_CLAIM_API = false
@@ -53,7 +53,8 @@ local plots = {}
 local function key(x, y) return y * W + x end
 local function newPlot(x, y)
 	local p = { x = x, y = y, props = {}, appeal = 0, continent = 0, wonder = -1, complete = false,
-		owner = -1, ownerCity = -1, improvement = -1, water = false }
+		owner = -1, ownerCity = -1, improvement = -1, water = false, district = -1 }
+	function p:GetDistrictType() return self.district end
 	function p:GetIndex() return key(self.x, self.y) end
 	function p:GetOwner() return self.owner end
 	function p:IsWater() return self.water end
@@ -140,7 +141,7 @@ function print(...) local t = {} for _, v in ipairs({...}) do t[#t + 1] = tostri
 MALI, CHINA = "LEADER_EUROPA_GOLDEN_EXPANSION", "LEADER_EUROPA_IMPERIAL_GARDENS"
 AMERICA, FRANCE, CREE = "LEADER_EUROPA_SCENIC_GENIUS", "LEADER_EUROPA_PALACE_DESIGNER", "LEADER_EUROPA_BORDERLESS_EMPIRE"
 ROUTES, GARDEN = "EUROPA_CONTINENT_ROUTES", "EUROPA_GARDEN_TILES"
-CH_WONDER, CH_CITY, HERD, CLAIM = "EUROPA_CHATEAU_WONDER", "EUROPA_CHATEAU_CITY", "EUROPA_HERD_CITY", "EUROPA_TRADE_CLAIM"
+CH_WONDER, CH_CITY, HERD, CLAIM = "EUROPA_CHATEAU_WONDER", "EUROPA_CHATEAU_COMPLEX", "EUROPA_HERD_CITY", "EUROPA_TRADE_CLAIM"
 OWN = "function Own(c, p) table.insert(c.owned, p) end"
 failures = []
 
@@ -298,19 +299,30 @@ g.HOOKS["turn"](0)
 check("France: no Chateau yet", (g.Prop(10, 10, CH_CITY), g.Prop(10, 10, CH_WONDER)), (0, 0))
 chateau.improvement = 7
 g.HOOKS["turn"](0)
-check("France: city with a Chateau is flagged", g.Prop(10, 10, CH_CITY), 1)
-check("France: no Wonder under construction", g.Prop(10, 10, CH_WONDER), 0)
-check("France: the other city is not flagged", g.Prop(25, 10, CH_CITY), 0)
+check("France: a lone Chateau flags nothing", (g.Prop(10, 10, CH_CITY), g.Prop(10, 10, CH_WONDER)), (0, 0))
 site.wonder = 9
 g.HOOKS["turn"](0)
-check("France: Wonder site touching a Chateau", g.Prop(10, 10, CH_WONDER), 1)
+check("France: unfinished Wonder touching a Chateau earns the Wonder bonus only",
+      (g.Prop(10, 10, CH_CITY), g.Prop(10, 10, CH_WONDER)), (0, 1))
 chateau.improvement = 3      # some other improvement
 g.HOOKS["turn"](0)
 check("France: another improvement is not a Chateau", (g.Prop(10, 10, CH_CITY), g.Prop(10, 10, CH_WONDER)), (0, 0))
 chateau.improvement = 7
 site.complete = True
 g.HOOKS["turn"](0)
-check("France: finished Wonder no longer counts", (g.Prop(10, 10, CH_CITY), g.Prop(10, 10, CH_WONDER)), (1, 0))
+check("France: Chateau beside a finished Wonder flags the city, Wonder bonus ends",
+      (g.Prop(10, 10, CH_CITY), g.Prop(10, 10, CH_WONDER)), (1, 0))
+check("France: the other city is not flagged", g.Prop(25, 10, CH_CITY), 0)
+site.wonder = -1
+site.complete = False
+g.HOOKS["turn"](0)
+check("France: no Wonder, no flag", g.Prop(10, 10, CH_CITY), 0)
+site.district = 4            # some other district
+g.HOOKS["turn"](0)
+check("France: another district is not a Preserve", g.Prop(10, 10, CH_CITY), 0)
+site.district = 21
+g.HOOKS["turn"](0)
+check("France: Chateau beside a Preserve flags the city", g.Prop(10, 10, CH_CITY), 1)
 g.RemoveCity(0, city)
 g.HOOKS["conquered"](1, 0, city.id, 10, 10)
 check("France: captured city's flags are cleared", g.Prop(10, 10, CH_CITY), 0)

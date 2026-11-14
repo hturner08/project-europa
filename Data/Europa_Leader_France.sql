@@ -44,8 +44,9 @@ INSERT INTO Requirements (RequirementId, RequirementType) VALUES
 
 INSERT INTO RequirementArguments (RequirementId, Name, Value) VALUES
 	-- Both properties are written to the city-centre plot by Scripts/Europa_Leaders.lua.
-	-- EUROPA_CHATEAU_CITY: 1 while the city owns at least one Chateau.
-	('EUROPA_REQ_CITY_HAS_CHATEAU',              'PropertyName',     'EUROPA_CHATEAU_CITY'),
+	-- EUROPA_CHATEAU_COMPLEX: 1 while one of the city's Chateaux touches a finished
+	-- Wonder or a Preserve.
+	('EUROPA_REQ_CITY_HAS_CHATEAU',              'PropertyName',     'EUROPA_CHATEAU_COMPLEX'),
 	('EUROPA_REQ_CITY_HAS_CHATEAU',              'PropertyMinimum',  '1'),
 	-- EUROPA_CHATEAU_WONDER: 1 while the Wonder that city is building touches a Chateau.
 	('EUROPA_REQ_WONDER_SITE_BY_CHATEAU',        'PropertyName',     'EUROPA_CHATEAU_WONDER'),
@@ -71,7 +72,8 @@ INSERT INTO RequirementSetRequirements (RequirementSetId, RequirementId) VALUES
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES
 	-- Chateaux raise Appeal. An improvement's Appeal is one number shared by every
 	-- French leader and the engine has no per-tile Appeal modifier, so this is +1
-	-- Appeal on every tile of a city that owns at least one Chateau.
+	-- Appeal on every tile of a city where a Chateau touches a Wonder or a Preserve.
+	-- (A bare "city owns a Chateau" test made it too cheap: one Builder charge per city.)
 	('EUROPA_FRANCE_CHATEAU_CITY_APPEAL',       'MODIFIER_PLAYER_CITIES_ADJUST_CITY_APPEAL',       'EUROPA_REQSET_CITY_HAS_CHATEAU'),
 	-- Chateaux next to a Wonder or a Preserve: +1 Production (once, not per neighbour).
 	('EUROPA_FRANCE_CHATEAU_PRODUCTION',        'MODIFIER_PLAYER_ADJUST_PLOT_YIELD',               'EUROPA_REQSET_CHATEAU_BY_WONDER_OR_PRESERVE'),
