@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GameData>
+	<LocalizedText>
+		<!-- Names -->
+		<Replace Tag="LOC_RESOURCE_EUROPA_TOPAZ_NAME" Language="en_US">
+			<Text>Topaz</Text>
+		</Replace>
+		<Replace Tag="LOC_RESOURCE_EUROPA_PEACOCKS_NAME" Language="en_US">
+			<Text>Peacocks</Text>
+		</Replace>
+		<Replace Tag="LOC_RESOURCE_EUROPA_PALLAS_CATS_NAME" Language="en_US">
+			<Text>Pallas's Cats</Text>
+		</Replace>
+		<Replace Tag="LOC_RESOURCE_EUROPA_PYGMY_RABBITS_NAME" Language="en_US">
+			<Text>Pygmy Rabbits</Text>
+		</Replace>
+		<Replace Tag="LOC_RESOURCE_EUROPA_TIBETAN_FOXES_NAME" Language="en_US">
+			<Text>Tibetan Foxes</Text>
+		</Replace>
+		<Replace Tag="LOC_RESOURCE_EUROPA_DISCUS_FISH_NAME" Language="en_US">
+			<Text>Discus Fish</Text>
+		</Replace>
+		<Replace Tag="LOC_RESOURCE_EUROPA_CAPYBARAS_NAME" Language="en_US">
+			<Text>Capybaras</Text>
+		</Replace>
+
+		<!-- Improvement -->
+		<Replace Tag="LOC_IMPROVEMENT_EUROPA_FISH_WEIR_NAME" Language="en_US">
+			<Text>Fish Weir</Text>
+		</Replace>
+		<Replace Tag="LOC_IMPROVEMENT_EUROPA_FISH_WEIR_DESCRIPTION" Language="en_US">
+			<Text>Unlocks the Builder ability to construct a Fish Weir.[NEWLINE][NEWLINE]+1 [ICON_Food] Food. Can only be built on [ICON_RESOURCE_EUROPA_DISCUS_FISH] Discus Fish, which are found in lakes.[NEWLINE][NEWLINE]The city will gain use of that resource.</Text>
+		</Replace>
+
+		<!-- Civilopedia -->
+		<Replace Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_EUROPA_TOPAZ_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>Topaz is a hard silicate gemstone found in granite and rhyolite country, most prized in its golden "imperial" form. For centuries almost any yellow stone was sold under the name, and courts from Lisbon to Saint Petersburg paid handsomely for the real thing.</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_EUROPA_PEACOCKS_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>Peafowl have been kept in palace gardens for at least three thousand years, carried west from India by traders who knew that nothing announced wealth quite like a bird that cost a fortune and did nothing useful. Their feathers decorated thrones, fans and crowns across Eurasia.</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_EUROPA_PALLAS_CATS_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>The manul, or Pallas's cat, is a small, densely furred wildcat of the cold Central Asian steppe and its rocky hills. Flat-faced, low-eared and permanently unimpressed, it was long hunted for its pelt and is now better loved for its expression.</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_EUROPA_PYGMY_RABBITS_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>The pygmy rabbit is the smallest rabbit in the world, small enough to sit in a cupped hand, and one of the few that digs its own burrows. It lives among sagebrush on dry plains, where it is both a reliable source of meat and an object of considerable local affection.</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_EUROPA_TIBETAN_FOXES_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>The Tibetan sand fox hunts pikas across the high plateau and the arid hills around it. Its thick coat made warm hats for herders, while its oddly square, narrow-eyed face has made it a fixture of folklore and, much later, of other people's jokes.</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_EUROPA_DISCUS_FISH_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>Discus are disc-shaped cichlids of slow, warm fresh water, banded and marbled in blues, reds and golds. Difficult to keep and beautiful to look at, they became the status fish of collectors, who call them the kings of the aquarium.</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_EUROPA_CAPYBARAS_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>The capybara is the largest rodent on Earth, a placid, barrel-shaped grazer of marshes and river floodplains. It has been hunted and ranched for meat and hide for thousands of years, and tolerates the company of nearly every other animal, people included.</Text>
+		</Replace>
+	</LocalizedText>
+</GameData>

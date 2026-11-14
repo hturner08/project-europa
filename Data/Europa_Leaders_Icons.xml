@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Project Europa: custom leaders reuse the portrait icon of the stock leader whose
+     art they borrow. The atlases belong to the game; only the names are ours.
+     Kept apart from Europa_Icons.xml because this file is also loaded on the
+     game-setup screens, where the resource textures are not imported. -->
+<GameInfo>
+	<IconDefinitions>
+		<Row Name="ICON_LEADER_EUROPA_GOLDEN_EXPANSION" Atlas="ICON_ATLAS_EXPANSION_2_LEADERS" Index="2"/>
+		<Row Name="ICON_LEADER_EUROPA_IMPERIAL_GARDENS" Atlas="ICON_ATLAS_LEADERS" Index="14"/>
+		<Row Name="ICON_LEADER_EUROPA_HIGHLAND_EMPIRE" Atlas="ICON_ATLAS_ETHIOPIA_MENELIK" Index="0"/>
+		<Row Name="ICON_LEADER_EUROPA_LIVING_PARADISE" Atlas="ICON_ATLAS_LEADERS" Index="10"/>
+	</IconDefinitions>
+</GameInfo>

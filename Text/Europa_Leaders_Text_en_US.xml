@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Project Europa: custom leader text. Loaded on the setup screens and in game.
+
+     TO RENAME A LEADER: change the text of its LOC_LEADER_EUROPA_*_NAME row in the
+     first block below (for example "Golden Expansion" to "Herbie"). Nothing else
+     refers to the display name, so that one edit is the whole job. The ability
+     keeps its own name in the second block. Restart the game after editing. -->
+<GameData>
+	<LocalizedText>
+		<!-- ===== Leader display names: edit these to rename a leader ===== -->
+		<Replace Tag="LOC_LEADER_EUROPA_GOLDEN_EXPANSION_NAME" Language="en_US">
+			<Text>Golden Expansion</Text>
+		</Replace>
+		<Replace Tag="LOC_LEADER_EUROPA_IMPERIAL_GARDENS_NAME" Language="en_US">
+			<Text>Imperial Gardens</Text>
+		</Replace>
+		<Replace Tag="LOC_LEADER_EUROPA_HIGHLAND_EMPIRE_NAME" Language="en_US">
+			<Text>Highland Empire</Text>
+		</Replace>
+		<Replace Tag="LOC_LEADER_EUROPA_LIVING_PARADISE_NAME" Language="en_US">
+			<Text>Living Paradise</Text>
+		</Replace>
+
+		<!-- ===== Ability names ===== -->
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_GOLDEN_EXPANSION_NAME" Language="en_US">
+			<Text>Golden Expansion</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_IMPERIAL_GARDENS_NAME" Language="en_US">
+			<Text>Imperial Gardens</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_HIGHLAND_EMPIRE_NAME" Language="en_US">
+			<Text>Highland Empire</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_LIVING_PARADISE_NAME" Language="en_US">
+			<Text>Living Paradise</Text>
+		</Replace>
+
+		<!-- ===== Ability descriptions: keep in step with Data/Europa_Leader_*.sql ===== -->
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_GOLDEN_EXPANSION_DESCRIPTION" Language="en_US">
+			<Text>Settlers cost 10% less [ICON_Gold] Gold to purchase. Domestic [ICON_TradeRoute] Trade Routes sent from a city with a Suguba provide +2 [ICON_Production] Production. +1 [ICON_TradeRoute] Trade Route capacity for each continent on which you own at least three cities that you founded (maximum +4).</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_IMPERIAL_GARDENS_DESCRIPTION" Language="en_US">
+			<Text>Every tile of a city that holds at least one Wonder has +1 Appeal. In a city with a Grove, +5% [ICON_Production] Production toward Wonders for each Breathtaking tile adjacent to the Wonder being built, up to +20% (counted at the start of your turn). Great Wall segments adjacent to another segment provide +1 [ICON_Faith] Faith.</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_HIGHLAND_EMPIRE_DESCRIPTION" Language="en_US">
+			<Text>Cities you found on Hills gain +1 [ICON_Production] Production and +10% [ICON_Production] Production toward Settlers. They also gain +25% [ICON_Production] Production toward districts until their first specialty district is complete.</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_LIVING_PARADISE_DESCRIPTION" Language="en_US">
+			<Text>Unimproved Rainforest tiles adjacent to a Preserve provide +1 [ICON_Culture] Culture once Medieval Faires is known. Cities with at least three Rainforest tiles gain +10% [ICON_Production] Production toward Wonders. In a city that holds at least one Wonder, each Rainforest provides a further +1 Appeal to adjacent tiles.</Text>
+		</Replace>
+
+		<!-- ===== Loading screen ===== -->
+		<Replace Tag="LOC_LOADING_INFO_LEADER_EUROPA_GOLDEN_EXPANSION" Language="en_US">
+			<Text>The caravans of Mali carry more than salt and gold: they carry the next city. Buy your Settlers, plant them on every shore you can reach, and let the trade that binds them together pay for the ones that follow.</Text>
+		</Replace>
+		<Replace Tag="LOC_LOADING_INFO_LEADER_EUROPA_IMPERIAL_GARDENS" Language="en_US">
+			<Text>A Wonder is only as fine as the land that frames it. Tend the groves, choose each site as a painter chooses where the mountain stands, and the empire itself becomes the garden.</Text>
+		</Replace>
+		<Replace Tag="LOC_LOADING_INFO_LEADER_EUROPA_HIGHLAND_EMPIRE" Language="en_US">
+			<Text>From the high plateau every valley looks like an invitation. Found your cities where the ground rises, and each one will be quick to raise its first quarter and quicker still to send out the next band of settlers.</Text>
+		</Replace>
+		<Replace Tag="LOC_LOADING_INFO_LEADER_EUROPA_LIVING_PARADISE" Language="en_US">
+			<Text>Leave the forest standing and it will repay you. Under its canopy rise Wonders the world will cross oceans to see, and every one of them makes the green around it lovelier still.</Text>
+		</Replace>
+	</LocalizedText>
+</GameData>

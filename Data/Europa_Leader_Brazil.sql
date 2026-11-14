@@ -1,0 +1,80 @@
+-- Project Europa: Brazil, "Living Paradise".
+-- Replaces the leader ability only; Amazon, the Street Carnival and the Minas
+-- Geraes are whatever the loaded ruleset (stock or BBG) defines.
+-- Art, agenda and favoured religion are borrowed from Pedro II.
+
+INSERT INTO Types (Type, Kind) VALUES
+	('LEADER_EUROPA_LIVING_PARADISE',       'KIND_LEADER'),
+	('TRAIT_LEADER_EUROPA_LIVING_PARADISE', 'KIND_TRAIT');
+
+INSERT INTO Leaders (LeaderType, Name, InheritFrom, SceneLayers, Sex) VALUES
+	('LEADER_EUROPA_LIVING_PARADISE', 'LOC_LEADER_EUROPA_LIVING_PARADISE_NAME', 'LEADER_DEFAULT', 4, 'Male');
+
+INSERT INTO CivilizationLeaders (LeaderType, CivilizationType, CapitalName)
+	SELECT 'LEADER_EUROPA_LIVING_PARADISE', CivilizationType, CapitalName
+	FROM CivilizationLeaders WHERE LeaderType = 'LEADER_PEDRO';
+
+INSERT INTO Traits (TraitType, Name, Description) VALUES
+	('TRAIT_LEADER_EUROPA_LIVING_PARADISE', 'LOC_TRAIT_LEADER_EUROPA_LIVING_PARADISE_NAME', 'LOC_TRAIT_LEADER_EUROPA_LIVING_PARADISE_DESCRIPTION');
+
+INSERT INTO LeaderTraits (LeaderType, TraitType) VALUES
+	('LEADER_EUROPA_LIVING_PARADISE', 'TRAIT_LEADER_EUROPA_LIVING_PARADISE');
+
+INSERT INTO HistoricalAgendas (LeaderType, AgendaType)
+	SELECT 'LEADER_EUROPA_LIVING_PARADISE', AgendaType FROM HistoricalAgendas WHERE LeaderType = 'LEADER_PEDRO';
+
+INSERT INTO FavoredReligions (LeaderType, ReligionType)
+	SELECT 'LEADER_EUROPA_LIVING_PARADISE', ReligionType FROM FavoredReligions WHERE LeaderType = 'LEADER_PEDRO';
+
+INSERT INTO LoadingInfo (LeaderType, ForegroundImage, BackgroundImage, LeaderText, PlayDawnOfManAudio) VALUES
+	('LEADER_EUROPA_LIVING_PARADISE', 'LEADER_PEDRO_NEUTRAL', 'LEADER_PEDRO_BACKGROUND', 'LOC_LOADING_INFO_LEADER_EUROPA_LIVING_PARADISE', 0);
+
+-- ---------------------------------------------------------------------------
+-- Ability
+-- ---------------------------------------------------------------------------
+
+INSERT INTO Requirements (RequirementId, RequirementType) VALUES
+	('EUROPA_REQ_PLOT_IS_RAINFOREST',         'REQUIREMENT_PLOT_FEATURE_TYPE_MATCHES'),
+	('EUROPA_REQ_PLOT_NEXT_TO_PRESERVE',      'REQUIREMENT_PLOT_ADJACENT_DISTRICT_TYPE_MATCHES'),
+	('EUROPA_REQ_PLAYER_HAS_MEDIEVAL_FAIRES', 'REQUIREMENT_PLAYER_HAS_CIVIC'),
+	('EUROPA_REQ_CITY_HAS_3_RAINFOREST',      'REQUIREMENT_CITY_HAS_X_FEATURE_TYPE');
+
+INSERT INTO RequirementArguments (RequirementId, Name, Value) VALUES
+	('EUROPA_REQ_PLOT_IS_RAINFOREST',         'FeatureType',  'FEATURE_JUNGLE'),
+	('EUROPA_REQ_PLOT_NEXT_TO_PRESERVE',      'DistrictType', 'DISTRICT_PRESERVE'),
+	('EUROPA_REQ_PLAYER_HAS_MEDIEVAL_FAIRES', 'CivicType',    'CIVIC_MEDIEVAL_FAIRES'),
+	('EUROPA_REQ_CITY_HAS_3_RAINFOREST',      'FeatureType',  'FEATURE_JUNGLE'),
+	('EUROPA_REQ_CITY_HAS_3_RAINFOREST',      'Amount',       '3');
+
+INSERT INTO RequirementSets (RequirementSetId, RequirementSetType) VALUES
+	('EUROPA_REQSET_WILD_RAINFOREST_BY_PRESERVE', 'REQUIREMENTSET_TEST_ALL'),
+	('EUROPA_REQSET_CITY_HAS_3_RAINFOREST',       'REQUIREMENTSET_TEST_ALL');
+
+INSERT INTO RequirementSetRequirements (RequirementSetId, RequirementId) VALUES
+	('EUROPA_REQSET_WILD_RAINFOREST_BY_PRESERVE', 'EUROPA_REQ_PLOT_IS_RAINFOREST'),
+	('EUROPA_REQSET_WILD_RAINFOREST_BY_PRESERVE', 'EUROPA_REQ_PLOT_HAS_NO_IMPROVEMENT'),
+	('EUROPA_REQSET_WILD_RAINFOREST_BY_PRESERVE', 'EUROPA_REQ_PLOT_NEXT_TO_PRESERVE'),
+	('EUROPA_REQSET_WILD_RAINFOREST_BY_PRESERVE', 'EUROPA_REQ_PLAYER_HAS_MEDIEVAL_FAIRES'),
+	('EUROPA_REQSET_CITY_HAS_3_RAINFOREST',       'EUROPA_REQ_CITY_HAS_3_RAINFOREST');
+
+INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES
+	-- Unimproved Rainforest next to a Preserve: +1 Culture once Medieval Faires is known.
+	('EUROPA_BRAZIL_PRESERVE_RAINFOREST_CULTURE', 'MODIFIER_PLAYER_ADJUST_PLOT_YIELD',                     'EUROPA_REQSET_WILD_RAINFOREST_BY_PRESERVE'),
+	-- Cities with three or more Rainforest tiles: +10% Wonder Production.
+	('EUROPA_BRAZIL_RAINFOREST_WONDER_PRODUCTION','MODIFIER_PLAYER_CITIES_ADJUST_WONDER_PRODUCTION',       'EUROPA_REQSET_CITY_HAS_3_RAINFOREST'),
+	-- Wonders make Rainforest more appealing. The engine has no per-tile Appeal
+	-- modifier, so: in a city with a Wonder, each Rainforest gives +1 more Appeal
+	-- to the tiles around it (on top of Brazil's own Rainforest Appeal).
+	('EUROPA_BRAZIL_WONDER_RAINFOREST_APPEAL',    'MODIFIER_PLAYER_CITIES_ADJUST_FEATURE_APPEAL_MODIFIER', 'EUROPA_REQSET_CITY_HAS_ANY_WONDER');
+
+INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES
+	('EUROPA_BRAZIL_PRESERVE_RAINFOREST_CULTURE',  'YieldType',   'YIELD_CULTURE'),
+	('EUROPA_BRAZIL_PRESERVE_RAINFOREST_CULTURE',  'Amount',      '1'),
+	('EUROPA_BRAZIL_RAINFOREST_WONDER_PRODUCTION', 'Amount',      '10'),
+	('EUROPA_BRAZIL_WONDER_RAINFOREST_APPEAL',     'FeatureType', 'FEATURE_JUNGLE'),
+	('EUROPA_BRAZIL_WONDER_RAINFOREST_APPEAL',     'Amount',      '1');
+
+INSERT INTO TraitModifiers (TraitType, ModifierId) VALUES
+	('TRAIT_LEADER_EUROPA_LIVING_PARADISE', 'EUROPA_BRAZIL_PRESERVE_RAINFOREST_CULTURE'),
+	('TRAIT_LEADER_EUROPA_LIVING_PARADISE', 'EUROPA_BRAZIL_RAINFOREST_WONDER_PRODUCTION'),
+	('TRAIT_LEADER_EUROPA_LIVING_PARADISE', 'EUROPA_BRAZIL_WONDER_RAINFOREST_APPEAL');

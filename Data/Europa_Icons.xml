@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Icon database. Loaded by the UpdateIcons action. The .dds atlases are generated
+     by tools/make_icons.py (4 columns x 2 rows, cell order = Index below). -->
+<GameInfo>
+	<IconTextureAtlases>
+		<Row Name="ICON_ATLAS_EUROPA_RESOURCES" IconSize="32"  IconsPerRow="4" IconsPerColumn="2" Filename="Europa_Resources32.dds"/>
+		<Row Name="ICON_ATLAS_EUROPA_RESOURCES" IconSize="38"  IconsPerRow="4" IconsPerColumn="2" Filename="Europa_Resources38.dds"/>
+		<Row Name="ICON_ATLAS_EUROPA_RESOURCES" IconSize="50"  IconsPerRow="4" IconsPerColumn="2" Filename="Europa_Resources50.dds"/>
+		<Row Name="ICON_ATLAS_EUROPA_RESOURCES" IconSize="64"  IconsPerRow="4" IconsPerColumn="2" Filename="Europa_Resources64.dds"/>
+		<Row Name="ICON_ATLAS_EUROPA_RESOURCES" IconSize="256" IconsPerRow="4" IconsPerColumn="2" Filename="Europa_Resources256.dds"/>
+		<Row Name="ICON_ATLAS_EUROPA_RESOURCES_FOW" IconSize="256" IconsPerRow="4" IconsPerColumn="2" Filename="Europa_Resources256_FOW.dds"/>
+		<!-- Inline text icons: [ICON_RESOURCE_EUROPA_TOPAZ] etc. -->
+		<Row Name="ICON_ATLAS_EUROPA_FONT_ICONS" Baseline="6" IconSize="22" IconsPerRow="4" IconsPerColumn="2" Filename="Europa_FontIcons22.dds"/>
+	</IconTextureAtlases>
+	<IconDefinitions>
+		<Row Name="ICON_RESOURCE_EUROPA_TOPAZ"         Atlas="ICON_ATLAS_EUROPA_RESOURCES" Index="0"/>
+		<Row Name="ICON_RESOURCE_EUROPA_PEACOCKS"      Atlas="ICON_ATLAS_EUROPA_RESOURCES" Index="1"/>
+		<Row Name="ICON_RESOURCE_EUROPA_PALLAS_CATS"   Atlas="ICON_ATLAS_EUROPA_RESOURCES" Index="2"/>
+		<Row Name="ICON_RESOURCE_EUROPA_PYGMY_RABBITS" Atlas="ICON_ATLAS_EUROPA_RESOURCES" Index="3"/>
+		<Row Name="ICON_RESOURCE_EUROPA_TIBETAN_FOXES" Atlas="ICON_ATLAS_EUROPA_RESOURCES" Index="4"/>
+		<Row Name="ICON_RESOURCE_EUROPA_DISCUS_FISH"   Atlas="ICON_ATLAS_EUROPA_RESOURCES" Index="5"/>
+		<Row Name="ICON_RESOURCE_EUROPA_CAPYBARAS"     Atlas="ICON_ATLAS_EUROPA_RESOURCES" Index="6"/>
+
+		<Row Name="ICON_RESOURCE_EUROPA_TOPAZ_FOW"         Atlas="ICON_ATLAS_EUROPA_RESOURCES_FOW" Index="0"/>
+		<Row Name="ICON_RESOURCE_EUROPA_PEACOCKS_FOW"      Atlas="ICON_ATLAS_EUROPA_RESOURCES_FOW" Index="1"/>
+		<Row Name="ICON_RESOURCE_EUROPA_PALLAS_CATS_FOW"   Atlas="ICON_ATLAS_EUROPA_RESOURCES_FOW" Index="2"/>
+		<Row Name="ICON_RESOURCE_EUROPA_PYGMY_RABBITS_FOW" Atlas="ICON_ATLAS_EUROPA_RESOURCES_FOW" Index="3"/>
+		<Row Name="ICON_RESOURCE_EUROPA_TIBETAN_FOXES_FOW" Atlas="ICON_ATLAS_EUROPA_RESOURCES_FOW" Index="4"/>
+		<Row Name="ICON_RESOURCE_EUROPA_DISCUS_FISH_FOW"   Atlas="ICON_ATLAS_EUROPA_RESOURCES_FOW" Index="5"/>
+		<Row Name="ICON_RESOURCE_EUROPA_CAPYBARAS_FOW"     Atlas="ICON_ATLAS_EUROPA_RESOURCES_FOW" Index="6"/>
+
+		<!-- Font icons are keyed without the ICON_ prefix. -->
+		<Row Name="RESOURCE_EUROPA_TOPAZ"         Atlas="ICON_ATLAS_EUROPA_FONT_ICONS" Index="0"/>
+		<Row Name="RESOURCE_EUROPA_PEACOCKS"      Atlas="ICON_ATLAS_EUROPA_FONT_ICONS" Index="1"/>
+		<Row Name="RESOURCE_EUROPA_PALLAS_CATS"   Atlas="ICON_ATLAS_EUROPA_FONT_ICONS" Index="2"/>
+		<Row Name="RESOURCE_EUROPA_PYGMY_RABBITS" Atlas="ICON_ATLAS_EUROPA_FONT_ICONS" Index="3"/>
+		<Row Name="RESOURCE_EUROPA_TIBETAN_FOXES" Atlas="ICON_ATLAS_EUROPA_FONT_ICONS" Index="4"/>
+		<Row Name="RESOURCE_EUROPA_DISCUS_FISH"   Atlas="ICON_ATLAS_EUROPA_FONT_ICONS" Index="5"/>
+		<Row Name="RESOURCE_EUROPA_CAPYBARAS"     Atlas="ICON_ATLAS_EUROPA_FONT_ICONS" Index="6"/>
+		<!-- Fish Weir borrows the stock Fishing Boats icon (same atlas cell). -->
+		<Row Name="ICON_IMPROVEMENT_EUROPA_FISH_WEIR" Atlas="ICON_ATLAS_UNIT_ACTIONS" Index="4"/>
+	</IconDefinitions>
+</GameInfo>

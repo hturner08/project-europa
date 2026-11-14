@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Project Europa: custom leaders take the colours of the stock leader beside them.
+     The game moves one player to an alternate set when two would clash. -->
+<GameInfo>
+	<PlayerColors>
+		<Row>
+			<Type>LEADER_EUROPA_GOLDEN_EXPANSION</Type>
+			<Usage>Unique</Usage>
+			<PrimaryColor>COLOR_STANDARD_RED_DK</PrimaryColor>
+			<SecondaryColor>COLOR_STANDARD_YELLOW_LT</SecondaryColor>
+			<Alt1PrimaryColor>COLOR_STANDARD_YELLOW_LT</Alt1PrimaryColor>
+			<Alt1SecondaryColor>COLOR_STANDARD_RED_DK</Alt1SecondaryColor>
+			<Alt2PrimaryColor>COLOR_STANDARD_YELLOW_DK</Alt2PrimaryColor>
+			<Alt2SecondaryColor>COLOR_STANDARD_WHITE_LT</Alt2SecondaryColor>
+			<Alt3PrimaryColor>COLOR_STANDARD_YELLOW_DK</Alt3PrimaryColor>
+			<Alt3SecondaryColor>COLOR_STANDARD_GREEN_LT</Alt3SecondaryColor>
+		</Row>
+		<Row>
+			<Type>LEADER_EUROPA_IMPERIAL_GARDENS</Type>
+			<Usage>Unique</Usage>
+			<PrimaryColor>COLOR_STANDARD_GREEN_DK</PrimaryColor>
+			<SecondaryColor>COLOR_STANDARD_WHITE_LT</SecondaryColor>
+			<Alt1PrimaryColor>COLOR_STANDARD_RED_MD</Alt1PrimaryColor>
+			<Alt1SecondaryColor>COLOR_STANDARD_YELLOW_MD</Alt1SecondaryColor>
+			<Alt2PrimaryColor>COLOR_STANDARD_YELLOW_MD</Alt2PrimaryColor>
+			<Alt2SecondaryColor>COLOR_STANDARD_RED_MD</Alt2SecondaryColor>
+			<Alt3PrimaryColor>COLOR_STANDARD_YELLOW_MD</Alt3PrimaryColor>
+			<Alt3SecondaryColor>COLOR_STANDARD_BLUE_DK</Alt3SecondaryColor>
+		</Row>
+		<Row>
+			<Type>LEADER_EUROPA_HIGHLAND_EMPIRE</Type>
+			<Usage>Unique</Usage>
+			<PrimaryColor>COLOR_STANDARD_YELLOW_MD</PrimaryColor>
+			<SecondaryColor>COLOR_STANDARD_GREEN_DK</SecondaryColor>
+			<Alt1PrimaryColor>COLOR_STANDARD_GREEN_DK</Alt1PrimaryColor>
+			<Alt1SecondaryColor>COLOR_STANDARD_YELLOW_MD</Alt1SecondaryColor>
+			<Alt2PrimaryColor>COLOR_STANDARD_RED_MD</Alt2PrimaryColor>
+			<Alt2SecondaryColor>COLOR_STANDARD_YELLOW_MD</Alt2SecondaryColor>
+			<Alt3PrimaryColor>COLOR_STANDARD_GREEN_DK</Alt3PrimaryColor>
+			<Alt3SecondaryColor>COLOR_STANDARD_RED_MD</Alt3SecondaryColor>
+		</Row>
+		<Row>
+			<Type>LEADER_EUROPA_LIVING_PARADISE</Type>
+			<Usage>Unique</Usage>
+			<PrimaryColor>COLOR_STANDARD_GREEN_MD</PrimaryColor>
+			<SecondaryColor>COLOR_STANDARD_YELLOW_MD</SecondaryColor>
+			<Alt1PrimaryColor>COLOR_STANDARD_GREEN_MD</Alt1PrimaryColor>
+			<Alt1SecondaryColor>COLOR_STANDARD_BLUE_DK</Alt1SecondaryColor>
+			<Alt2PrimaryColor>COLOR_STANDARD_YELLOW_MD</Alt2PrimaryColor>
+			<Alt2SecondaryColor>COLOR_STANDARD_GREEN_DK</Alt2SecondaryColor>
+			<Alt3PrimaryColor>COLOR_STANDARD_BLUE_DK</Alt3PrimaryColor>
+			<Alt3SecondaryColor>COLOR_STANDARD_GREEN_LT</Alt3SecondaryColor>
+		</Row>
+	</PlayerColors>
+</GameInfo>
