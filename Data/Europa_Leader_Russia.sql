@@ -1,0 +1,82 @@
+-- Project Europa: Russia, "The Endless Continent" (ability: Conquest of the Wilderness).
+-- Replaces the leader ability only; Mother Russia, the Lavra and the Cossack are
+-- whatever the loaded ruleset (stock or BBG) defines.
+-- Art, agenda and favoured religion are borrowed from Peter.
+
+INSERT INTO Types (Type, Kind) VALUES
+	('LEADER_EUROPA_ENDLESS_CONTINENT',       'KIND_LEADER'),
+	('TRAIT_LEADER_EUROPA_ENDLESS_CONTINENT', 'KIND_TRAIT');
+
+INSERT INTO Leaders (LeaderType, Name, InheritFrom, SceneLayers, Sex) VALUES
+	('LEADER_EUROPA_ENDLESS_CONTINENT', 'LOC_LEADER_EUROPA_ENDLESS_CONTINENT_NAME', 'LEADER_DEFAULT', 4, 'Male');
+
+INSERT INTO CivilizationLeaders (LeaderType, CivilizationType, CapitalName)
+	SELECT 'LEADER_EUROPA_ENDLESS_CONTINENT', CivilizationType, CapitalName
+	FROM CivilizationLeaders WHERE LeaderType = 'LEADER_PETER_GREAT';
+
+INSERT INTO Traits (TraitType, Name, Description) VALUES
+	('TRAIT_LEADER_EUROPA_ENDLESS_CONTINENT', 'LOC_TRAIT_LEADER_EUROPA_ENDLESS_CONTINENT_NAME', 'LOC_TRAIT_LEADER_EUROPA_ENDLESS_CONTINENT_DESCRIPTION');
+
+INSERT INTO LeaderTraits (LeaderType, TraitType) VALUES
+	('LEADER_EUROPA_ENDLESS_CONTINENT', 'TRAIT_LEADER_EUROPA_ENDLESS_CONTINENT');
+
+INSERT INTO HistoricalAgendas (LeaderType, AgendaType)
+	SELECT 'LEADER_EUROPA_ENDLESS_CONTINENT', AgendaType FROM HistoricalAgendas WHERE LeaderType = 'LEADER_PETER_GREAT';
+
+INSERT INTO FavoredReligions (LeaderType, ReligionType)
+	SELECT 'LEADER_EUROPA_ENDLESS_CONTINENT', ReligionType FROM FavoredReligions WHERE LeaderType = 'LEADER_PETER_GREAT';
+
+INSERT INTO LoadingInfo (LeaderType, ForegroundImage, BackgroundImage, LeaderText, PlayDawnOfManAudio) VALUES
+	('LEADER_EUROPA_ENDLESS_CONTINENT', 'LEADER_PETER_GREAT_NEUTRAL', 'LEADER_PETER_GREAT_BACKGROUND', 'LOC_LOADING_INFO_LEADER_EUROPA_ENDLESS_CONTINENT', 0);
+
+-- ---------------------------------------------------------------------------
+-- Ability
+-- ---------------------------------------------------------------------------
+
+INSERT INTO Requirements (RequirementId, RequirementType) VALUES
+	('EUROPA_REQ_CITY_HAS_LAVRA',       'REQUIREMENT_CITY_HAS_DISTRICT'),
+	('EUROPA_REQ_PLOT_IS_TUNDRA',       'REQUIREMENT_PLOT_TERRAIN_TYPE_MATCHES'),
+	('EUROPA_REQ_PLOT_IS_TUNDRA_HILLS', 'REQUIREMENT_PLOT_TERRAIN_TYPE_MATCHES'),
+	('EUROPA_REQ_PLOT_IS_WOODS',        'REQUIREMENT_PLOT_FEATURE_TYPE_MATCHES'),
+	('EUROPA_REQ_PLOT_IS_ANY_TUNDRA',   'REQUIREMENT_REQUIREMENTSET_IS_MET');
+
+INSERT INTO RequirementArguments (RequirementId, Name, Value) VALUES
+	('EUROPA_REQ_CITY_HAS_LAVRA',       'DistrictType',     'DISTRICT_LAVRA'),
+	('EUROPA_REQ_PLOT_IS_TUNDRA',       'TerrainType',      'TERRAIN_TUNDRA'),
+	('EUROPA_REQ_PLOT_IS_TUNDRA_HILLS', 'TerrainType',      'TERRAIN_TUNDRA_HILLS'),
+	('EUROPA_REQ_PLOT_IS_WOODS',        'FeatureType',      'FEATURE_FOREST'),
+	('EUROPA_REQ_PLOT_IS_ANY_TUNDRA',   'RequirementSetId', 'EUROPA_REQSET_PLOT_IS_ANY_TUNDRA');
+
+INSERT INTO RequirementSets (RequirementSetId, RequirementSetType) VALUES
+	('EUROPA_REQSET_CITY_HAS_LAVRA',      'REQUIREMENTSET_TEST_ALL'),
+	('EUROPA_REQSET_PLOT_IS_ANY_TUNDRA',  'REQUIREMENTSET_TEST_ANY'),
+	('EUROPA_REQSET_PLOT_IS_TUNDRA_WOODS','REQUIREMENTSET_TEST_ALL');
+
+INSERT INTO RequirementSetRequirements (RequirementSetId, RequirementId) VALUES
+	('EUROPA_REQSET_CITY_HAS_LAVRA',       'EUROPA_REQ_CITY_HAS_LAVRA'),
+	('EUROPA_REQSET_PLOT_IS_ANY_TUNDRA',   'EUROPA_REQ_PLOT_IS_TUNDRA'),
+	('EUROPA_REQSET_PLOT_IS_ANY_TUNDRA',   'EUROPA_REQ_PLOT_IS_TUNDRA_HILLS'),
+	('EUROPA_REQSET_PLOT_IS_TUNDRA_WOODS', 'EUROPA_REQ_PLOT_IS_ANY_TUNDRA'),
+	('EUROPA_REQSET_PLOT_IS_TUNDRA_WOODS', 'EUROPA_REQ_PLOT_IS_WOODS');
+
+INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES
+	-- Cities with a Lavra: +20% Production toward Settlers.
+	('EUROPA_RUSSIA_LAVRA_SETTLERS',     'EUROPA_MODIFIER_PLAYER_CITIES_ADJUST_UNIT_PRODUCTION', 'EUROPA_REQSET_CITY_HAS_LAVRA'),
+	-- Cities founded on Tundra or Tundra Hills: a free Builder. Same modifier type as
+	-- the Ancestral Hall's free Builder, limited to cities whose own tile is Tundra.
+	('EUROPA_RUSSIA_TUNDRA_CITY_BUILDER','MODIFIER_PLAYER_BUILT_CITIES_GRANT_FREE_UNIT',          'EUROPA_REQSET_PLOT_IS_ANY_TUNDRA'),
+	-- Tundra Woods: +1 Food.
+	('EUROPA_RUSSIA_TUNDRA_WOODS_FOOD',  'MODIFIER_PLAYER_ADJUST_PLOT_YIELD',                     'EUROPA_REQSET_PLOT_IS_TUNDRA_WOODS');
+
+INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES
+	('EUROPA_RUSSIA_LAVRA_SETTLERS',      'UnitType',  'UNIT_SETTLER'),
+	('EUROPA_RUSSIA_LAVRA_SETTLERS',      'Amount',    '20'),
+	('EUROPA_RUSSIA_TUNDRA_CITY_BUILDER', 'UnitType',  'UNIT_BUILDER'),
+	('EUROPA_RUSSIA_TUNDRA_CITY_BUILDER', 'Amount',    '1'),
+	('EUROPA_RUSSIA_TUNDRA_WOODS_FOOD',   'YieldType', 'YIELD_FOOD'),
+	('EUROPA_RUSSIA_TUNDRA_WOODS_FOOD',   'Amount',    '1');
+
+INSERT INTO TraitModifiers (TraitType, ModifierId) VALUES
+	('TRAIT_LEADER_EUROPA_ENDLESS_CONTINENT', 'EUROPA_RUSSIA_LAVRA_SETTLERS'),
+	('TRAIT_LEADER_EUROPA_ENDLESS_CONTINENT', 'EUROPA_RUSSIA_TUNDRA_CITY_BUILDER'),
+	('TRAIT_LEADER_EUROPA_ENDLESS_CONTINENT', 'EUROPA_RUSSIA_TUNDRA_WOODS_FOOD');

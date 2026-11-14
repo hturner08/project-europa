@@ -109,14 +109,17 @@ for (leader,) in leaders:
 # Every EUROPA_ modifier must be attached to something, and every requirement set used.
 for (mid,) in db.execute("SELECT ModifierId FROM Modifiers WHERE ModifierId LIKE 'EUROPA_%' AND ModifierId NOT IN (SELECT ModifierId FROM TraitModifiers)"):
     print(f"UNATTACHED MODIFIER: {mid}"); ok = False
-for (rs,) in db.execute("SELECT RequirementSetId FROM RequirementSets WHERE RequirementSetId LIKE 'EUROPA_%' AND RequirementSetId NOT IN (SELECT SubjectRequirementSetId FROM Modifiers WHERE SubjectRequirementSetId IS NOT NULL)"):
+for (rs,) in db.execute("SELECT RequirementSetId FROM RequirementSets WHERE RequirementSetId LIKE 'EUROPA_%' AND RequirementSetId NOT IN (SELECT SubjectRequirementSetId FROM Modifiers WHERE SubjectRequirementSetId IS NOT NULL) AND RequirementSetId NOT IN (SELECT Value FROM RequirementArguments WHERE Name='RequirementSetId')"):
     print(f"UNUSED REQUIREMENT SET: {rs}"); ok = False
 for (rs,) in db.execute("SELECT RequirementSetId FROM RequirementSets WHERE RequirementSetId LIKE 'EUROPA_%' AND RequirementSetId NOT IN (SELECT RequirementSetId FROM RequirementSetRequirements)"):
     print(f"EMPTY REQUIREMENT SET: {rs}"); ok = False
 # BBG switches leader-specific district adjacencies off by trait, so a new leader inherits every
 # sibling's unless it opts out. KEEP lists the ones a leader is meant to have; anything else
 # left over is a mistake.
-KEEP = {"LEADER_EUROPA_GOLDEN_EXPANSION": {"BBG_SUGUBA_HOLY_SITE_MANSA"}}
+# BBG_AOS_ADJENCY_IZ_RND is not a sibling's bonus: it is England's Industrial Zone
+# adjacency, which BBG excludes for every non-English trait including Eleanor's.
+KEEP = {"LEADER_EUROPA_GOLDEN_EXPANSION": {"BBG_SUGUBA_HOLY_SITE_MANSA"},
+        "LEADER_EUROPA_PALACE_DESIGNER": {"BBG_AOS_ADJENCY_IZ_RND"}}
 for (leader,) in leaders:
     civ = db.execute("SELECT CivilizationType FROM CivilizationLeaders WHERE LeaderType=?", (leader,)).fetchone()
     if not civ: continue
@@ -157,8 +160,8 @@ for leader, domain, civ, portrait, civ_ability in rows:
     print(f"  {leader}: {civ} in {domain}, portrait {portrait}, items {', '.join(items) or 'NONE'}")
     if not items or not portrait or not civ_ability:
         print(f"SETUP ROW INCOMPLETE: {leader}"); ok = False
-if len(rows) != 4:
-    print(f"EXPECTED 4 SELECTABLE LEADERS, GOT {len(rows)}"); ok = False
+if len(rows) != 8:
+    print(f"EXPECTED 8 SELECTABLE LEADERS, GOT {len(rows)}"); ok = False
 sys.exit(0 if ok else 1)
 PY
 fi

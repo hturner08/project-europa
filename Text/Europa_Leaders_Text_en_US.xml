@@ -20,7 +20,18 @@
 		<Replace Tag="LOC_LEADER_EUROPA_LIVING_PARADISE_NAME" Language="en_US">
 			<Text>Living Paradise</Text>
 		</Replace>
-
+		<Replace Tag="LOC_LEADER_EUROPA_BORDERLESS_EMPIRE_NAME" Language="en_US">
+			<Text>Borderless Empire</Text>
+		</Replace>
+		<Replace Tag="LOC_LEADER_EUROPA_ENDLESS_CONTINENT_NAME" Language="en_US">
+			<Text>Endless Continent</Text>
+		</Replace>
+		<Replace Tag="LOC_LEADER_EUROPA_SCENIC_GENIUS_NAME" Language="en_US">
+			<Text>Scenic Genius</Text>
+		</Replace>
+		<Replace Tag="LOC_LEADER_EUROPA_PALACE_DESIGNER_NAME" Language="en_US">
+			<Text>Palace Designer</Text>
+		</Replace>
 		<!-- ===== Ability names ===== -->
 		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_GOLDEN_EXPANSION_NAME" Language="en_US">
 			<Text>Golden Expansion</Text>
@@ -34,7 +45,18 @@
 		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_LIVING_PARADISE_NAME" Language="en_US">
 			<Text>Living Paradise</Text>
 		</Replace>
-
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_BORDERLESS_EMPIRE_NAME" Language="en_US">
+			<Text>Land Through Commerce</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_ENDLESS_CONTINENT_NAME" Language="en_US">
+			<Text>Conquest of the Wilderness</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_SCENIC_GENIUS_NAME" Language="en_US">
+			<Text>National Masterpieces</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_PALACE_DESIGNER_NAME" Language="en_US">
+			<Text>Gardens of Versailles</Text>
+		</Replace>
 		<!-- ===== Ability descriptions: keep in step with Data/Europa_Leader_*.sql ===== -->
 		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_GOLDEN_EXPANSION_DESCRIPTION" Language="en_US">
 			<Text>Settlers cost 10% less [ICON_Gold] Gold to purchase. Domestic [ICON_TradeRoute] Trade Routes sent from a city with a Suguba provide +2 [ICON_Production] Production. +1 [ICON_TradeRoute] Trade Route capacity for each continent on which you own at least three cities that you founded (maximum +4).</Text>
@@ -48,7 +70,18 @@
 		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_LIVING_PARADISE_DESCRIPTION" Language="en_US">
 			<Text>Unimproved Rainforest tiles adjacent to a Preserve provide +1 [ICON_Culture] Culture once Medieval Faires is known. Cities with at least three Rainforest tiles gain +10% [ICON_Production] Production toward Wonders. In a city that holds at least one Wonder, each Rainforest provides a further +1 Appeal to adjacent tiles.</Text>
 		</Replace>
-
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_BORDERLESS_EMPIRE_DESCRIPTION" Language="en_US">
+			<Text>Settlers have +1 sight. The first [ICON_TradeRoute] Trade Route sent from each city you found claims up to two unowned tiles near that city (checked at the start of your turn). International [ICON_TradeRoute] Trade Routes sent from a city with at least one Camp or Pasture provide +2 [ICON_Food] Food and +1 [ICON_Production] Production.</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_ENDLESS_CONTINENT_DESCRIPTION" Language="en_US">
+			<Text>Cities with a Lavra gain +20% [ICON_Production] Production toward Settlers. Cities you found on Tundra or Tundra Hills receive a free Builder. Tundra Woods provide +1 [ICON_Food] Food.</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_SCENIC_GENIUS_DESCRIPTION" Language="en_US">
+			<Text>+30% [ICON_Production] Production toward Preserves. +10% [ICON_Production] Production toward a Wonder that is adjacent to a Breathtaking tile (counted at the start of your turn). Unimproved Breathtaking tiles adjacent to a Wonder provide +1 [ICON_Culture] Culture. Every tile of a city that holds a National Park has +1 Appeal.</Text>
+		</Replace>
+		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_PALACE_DESIGNER_DESCRIPTION" Language="en_US">
+			<Text>Every tile of a city that has at least one Château has +1 Appeal. Châteaux adjacent to a Wonder or a Preserve provide +1 [ICON_Production] Production. +10% [ICON_Production] Production toward a Wonder that is adjacent to a Château (counted at the start of your turn).</Text>
+		</Replace>
 		<!-- ===== Loading screen ===== -->
 		<Replace Tag="LOC_LOADING_INFO_LEADER_EUROPA_GOLDEN_EXPANSION" Language="en_US">
 			<Text>The caravans of Mali carry more than salt and gold: they carry the next city. Buy your Settlers, plant them on every shore you can reach, and let the trade that binds them together pay for the ones that follow.</Text>
@@ -61,6 +94,18 @@
 		</Replace>
 		<Replace Tag="LOC_LOADING_INFO_LEADER_EUROPA_LIVING_PARADISE" Language="en_US">
 			<Text>Leave the forest standing and it will repay you. Under its canopy rise Wonders the world will cross oceans to see, and every one of them makes the green around it lovelier still.</Text>
+		</Replace>
+		<Replace Tag="LOC_LOADING_INFO_LEADER_EUROPA_BORDERLESS_EMPIRE" Language="en_US">
+			<Text>No wall marks where the Cree nation ends. Send your Traders out along the rivers and across the plains, and the land they cross will come to know your name. Let every new camp begin with a caravan.</Text>
+		</Replace>
+		<Replace Tag="LOC_LOADING_INFO_LEADER_EUROPA_ENDLESS_CONTINENT" Language="en_US">
+			<Text>Beyond the last village the forest goes on, and beyond the forest the snow. Others see empty land; you see room. Raise your Lavras, send the settlers east, and make the cold country feed an empire without end.</Text>
+		</Replace>
+		<Replace Tag="LOC_LOADING_INFO_LEADER_EUROPA_SCENIC_GENIUS" Language="en_US">
+			<Text>A canyon, a waterfall, a marble dome set just where the valley opens: a nation can be composed like a painting. Keep the wild places wild, build beside them with care, and the whole country becomes a park worth crossing the world to see.</Text>
+		</Replace>
+		<Replace Tag="LOC_LOADING_INFO_LEADER_EUROPA_PALACE_DESIGNER" Language="en_US">
+			<Text>A palace is never one building. It is the avenue that leads to it, the water that mirrors it and the gardens that make a visitor forget the road home. Lay out your Châteaux first, and let each Wonder rise as the centrepiece they were waiting for.</Text>
 		</Replace>
 	</LocalizedText>
 </GameData>

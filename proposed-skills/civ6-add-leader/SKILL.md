@@ -60,6 +60,16 @@ Best template: `DLC/JuliusCaesar` (one leader, existing civilization).
    `REQUIREMENT_PLOT_PROPERTY_MATCHES` (`PropertyName`, `PropertyMinimum`).
    Plot requirements (`PLOT_IS_HILLS`, `PLOT_PROPERTY_MATCHES`, ...) do work on
    city subjects.
+   - Ask whether a city owns a given improvement (no `CITY_HAS_IMPROVEMENT`
+     requirement). Flag the city from Lua with the plot property pattern.
+   - Give one leader's copy of a shared improvement a different Appeal
+     (`Improvements.Appeal` is one number for the whole civilization).
+   Things it **can** do that are easy to miss: a free unit in each newly founded
+   city (`MODIFIER_PLAYER_BUILT_CITIES_GRANT_FREE_UNIT`, the Ancestral Hall's, with
+   a plot requirement set on the city to limit it by terrain); "A or B" inside an
+   "all of" set (`REQUIREMENT_REQUIREMENTSET_IS_MET` pointing at a `TEST_ANY` set);
+   `REQUIREMENT_PLOT_ADJACENT_TO_WONDER`, `REQUIREMENT_PLOT_IS_APPEAL_BETWEEN`
+   (`MinimumAppeal`), `REQUIREMENT_CITY_HAS_NATIONAL_PARK`.
 4. Modifier types that only DLC packs define (names ending `_WARLORDS`,
    `_GRANCOLOMBIA_MAYA`, ...) make the file depend on that pack. Add your own
    `Types` + `DynamicModifiers` row pointing at the same collection and effect.
@@ -70,6 +80,13 @@ Use `GameEvents.*` only (`PlayerTurnStarted`, `CityBuilt`, `CityConquered`).
 `Events.*` are UI-side; BBG routes them through the UI rather than writing game
 state from them. No randomness. Guard functions you could only find in UI files
 (`if pPlot.GetWonderType == nil then ... end`) and print once to `Lua.log`.
+
+To judge whether a function exists gameplay-side, grep the Firaxis scenario
+scripts (`$GAME/DLC/*Scenario/Scripts/*.lua`): they are real gameplay scripts.
+They use `pCity:GetOwnedPlots()`, `WorldBuilder.CityManager()`,
+`pPlot:SetOwner(-1)` and `pPlayer:GetTrade():CountOutgoingRoutes()`. Anything
+found only under `UI/` is unproven: guard it, and wrap state-changing calls of
+uncertain signature in `pcall`, then check the result (`pPlot:GetOwner()`).
 
 ## Balance-mod traps (BBG)
 

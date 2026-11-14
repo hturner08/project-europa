@@ -1,7 +1,7 @@
 # Project Europa
 
 A Civilization VI mod: seven luxury resources, the Fish Weir, bigger deserts, and
-four custom leaders balanced against Better Balanced Game 7.5.1.
+eight custom leaders balanced against Better Balanced Game 7.5.1.
 
 Every change is listed, BBG-style, at https://hturner08.github.io/project-europa/
 (GitHub Pages serves the `docs/` folder of `main`; edit `docs/index.html` and push).
@@ -38,7 +38,7 @@ ones that use the standard terrain step.
 
 ## Custom leaders
 
-Four new, separately selectable leaders. Each replaces only the leader ability;
+Eight new, separately selectable leaders. Each replaces only the leader ability;
 the civilization ability and uniques are whatever the loaded ruleset (stock or
 BBG) defines. Gathering Storm ruleset only. BBG is optional.
 
@@ -48,6 +48,10 @@ BBG) defines. Gathering Storm ruleset only. BBG is optional.
 | Imperial Gardens | China | +1 Appeal on every tile of a city with a Wonder. In a Grove city, +5% Wonder Production per Breathtaking tile next to the Wonder being built (max +20%). Great Wall next to Great Wall: +1 Faith. |
 | Highland Empire | Ethiopia | Cities you found on Hills: +1 Production, +10% toward Settlers, +25% toward districts until the first specialty district is complete. |
 | Living Paradise | Brazil | Unimproved Rainforest next to a Preserve: +1 Culture after Medieval Faires. Cities with three Rainforest tiles: +10% Wonder Production. In a city with a Wonder, Rainforest gives +1 more Appeal to adjacent tiles. |
+| Borderless Empire | Cree | Settlers +1 sight. The first Trade Route from each city you found claims up to two unowned tiles near it. International Trade Routes from a city with a Camp or Pasture: +2 Food, +1 Production. |
+| Endless Continent | Russia | Lavra cities: +20% toward Settlers. Cities founded on Tundra or Tundra Hills get a free Builder. Tundra Woods: +1 Food. |
+| Scenic Genius | America | +30% toward Preserves. +10% toward a Wonder next to a Breathtaking tile. Unimproved Breathtaking tiles next to a Wonder: +1 Culture. +1 Appeal on every tile of a city with a National Park. |
+| Palace Designer | France | +1 Appeal on every tile of a city with a Château. Châteaux next to a Wonder or Preserve: +1 Production. +10% toward a Wonder next to a Château. |
 
 Where these differ from the original design brief, and why, is on the changes
 page. In short: Civ VI has no per-tile Appeal modifier (so Appeal effects are
@@ -56,10 +60,12 @@ per city), and domestic trade route yields go to the sending city.
 **Renaming a leader:** edit its `LOC_LEADER_EUROPA_*_NAME` row at the top of
 `Text/Europa_Leaders_Text_en_US.xml`. Nothing else refers to the display name.
 
-**Two effects are counted by script** (`Scripts/Europa_Leaders.lua`): Mali's
-continents and China's Breathtaking tiles. The script writes a number onto a
-city-centre plot and tiered modifiers read it back. It only uses simulation-side
-events, so values refresh at the start of the owner's turn.
+**Some effects are worked out by script** (`Scripts/Europa_Leaders.lua`): Mali's
+continents, the Wonder-site checks (China, America, France), whether a city has
+a Château (France) or a Camp or Pasture (Cree), and the Cree tile claim. The
+script writes a number onto a city-centre plot and modifiers read it back; the
+tile claim it does itself. It only uses simulation-side events, so values
+refresh at the start of the owner's turn.
 
 ## Layout
 
@@ -73,7 +79,7 @@ events, so values refresh at the start of the owner's turn.
 | `Config/Europa_Leaders_Config.sql` | Game-setup rows (what makes the leaders selectable); copies civilization columns from the stock leader |
 | `Data/Europa_Leaders_Icons.xml`, `Data/Europa_Leaders_Colors.xml` | Leader icons (reusing stock atlases) and jersey colours |
 | `Text/Europa_Leaders_Text_en_US.xml` | Leader names, ability text, loading-screen text |
-| `Scripts/Europa_Leaders.lua` | Counts continents (Mali) and Breathtaking tiles round a Wonder site (China) |
+| `Scripts/Europa_Leaders.lua` | Continents (Mali), Wonder sites (China, America, France), city improvement flags (France, Cree), Cree tile claims |
 | `ArtDefs/Leaders.artdef`, `ArtDefs/FallbackLeaders.artdef` | Generated: stock leaders' art entries under our names (do not edit; run `tools/make_leader_art.py`) |
 | `docs/index.html` | The changes page |
 | `Scripts/Europa_LakeResources.lua` | Places Discus Fish on lakes at game start |
@@ -113,10 +119,16 @@ and cropped (`docs/img/`). Each card on the page links to the original.
   `tools/validate.sh`), but the setup screen, the borrowed 3D leader scenes and
   the Lua functions for Wonders and Appeal are only confirmed by playing. After a
   first game, check `Lua.log` for lines starting `Europa leaders:`.
+- **The Cree tile claim is the least certain effect.** It reads a city's outgoing
+  Trade Routes and assigns plots from a gameplay script. The game's own scenario
+  scripts use the neighbouring functions, but not these exact calls, so the
+  script checks each one and prints a single `Europa leaders:` line to `Lua.log`
+  if one is missing instead of failing.
 - **Leaders borrow stock art.** Portrait, 3D scene, icon, colours and agenda come
-  from Mansa Musa, Qin Shi Huang, Menelik II and Pedro II.
-- **Highland Empire needs the Ethiopia Pack.** Without it that leader is skipped
-  and the others still load.
+  from Mansa Musa, Qin Shi Huang, Menelik II, Pedro II, Poundmaker, Peter, Teddy
+  Roosevelt (Bull Moose) and Catherine de Medici (Black Queen).
+- **Highland Empire needs the Ethiopia Pack and Borderless Empire needs Rise and
+  Fall.** Without the pack that leader is skipped and the others still load.
 
 - **Map models are placeholders.** Each resource borrows an existing model
   (Topaz = Diamonds, Peacocks = Deer, Pallas's Cats and Tibetan Foxes = Furs,

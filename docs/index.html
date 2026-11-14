@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Everything the Project Europa mod for Civilization VI changes: four custom leaders, seven luxuries, the Fish Weir and bigger deserts.">
+<meta name="description" content="Everything the Project Europa mod for Civilization VI changes: eight custom leaders, seven luxuries, the Fish Weir and bigger deserts.">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Project Europa Changes</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -90,6 +90,7 @@ h2 { font: 700 1.3rem/1.2 var(--display); letter-spacing: 0.06em; margin: 0; col
 
 .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 0.86rem; color: var(--muted); margin: 0; padding: 0; list-style: none; }
 .tag { display: inline-block; font: 600 0.7rem/1 var(--body); text-transform: uppercase; letter-spacing: 0.08em; padding: 4px 7px; border-radius: 3px; border: 1px solid currentColor; white-space: nowrap; }
+.abilities .tag { align-self: start; margin-top: 2px; }
 .tag.ok { color: var(--ok); } .tag.adj { color: var(--adj); } .tag.new { color: var(--new); }
 
 .leader { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; scroll-margin-top: 16px; }
@@ -189,6 +190,10 @@ td.num { font-variant-numeric: tabular-nums; }
 			<a href="#imperial-gardens">Imperial Gardens</a>
 			<a href="#highland-empire">Highland Empire</a>
 			<a href="#living-paradise">Living Paradise</a>
+			<a href="#borderless-empire">Borderless Empire</a>
+			<a href="#endless-continent">Endless Continent</a>
+			<a href="#scenic-genius">Scenic Genius</a>
+			<a href="#palace-designer">Palace Designer</a>
 			<span class="group">World</span>
 			<a href="#luxuries">Luxuries</a>
 			<a href="#fish-weir">Fish Weir</a>
@@ -203,7 +208,7 @@ td.num { font-variant-numeric: tabular-nums; }
 			<h1>Project Europa</h1>
 			<p class="lede">Live out your expansionist and preserve dreams while enjoying the finest luxuries!</p>
 			<ul class="facts">
-				<li><b>4</b> custom leaders</li>
+				<li><b>8</b> custom leaders</li>
 				<li><b>7</b> luxury resources</li>
 				<li><b>1</b> new improvement</li>
 				<li><b>1</b> map generation change</li>
@@ -212,7 +217,7 @@ td.num { font-variant-numeric: tabular-nums; }
 
 		<section id="leaders">
 			<h2>Leaders</h2>
-			<p class="intro">Each leader is a new, separately selectable leader that stands beside the stock ones. Two are built for expansion (Mali, Ethiopia) and two for Wonders, Preserves and Appeal (China, Brazil).</p>
+			<p class="intro">Each leader is a new, separately selectable leader that stands beside the stock ones. Four are built for expansion (Mali, Ethiopia, Cree, Russia) and four for Wonders, Preserves and Appeal (China, Brazil, America, France).</p>
 			<ul class="legend">
 				<li><span class="tag ok">As designed</span> matches the design brief</li>
 				<li><span class="tag adj">Adjusted</span> the game engine forced a change, explained underneath</li>
@@ -279,6 +284,66 @@ td.num { font-variant-numeric: tabular-nums; }
 						<p class="note">The brief raised the Appeal of Rainforest tiles next to each finished Wonder. With no per-tile Appeal modifier in the engine, this raises what Rainforest radiates instead, on top of Brazil's existing +1, across any city that has a Wonder.</p></li>
 				</ul>
 				<div class="kept"><span><b>Unchanged:</b> Amazon (including BBG's +1 Production on unimproved Rainforest after Construction), the Street Carnival and the Minas Geraes.</span><span><b>Not included:</b> Pedro's Magnanimous (Great Person point refunds).</span></div>
+			</article>
+
+			<article class="leader" id="borderless-empire" style="--c1:#1f3f7a; --c2:#58b07a">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>Cr</span></div>
+					<div class="names"><h3>Borderless Empire</h3><div class="civ">Cree &middot; expansion &middot; needs Rise and Fall</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag ok">As designed</span><p class="what">Settlers have +1 sight.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">The first <span class="y trade">Trade Route</span> sent from each city you found claims up to two unowned tiles near that city.</p>
+						<p class="note">Done by script at the start of your turn, so the tiles arrive the turn after the Trader sets out. It takes the nearest unowned tiles within three of the city centre, land before water. Once per city; captured cities do not count.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">International <span class="y trade">Trade Routes</span> sent from a city with at least one Camp or Pasture provide <span class="y food">+2 Food</span> and <span class="y prod">+1 Production</span>.</p>
+						<p class="note">Whether a city has a Camp or Pasture is checked by script at the start of your turn.</p></li>
+				</ul>
+				<div class="kept"><span><b>Unchanged:</b> Nihithaw (Traders still claim the tiles they walk through), the Mekewap and the Okihtcitaw.</span><span><b>Not included:</b> Poundmaker's Favorable Terms (shared visibility with allies, and Food and Gold for Camps and Pastures in the destination city).</span></div>
+			</article>
+
+			<article class="leader" id="endless-continent" style="--c1:#d9b23a; --c2:#6b7280">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>R</span></div>
+					<div class="names"><h3>Endless Continent</h3><div class="civ">Russia &middot; expansion</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag ok">As designed</span><p class="what">Cities with a Lavra gain <span class="y prod">+20% Production toward Settlers</span>.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">Cities you found on Tundra or Tundra Hills receive a free Builder.</p>
+						<p class="note">This includes your capital if it starts on Tundra.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">Tundra Woods provide <span class="y food">+1 Food</span>.</p></li>
+				</ul>
+				<div class="kept"><span><b>Unchanged:</b> Mother Russia (extra territory on founding, and the Tundra yields as BBG sets them), the Lavra and the Cossack.</span><span><b>Not included:</b> Peter's Grand Embassy (Science and Culture from Trade Routes to more advanced civilizations).</span></div>
+			</article>
+
+			<article class="leader" id="scenic-genius" style="--c1:#1f3f7a; --c2:#f1efe6">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>A</span></div>
+					<div class="names"><h3>Scenic Genius</h3><div class="civ">America &middot; Wonders and Appeal</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag ok">As designed</span><p class="what"><span class="y prod">+30% Production toward Preserves</span>.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what"><span class="y prod">+10% Production toward a Wonder</span> that is next to a Breathtaking tile.</p>
+						<p class="note">Counted by script at the start of your turn, so a Wonder placed this turn starts earning the bonus next turn.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">Unimproved Breathtaking tiles next to a Wonder provide <span class="y cult">+1 Culture</span>.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">Every tile of a city that holds a National Park has <span class="y appeal">+1 Appeal</span>.</p></li>
+				</ul>
+				<div class="kept"><span><b>Unchanged:</b> Founding Fathers, the Film Studio and the P-51 Mustang.</span><span><b>Not included:</b> Teddy Roosevelt's own abilities in either persona (the Bull Moose yields on Breathtaking tiles, the Roosevelt Corollary and the Rough Rider).</span></div>
+			</article>
+
+			<article class="leader" id="palace-designer" style="--c1:#2f6fbf; --c2:#f3e39b">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>F</span></div>
+					<div class="names"><h3>Palace Designer</h3><div class="civ">France &middot; Wonders and Appeal</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag adj">Adjusted</span><p class="what">Every tile of a city that has at least one Ch&acirc;teau has <span class="y appeal">+1 Appeal</span>.</p>
+						<p class="note">The brief gave +1 more Appeal to the tiles next to each Ch&acirc;teau. A Ch&acirc;teau's Appeal is one number shared by every French leader, and Civ VI has no modifier that changes Appeal on chosen tiles, only on a whole city. This version covers more tiles but does not stack with more Ch&acirc;teaux.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">Ch&acirc;teaux next to a Wonder or a Preserve provide <span class="y prod">+1 Production</span>.</p>
+						<p class="note">+1 in total, not +1 for each Wonder or Preserve beside it.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what"><span class="y prod">+10% Production toward a Wonder</span> that is next to a Ch&acirc;teau.</p>
+						<p class="note">Counted by script at the start of your turn, so a Wonder placed this turn starts earning the bonus next turn.</p></li>
+				</ul>
+				<div class="kept"><span><b>Unchanged:</b> Grand Tour, the Ch&acirc;teau and the Garde Imp&eacute;riale.</span><span><b>Not included:</b> Catherine de Medici's abilities in either persona (Flying Squadron, Magnificences).</span></div>
 			</article>
 		</section>
 

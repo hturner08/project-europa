@@ -2,8 +2,8 @@
 <Mod id="7fe8ff0a-8385-4631-b121-6032c7cce1f5" version="1">
 	<Properties>
 		<Name>Project Europa</Name>
-		<Description>Seven luxury resources (Topaz, Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Discus Fish, Capybaras), the Fish Weir, bigger deserts, and four custom leaders balanced against Better Balanced Game: Golden Expansion (Mali), Imperial Gardens (China), Highland Empire (Ethiopia) and Living Paradise (Brazil).</Description>
-		<Teaser>New luxuries, bigger deserts, four custom leaders.</Teaser>
+		<Description>Seven luxury resources (Topaz, Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Discus Fish, Capybaras), the Fish Weir, bigger deserts, and eight custom leaders balanced against Better Balanced Game: Golden Expansion (Mali), Imperial Gardens (China), Highland Empire (Ethiopia), Living Paradise (Brazil), Borderless Empire (Cree), Endless Continent (Russia), Scenic Genius (America) and Palace Designer (France).</Description>
+		<Teaser>New luxuries, bigger deserts, eight custom leaders.</Teaser>
 		<Authors>Project Europa</Authors>
 		<AffectsSavedGames>1</AffectsSavedGames>
 		<CompatibleVersions>1.2,2.0</CompatibleVersions>
@@ -34,6 +34,10 @@
 			<File>Data/Europa_Leader_China.sql</File>
 			<File>Data/Europa_Leader_Ethiopia.sql</File>
 			<File>Data/Europa_Leader_Brazil.sql</File>
+			<File>Data/Europa_Leader_Cree.sql</File>
+			<File>Data/Europa_Leader_Russia.sql</File>
+			<File>Data/Europa_Leader_America.sql</File>
+			<File>Data/Europa_Leader_France.sql</File>
 		</UpdateDatabase>
 		<UpdateColors id="EuropaLeaderColors" criteria="Expansion2">
 			<File>Data/Europa_Leaders_Colors.xml</File>
@@ -120,6 +124,10 @@
 		<File>Data/Europa_Leader_China.sql</File>
 		<File>Data/Europa_Leader_Ethiopia.sql</File>
 		<File>Data/Europa_Leader_Brazil.sql</File>
+		<File>Data/Europa_Leader_Cree.sql</File>
+		<File>Data/Europa_Leader_Russia.sql</File>
+		<File>Data/Europa_Leader_America.sql</File>
+		<File>Data/Europa_Leader_France.sql</File>
 		<File>Data/Europa_Leaders_Colors.xml</File>
 		<File>Data/Europa_Leaders_Icons.xml</File>
 		<File>Text/Europa_Leaders_Text_en_US.xml</File>
