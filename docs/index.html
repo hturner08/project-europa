@@ -194,6 +194,13 @@ td.num { font-variant-numeric: tabular-nums; }
 			<a href="#endless-continent">Endless Continent</a>
 			<a href="#scenic-genius">Scenic Genius</a>
 			<a href="#palace-designer">Palace Designer</a>
+			<span class="group">City-states</span>
+			<a href="#syracuse">Syracuse</a>
+			<a href="#ubud">Ubud</a>
+			<a href="#sheffield">Sheffield</a>
+			<a href="#ravenna">Ravenna</a>
+			<a href="#lhasa">Lhasa</a>
+			<a href="#bruges">Bruges</a>
 			<span class="group">World</span>
 			<a href="#luxuries">Luxuries</a>
 			<a href="#fish-weir">Fish Weir</a>
@@ -209,6 +216,7 @@ td.num { font-variant-numeric: tabular-nums; }
 			<p class="lede">Live out your expansionist and preserve dreams while enjoying the finest luxuries!</p>
 			<ul class="facts">
 				<li><b>8</b> custom leaders</li>
+				<li><b>6</b> city-states</li>
 				<li><b>7</b> luxury resources</li>
 				<li><b>1</b> new improvement</li>
 				<li><b>1</b> map generation change</li>
@@ -344,6 +352,88 @@ td.num { font-variant-numeric: tabular-nums; }
 						<p class="note">Counted by script at the start of your turn, so a Wonder placed this turn starts earning the bonus next turn.</p></li>
 				</ul>
 				<div class="kept"><span><b>Unchanged:</b> Grand Tour, the Ch&acirc;teau and the Garde Imp&eacute;riale.</span><span><b>Not included:</b> Catherine de Medici's abilities in either persona (Flying Squadron, Magnificences).</span></div>
+			</article>
+		</section>
+
+		<section id="city-states">
+			<h2>City-states</h2>
+			<p class="intro">Six new city-states, one of each type, that join the pool the game draws from and appear in the city-state picker. Each gives its type's usual envoy bonuses at 1, 3 and 6 envoys, plus the Suzerain bonus below. Gathering Storm ruleset only. With BBG they also count toward its per-city-state bonuses (Pericles, the Huszar, the Varangian longship).</p>
+
+			<article class="leader" id="syracuse" style="--c1:#1d4f8c; --c2:#cfe3f7">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>S</span></div>
+					<div class="names"><h3>Syracuse</h3><div class="civ">Scientific &middot; Applied Engineering</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag adj">Adjusted</span><p class="what">Campuses receive <span class="y sci">+1 Science</span> for each adjacent Aqueduct or Dam.</p>
+						<p class="note">The brief asked for true district adjacency. Civ VI's district-adjacency modifier cannot name the neighbouring district (it counts any district), so a script counts the neighbours and the yield is added to the district itself. It does not appear on the adjacency line of the tooltip, and whether adjacency-doubling policy cards multiply it has not been tested in game. Counted at the start of your turn and when a district is finished. Each Aqueduct and Dam counts separately; a Bath counts as an Aqueduct.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">Workshops provide <span class="y sci">+1 Science</span> in cities with a Campus.</p>
+						<p class="note">Once per Workshop, wherever the two districts stand.</p></li>
+				</ul>
+			</article>
+
+			<article class="leader" id="ubud" style="--c1:#7a2f8c; --c2:#f0d9f5">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>U</span></div>
+					<div class="names"><h3>Ubud</h3><div class="civ">Cultural &middot; Art in Nature</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag adj">Adjusted</span><p class="what">Theater Squares receive <span class="y cult">+1 Culture</span> for each adjacent unimproved Woods or Rainforest, to a maximum of +2.</p>
+						<p class="note">Added to the district rather than declared as adjacency, for the same reason as Syracuse: the engine's feature-adjacency modifier can neither skip improved tiles nor stop at two. The tiles need not belong to the same city, or to anyone.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">After Flight, Theater Squares next to at least two such tiles provide <span class="y tour">+2 Tourism</span>.</p>
+						<p class="note">A flat +2 per Theater Square, not per tile.</p></li>
+				</ul>
+			</article>
+
+			<article class="leader" id="sheffield" style="--c1:#8c5a1d; --c2:#f5e3c8">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>S</span></div>
+					<div class="names"><h3>Sheffield</h3><div class="civ">Industrial &middot; Masters of Steel</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag ok">As designed</span><p class="what">Mines and Quarries next to one of your Industrial Zones receive <span class="y prod">+1 Production</span>.</p>
+						<p class="note">+1 in total, however many Zones the tile touches. The Zone must be yours and finished; a Hansa or Oppidum counts. Flagged by script at the start of your turn, so a Mine built this turn earns it next turn.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">Each Industrial Zone with a Workshop and at least three adjacent Mines or Quarries provides <span class="y gp">+1 Great Engineer point</span> per turn.</p>
+						<p class="note">No empire-wide cap. The Mines and Quarries must be yours and unpillaged but may belong to another of your cities; the Zone must be finished and unpillaged.</p></li>
+				</ul>
+			</article>
+
+			<article class="leader" id="ravenna" style="--c1:#8c1d18; --c2:#f5d0cd">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>R</span></div>
+					<div class="names"><h3>Ravenna</h3><div class="civ">Militaristic &middot; Imperial Engineering</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag adj">Adjusted</span><p class="what"><span class="y prod">+20% Production</span> toward Harbor and Encampment districts.</p>
+						<p class="note">The brief gave Military Engineers +1 build charge. Neither of us builds them, so the bonus now speeds up the two districts the second half asks for. Unique Harbors and Encampments (Royal Navy Dockyard, Cothon, Ikanda, Th&agrave;nh) get it too.</p></li>
+					<li><span class="tag adj">Adjusted</span><p class="what">Cities with both a Harbor and an Encampment gain <span class="y prod">+2 Production</span> while constructing a building of either district.</p>
+						<p class="note">Civ VI only has percentage bonuses toward buildings, so this is +2 city Production that a script switches on while a Harbor or Encampment building is what the city is making. The script looks at the start of your turn: if you change production mid-turn, the bonus follows one turn later.</p></li>
+				</ul>
+			</article>
+
+			<article class="leader" id="lhasa" style="--c1:#6b6b6b; --c2:#ffffff">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>L</span></div>
+					<div class="names"><h3>Lhasa</h3><div class="civ">Religious &middot; Mountain Monasteries</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag ok">As designed</span><p class="what">Holy Sites adjacent to at least two Mountains provide <span class="y cult">+2 Culture</span>.</p>
+						<p class="note">A flat district yield; more Mountains add nothing. The Mountains can be anyone's or no one's.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">Shrines in those cities provide <span class="y prod">+1 Production</span>.</p></li>
+				</ul>
+			</article>
+
+			<article class="leader" id="bruges" style="--c1:#8c7a1d; --c2:#f7f0c8">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>B</span></div>
+					<div class="names"><h3>Bruges</h3><div class="civ">Trade &middot; Mercantile Renaissance</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag adj">Adjusted</span><p class="what">Commercial Hubs receive <span class="y gold">+1 Gold</span> for each adjacent Theater Square, and Theater Squares receive <span class="y cult">+1 Culture</span> for each adjacent Commercial Hub.</p>
+						<p class="note">Added to the district rather than declared as adjacency, for the same reason as Syracuse.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">Cities with both districts gain <span class="y cult">+1 Culture</span> for each <span class="y trade">Trade Route</span> they send, to a maximum of +2 per city.</p>
+						<p class="note">Domestic and international routes both count, the districts need not touch, and each city is capped on its own. Counted at the start of your turn.</p></li>
+				</ul>
 			</article>
 		</section>
 

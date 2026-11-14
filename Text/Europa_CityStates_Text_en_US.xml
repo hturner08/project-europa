@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Project Europa: city-state text. Loaded on the setup screens (the city-state picker)
+     and in game. -->
+<GameData>
+	<LocalizedText>
+		<!-- ===== Syracuse ===== -->
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_SYRACUSE_NAME" Language="en_US">
+			<Text>Syracuse</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_SYRACUSE_DESCRIPTION" Language="en_US">
+			<Text>Syracuse city-state</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_SYRACUSE_ADJECTIVE" Language="en_US">
+			<Text>Syracusan</Text>
+		</Replace>
+		<Replace Tag="LOC_CITY_NAME_EUROPA_SYRACUSE" Language="en_US">
+			<Text>Syracuse</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_SYRACUSE_TRAIT_NAME" Language="en_US">
+			<Text>Syracuse Suzerain Bonus: Applied Engineering</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_SYRACUSE_TRAIT_DESCRIPTION" Language="en_US">
+			<Text>Your Campuses receive +1 [ICON_Science] Science for each adjacent Aqueduct or Dam. Your Workshops provide +1 [ICON_Science] Science in cities with a Campus.</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_CITYSTATES_PAGE_CIVILIZATION_EUROPA_SYRACUSE_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>Founded by Corinthian settlers on the coast of Sicily in the 8th Century BCE, Syracuse grew into one of the greatest cities of the Greek world, a rival to Athens and Carthage alike. It was the home of Archimedes, whose screw pumps, compound pulleys and war engines made the city a byword for mathematics put to practical use, and whose machines are said to have held off a Roman siege for two years.</Text>
+		</Replace>
+		<!-- ===== Ubud ===== -->
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_UBUD_NAME" Language="en_US">
+			<Text>Ubud</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_UBUD_DESCRIPTION" Language="en_US">
+			<Text>Ubud city-state</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_UBUD_ADJECTIVE" Language="en_US">
+			<Text>Ubudian</Text>
+		</Replace>
+		<Replace Tag="LOC_CITY_NAME_EUROPA_UBUD" Language="en_US">
+			<Text>Ubud</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_UBUD_TRAIT_NAME" Language="en_US">
+			<Text>Ubud Suzerain Bonus: Art in Nature</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_UBUD_TRAIT_DESCRIPTION" Language="en_US">
+			<Text>Your Theater Squares receive +1 [ICON_Culture] Culture for each adjacent unimproved Woods or Rainforest (maximum +2). After researching Flight, Theater Squares adjacent to at least two such tiles also provide +2 [ICON_Tourism] Tourism.</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_CITYSTATES_PAGE_CIVILIZATION_EUROPA_UBUD_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>Set among rice terraces and forested ravines in the uplands of Bali, Ubud began as a centre of medicine and herbs and became the island's artistic heart. Under the patronage of its royal family, painters, carvers, dancers and musicians gathered there, and the town's temples, its sacred monkey forest and its workshops remain inseparable from the landscape around them.</Text>
+		</Replace>
+		<!-- ===== Sheffield ===== -->
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_SHEFFIELD_NAME" Language="en_US">
+			<Text>Sheffield</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_SHEFFIELD_DESCRIPTION" Language="en_US">
+			<Text>Sheffield city-state</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_SHEFFIELD_ADJECTIVE" Language="en_US">
+			<Text>Sheffield</Text>
+		</Replace>
+		<Replace Tag="LOC_CITY_NAME_EUROPA_SHEFFIELD" Language="en_US">
+			<Text>Sheffield</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_SHEFFIELD_TRAIT_NAME" Language="en_US">
+			<Text>Sheffield Suzerain Bonus: Masters of Steel</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_SHEFFIELD_TRAIT_DESCRIPTION" Language="en_US">
+			<Text>Your Mines and Quarries adjacent to one of your Industrial Zones receive +1 [ICON_Production] Production. Each of your Industrial Zones with a Workshop and at least three adjacent Mines or Quarries provides +1 [ICON_GreatEngineer] Great Engineer point per turn.</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_CITYSTATES_PAGE_CIVILIZATION_EUROPA_SHEFFIELD_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>Built where five rivers come down from the Pennine hills, Sheffield was known for its cutlery by the Middle Ages. In the 18th and 19th Centuries the invention there of crucible steel, and later of stainless steel, made it the steel capital of the world, its valleys lined with forges, grinding wheels and rolling mills.</Text>
+		</Replace>
+		<!-- ===== Ravenna ===== -->
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_RAVENNA_NAME" Language="en_US">
+			<Text>Ravenna</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_RAVENNA_DESCRIPTION" Language="en_US">
+			<Text>Ravenna city-state</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_RAVENNA_ADJECTIVE" Language="en_US">
+			<Text>Ravennate</Text>
+		</Replace>
+		<Replace Tag="LOC_CITY_NAME_EUROPA_RAVENNA" Language="en_US">
+			<Text>Ravenna</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_RAVENNA_TRAIT_NAME" Language="en_US">
+			<Text>Ravenna Suzerain Bonus: Imperial Engineering</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_RAVENNA_TRAIT_DESCRIPTION" Language="en_US">
+			<Text>+20% [ICON_Production] Production toward Harbor and Encampment districts. Your cities with both a Harbor and an Encampment gain +2 [ICON_Production] Production while constructing a building of either district.</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_CITYSTATES_PAGE_CIVILIZATION_EUROPA_RAVENNA_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>Ringed by marshes and lagoons on the Adriatic, Ravenna was all but unassailable by land, and Augustus made its harbour at Classe the base of Rome's eastern fleet. That security made it the capital of the Western Roman Empire in its last decades, then of the Ostrogothic kingdom and of the Byzantine Exarchate, each of which left the city walls, canals and glittering mosaics.</Text>
+		</Replace>
+		<!-- ===== Lhasa ===== -->
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_LHASA_NAME" Language="en_US">
+			<Text>Lhasa</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_LHASA_DESCRIPTION" Language="en_US">
+			<Text>Lhasa city-state</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_LHASA_ADJECTIVE" Language="en_US">
+			<Text>Lhasan</Text>
+		</Replace>
+		<Replace Tag="LOC_CITY_NAME_EUROPA_LHASA" Language="en_US">
+			<Text>Lhasa</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_LHASA_TRAIT_NAME" Language="en_US">
+			<Text>Lhasa Suzerain Bonus: Mountain Monasteries</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_LHASA_TRAIT_DESCRIPTION" Language="en_US">
+			<Text>Your Holy Sites adjacent to at least two Mountains provide +2 [ICON_Culture] Culture. Shrines in those cities provide +1 [ICON_Production] Production.</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_CITYSTATES_PAGE_CIVILIZATION_EUROPA_LHASA_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>Lhasa, the "place of the gods", lies in a high valley of the Tibetan Plateau some 3,650 metres above the sea. It became the seat of Tibetan Buddhism with the founding of the Jokhang temple in the 7th Century, and the great monasteries of Drepung, Sera and Ganden and the Potala Palace on its red hill drew pilgrims and scholars across the Himalaya for centuries.</Text>
+		</Replace>
+		<!-- ===== Bruges ===== -->
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_BRUGES_NAME" Language="en_US">
+			<Text>Bruges</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_BRUGES_DESCRIPTION" Language="en_US">
+			<Text>Bruges city-state</Text>
+		</Replace>
+		<Replace Tag="LOC_CIVILIZATION_EUROPA_BRUGES_ADJECTIVE" Language="en_US">
+			<Text>Bruges</Text>
+		</Replace>
+		<Replace Tag="LOC_CITY_NAME_EUROPA_BRUGES" Language="en_US">
+			<Text>Bruges</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_BRUGES_TRAIT_NAME" Language="en_US">
+			<Text>Bruges Suzerain Bonus: Mercantile Renaissance</Text>
+		</Replace>
+		<Replace Tag="LOC_MINOR_CIV_EUROPA_BRUGES_TRAIT_DESCRIPTION" Language="en_US">
+			<Text>Your Commercial Hubs receive +1 [ICON_Gold] Gold for each adjacent Theater Square, and your Theater Squares receive +1 [ICON_Culture] Culture for each adjacent Commercial Hub. Your cities with both districts gain +1 [ICON_Culture] Culture for each [ICON_TradeRoute] Trade Route they send (maximum +2 per city).</Text>
+		</Replace>
+		<Replace Tag="LOC_PEDIA_CITYSTATES_PAGE_CIVILIZATION_EUROPA_BRUGES_CHAPTER_HISTORY_PARA_1" Language="en_US">
+			<Text>Linked to the North Sea by a tidal inlet, Bruges became the great marketplace of medieval northern Europe, where Flemish cloth met Italian bankers and the merchants of the Hanseatic League. The wealth of its trading houses paid for the painters of the Flemish school, among them Jan van Eyck and Hans Memling, and the world's first bourse took its name from a Bruges inn.</Text>
+		</Replace>
+	</LocalizedText>
+</GameData>
