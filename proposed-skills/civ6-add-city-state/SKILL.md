@@ -57,6 +57,11 @@ Things it can do directly: build charges on newly trained units
 requirement, as Serfdom does); a building yield in cities with a district
 (`MODIFIER_PLAYER_CITIES_ADJUST_BUILDING_YIELD_CHANGE` + `REQUIREMENT_CITY_HAS_DISTRICT`).
 
+District Production bonuses (`MODIFIER_PLAYER_CITIES_ADJUST_DISTRICT_PRODUCTION`)
+take one `DistrictType`; BBG writes a separate row for each unique replacement
+(Royal Navy Dockyard beside Harbor), so generate one per district from
+`DistrictReplaces` rather than assuming replacements are covered.
+
 ## Lua found gameplay-side (Firaxis scenario scripts or BBG)
 
 `CityManager.GetDistrictAt(x, y)`, `pPlot:GetDistrictType()`,

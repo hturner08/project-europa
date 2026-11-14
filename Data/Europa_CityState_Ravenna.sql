@@ -1,5 +1,5 @@
 -- Project Europa: Ravenna, a Militaristic city-state. Suzerain bonus: Imperial Engineering.
---   Military Engineers trained or bought while Suzerain: +1 build charge (kept afterwards).
+--   +20% Production toward Harbors and Encampments.
 --   Cities with a Harbor and an Encampment: +2 Production while constructing a building of either.
 -- Shared requirements and the Europa_Tiers table come from Europa_CityStateCommon.sql.
 
@@ -40,26 +40,25 @@ INSERT INTO StartBiasTerrains (CivilizationType, TerrainType, Tier) VALUES
 -- Suzerain bonus
 -- ---------------------------------------------------------------------------
 
-INSERT INTO Requirements (RequirementId, RequirementType) VALUES
-	('EUROPA_REQ_UNIT_IS_MILITARY_ENGINEER', 'REQUIREMENT_UNIT_TYPE_MATCHES');
-INSERT INTO RequirementArguments (RequirementId, Name, Value) VALUES
-	('EUROPA_REQ_UNIT_IS_MILITARY_ENGINEER', 'UnitType', 'UNIT_MILITARY_ENGINEER');
-INSERT INTO RequirementSets (RequirementSetId, RequirementSetType) VALUES
-	('EUROPA_REQSET_UNIT_IS_MILITARY_ENGINEER', 'REQUIREMENTSET_TEST_ALL');
-INSERT INTO RequirementSetRequirements (RequirementSetId, RequirementId) VALUES
-	('EUROPA_REQSET_UNIT_IS_MILITARY_ENGINEER', 'EUROPA_REQ_UNIT_IS_MILITARY_ENGINEER');
+-- +20% Production toward Harbors and Encampments. The effect takes one district type and
+-- (going by BBG, which writes a row per unique district) does not extend to the districts
+-- that replace it, so there is one modifier for each district that is, or replaces, a
+-- Harbor or an Encampment in the loaded ruleset.
+INSERT INTO Modifiers (ModifierId, ModifierType)
+	SELECT 'EUROPA_RAVENNA_PRODUCTION_' || DistrictType, 'MODIFIER_PLAYER_CITIES_ADJUST_DISTRICT_PRODUCTION'
+	FROM Districts
+	WHERE DistrictType IN ('DISTRICT_HARBOR', 'DISTRICT_ENCAMPMENT')
+		OR DistrictType IN (SELECT CivUniqueDistrictType FROM DistrictReplaces WHERE ReplacesDistrictType IN ('DISTRICT_HARBOR', 'DISTRICT_ENCAMPMENT'));
+INSERT INTO ModifierArguments (ModifierId, Name, Value)
+	SELECT ModifierId, 'DistrictType', replace(ModifierId, 'EUROPA_RAVENNA_PRODUCTION_', '') FROM Modifiers WHERE ModifierId LIKE 'EUROPA_RAVENNA_PRODUCTION_DISTRICT_%'
+	UNION ALL
+	SELECT ModifierId, 'Amount', '20' FROM Modifiers WHERE ModifierId LIKE 'EUROPA_RAVENNA_PRODUCTION_DISTRICT_%';
 
--- Same shape as Serfdom's Builder charges: it acts on units as they are trained or bought and
--- is Permanent, so the charge stays on the unit when suzerainty is lost and units that already
--- exist get nothing.
-INSERT INTO Modifiers (ModifierId, ModifierType, Permanent, SubjectRequirementSetId) VALUES
-	('EUROPA_RAVENNA_ENGINEER_CHARGE', 'MODIFIER_PLAYER_TRAINED_UNITS_ADJUST_BUILDER_CHARGES', 1, 'EUROPA_REQSET_UNIT_IS_MILITARY_ENGINEER');
 -- The engine only has percentage bonuses toward buildings, so the flat +2 is city Production
 -- that the script switches on while a Harbor or Encampment building is what the city is making.
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES
 	('EUROPA_RAVENNA_ARSENAL_PRODUCTION', 'MODIFIER_PLAYER_CITIES_ADJUST_CITY_YIELD_CHANGE', 'EUROPA_REQSET_CS_ARSENAL_1');
 INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES
-	('EUROPA_RAVENNA_ENGINEER_CHARGE',    'Amount',    '1'),
 	('EUROPA_RAVENNA_ARSENAL_PRODUCTION', 'YieldType', 'YIELD_PRODUCTION'),
 	('EUROPA_RAVENNA_ARSENAL_PRODUCTION', 'Amount',    '2');
 

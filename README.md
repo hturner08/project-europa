@@ -79,7 +79,7 @@ count toward BBG's per-city-state bonuses (Pericles, Huszar, Varangian longship)
 | Syracuse | Scientific | Campuses: +1 Science per adjacent Aqueduct or Dam. Workshops: +1 Science in cities with a Campus. |
 | Ubud | Cultural | Theater Squares: +1 Culture per adjacent unimproved Woods or Rainforest (max +2); with two such tiles, +2 Tourism after Flight. |
 | Sheffield | Industrial | Mines and Quarries next to your Industrial Zones: +1 Production. Industrial Zones with a Workshop and three adjacent Mines or Quarries: +1 Great Engineer point each. |
-| Ravenna | Militaristic | Military Engineers trained or bought: +1 build charge. Cities with a Harbor and an Encampment: +2 Production while constructing a building of either. |
+| Ravenna | Militaristic | +20% Production toward Harbors and Encampments. Cities with a Harbor and an Encampment: +2 Production while constructing a building of either. |
 | Lhasa | Religious | Holy Sites next to two Mountains: +2 Culture, and Shrines in those cities +1 Production. |
 | Bruges | Trade | Commercial Hubs: +1 Gold per adjacent Theater Square, and the reverse for Culture. Cities with both: +1 Culture per Trade Route sent (max +2 per city). |
 

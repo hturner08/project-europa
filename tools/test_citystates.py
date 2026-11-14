@@ -17,7 +17,7 @@ Checks:
     Zones are flagged; a Zone (or Hansa) is flagged with three of the player's
     unpillaged Mines or Quarries beside it, and not when it is pillaged
   * Lhasa: a Holy Site with two adjacent Mountains is flagged, and its city with it
-  * Ravenna: a city with a working Harbor and Encampment is flagged only while it is
+  * Ravenna: (the district Production bonus is database-only) a city with a working Harbor and Encampment is flagged only while it is
     constructing a building of either district
   * Bruges: Hubs and Theater Squares count each other; a city with both counts the
     Trade Routes it sends, capped at 2, each city on its own

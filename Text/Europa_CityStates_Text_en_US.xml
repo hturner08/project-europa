@@ -86,7 +86,7 @@
 			<Text>Ravenna Suzerain Bonus: Imperial Engineering</Text>
 		</Replace>
 		<Replace Tag="LOC_MINOR_CIV_EUROPA_RAVENNA_TRAIT_DESCRIPTION" Language="en_US">
-			<Text>Military Engineers you train or purchase receive +1 build charge. Your cities with both a Harbor and an Encampment gain +2 [ICON_Production] Production while constructing a building of either district.</Text>
+			<Text>+20% [ICON_Production] Production toward Harbor and Encampment districts. Your cities with both a Harbor and an Encampment gain +2 [ICON_Production] Production while constructing a building of either district.</Text>
 		</Replace>
 		<Replace Tag="LOC_PEDIA_CITYSTATES_PAGE_CIVILIZATION_EUROPA_RAVENNA_CHAPTER_HISTORY_PARA_1" Language="en_US">
 			<Text>Ringed by marshes and lagoons on the Adriatic, Ravenna was all but unassailable by land, and Augustus made its harbour at Classe the base of Rome's eastern fleet. That security made it the capital of the Western Roman Empire in its last decades, then of the Ostrogothic kingdom and of the Byzantine Exarchate, each of which left the city walls, canals and glittering mosaics.</Text>
