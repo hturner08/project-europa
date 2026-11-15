@@ -2,8 +2,8 @@
 -- Runs against the Configuration database, not the gameplay one.
 --
 -- These rows put the city-states in the Gathering Storm city-state picker and, through
--- it, in the pool the game draws from. Gathering Storm ruleset only: Dams, Military
--- Engineer charges and the envoy-bonus table the gameplay rows use all need it.
+-- it, in the pool the game draws from. Gathering Storm ruleset only: Dams and the
+-- envoy-bonus table the gameplay rows use both need it.
 
 INSERT OR REPLACE INTO CityStates (Domain, CivilizationType, CityStateCategory, Name, Icon, Bonus) VALUES
 	('Expansion2CityStates', 'CIVILIZATION_EUROPA_SYRACUSE',  'SCIENTIFIC',   'LOC_CIVILIZATION_EUROPA_SYRACUSE_NAME',  'ICON_CIVILIZATION_EUROPA_SYRACUSE',  'LOC_MINOR_CIV_EUROPA_SYRACUSE_TRAIT_DESCRIPTION'),
