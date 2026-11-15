@@ -6,13 +6,18 @@ requirement type exists, each effect is limited to the pantheon's owner, the Bui
 charges are permanent, the Sacred Companions list matches the Camp luxuries, the stock
 Divine Inspiration belief is untouched, and text, icons and load order are in place.
 
+With the `lupa` package installed it also runs `Scripts/Europa_Pantheons.lua` against
+stubbed game functions (`tools/test_pantheons.py`).
+
 It cannot run the engine. The items below need a game. Items marked **(open)** are the
 ones where the engine's behaviour is not known in advance; the rest are expected to
 pass and are here to confirm it.
 
 Setup: Gathering Storm ruleset, BBG and Project Europa on, two human players (hotseat is
 fine for most of it; do one pass over real multiplayer with simultaneous turns). After
-the first launch, check `Database.log` and `Modding.log` for lines mentioning `Europa_Pantheon`.
+the first launch, check `Database.log` and `Modding.log` for lines mentioning `Europa_Pantheon`,
+and `Lua.log` for `Europa pantheons: hooks added.` Any other `Europa pantheons:` line means a
+game function the script needs is missing.
 
 ## Selection
 
@@ -50,8 +55,8 @@ Same mechanism, so run each line for a Market city (Guilds) and a Wonder city (P
 - [ ] Save, quit, reload: the Builder has the same charges as before (no extra, none lost).
 - [ ] Pillage the Market after the Builder exists: the Builder keeps its charge.
 - [ ] **(open)** Pillage the Market, then train a Builder: no extra charge until repaired.
-- [ ] **(open)** A free Builder that appears in a qualifying city (Ancestral Hall, Endless Continent's Tundra city) should not get the charge.
-- [ ] **(open)** Pillars only: a city with a Wonder still under construction should not count.
+- [ ] Note only: whether a free Builder that appears in a qualifying city (Ancestral Hall, Endless Continent's Tundra city) gets the charge. Either result is accepted.
+- [ ] Pillars only: a city whose only Wonder is still under construction gives no extra charge; the turn the Wonder is finished it does.
 - [ ] Pillars only: four Wonders in the city still give only +1. A captured Wonder city qualifies.
 
 ## Sacred Wilderness
@@ -63,8 +68,9 @@ Same mechanism, so run each line for a Market city (Guilds) and a Wonder city (P
 - [ ] Lower the tile's Appeal below 4 (Mine or Industrial Zone nearby): bonus goes; raise it again: returns.
 - [ ] A tile in one city next to a Preserve of another of your cities: gets it.
 - [ ] Stacks with the Grove and Sanctuary tile yields.
-- [ ] **(open)** A Preserve still under construction should not count.
-- [ ] **(open, expected to deviate)** Your tile next to the *other player's* Preserve: the design says no bonus; the engine's adjacency test cannot tell whose Preserve it is, so it probably gives it.
+- [ ] A Preserve still under construction does not count; the tiles get the bonus once it is finished (at the latest at the start of your next turn).
+- [ ] Your tile next to the *other player's* Preserve: no bonus.
+- [ ] Capture a city with a Preserve: its neighbouring tiles now count for you, and no longer for the previous owner's tiles across the border.
 
 ## Divine Inspiration
 
@@ -73,7 +79,7 @@ Same mechanism, so run each line for a Market city (Guilds) and a Wonder city (P
 - [ ] Wonder and Archaeological Museum: nothing. Art Museum, no Wonder: nothing.
 - [ ] Four qualifying cities: +4.
 - [ ] **(open)** Pillage the Art Museum: bonus goes until repaired.
-- [ ] **(open)** A Wonder still under construction should not count.
+- [ ] A Wonder still under construction does not count; the point appears once it is finished.
 
 ## Multiplayer
 

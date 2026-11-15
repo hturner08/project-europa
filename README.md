@@ -113,13 +113,23 @@ civilization can take them. Gathering Storm ruleset only. BBG is optional.
 | Divine Inspiration | Cities with an Art Museum and a World Wonder: +1 Great Artist point per turn. |
 | Pillars of Creation | Builders trained or purchased in a city with a World Wonder: +1 build charge. |
 
-**How they work.** Database modifiers only, no script. Each belief attaches its effect
+**How they work.** Each belief attaches its effect
 to the player who holds the pantheon (the way God of the Forge does), so the bonus
 follows the owner and does not depend on what an individual city follows, and it
 carries on after a religion is founded. The Builder charge is built exactly like
 Liang's Guildmaster promotion: a permanent +1 given to Builders the city trains or
 buys, which is why it is granted once, survives save/load, and adds to Liang, Serfdom
 and the Pyramids.
+
+Two facts no stock requirement can establish come from `Scripts/Europa_Pantheons.lua`,
+which writes them onto plots for the modifiers to read: whether a tile touches a
+completed, unpillaged Preserve *of the same player* (Sacred Wilderness), and whether
+a city owns a *completed* World Wonder (Divine Inspiration, Pillars of Creation; a
+Wonder under construction does not count). It uses simulation-side events only, so
+those two refresh at the start of the owner's turn, when a district or building is
+finished, when something is pillaged and when a city is founded or captured.
+Appeal, improvements, the civic, the Market and the Art Museum are still tested by
+the database and react at once.
 
 **Divine Inspiration** shares its display name with the stock Follower belief on
 purpose. Ours is `BELIEF_CUSTOM_ARTISTIC_INSPIRATION`; the stock
@@ -134,16 +144,13 @@ it, the usual rule applies and a pantheon one player takes is gone for the other
 **Not yet confirmed in a game** (the offline check cannot run the engine; see
 `docs/pantheon-testing.md` for the checklist):
 
-- Whether a *free* Builder (Ancestral Hall, Russia's Tundra cities, and so on) that
-  appears in a Market or Wonder city gets the extra charge. The design says it should
-  not. The engine's "units trained by this city" collection decides, and it is the
-  same one Liang uses.
-- Whether a Wonder still under construction already counts as "a city with a Wonder"
-  (Divine Inspiration, Pillars of Creation). The design says it should not.
-- Sacred Wilderness looks for a working Preserve next to the tile; the engine's
-  adjacency test does not say whose Preserve it is, so the other player's Preserve on
-  your border would also count for your tile.
+- That the script's calls exist in the game's gameplay-script context. They are the
+  same ones the city-state and leader scripts use, and the script prints one
+  `Europa pantheons:` line to `Lua.log` if one is missing instead of failing.
 - That a pillaged Camp, Market or Art Museum switches its bonus off until repaired.
+- A *free* Builder (Ancestral Hall, Russia's Tundra cities, and so on) that appears
+  in a Market or Wonder city may also get the extra charge; the engine's "units
+  trained by this city" collection decides, the same one Liang uses. Accepted either way.
 
 ## Layout
 
@@ -163,6 +170,7 @@ it, the usual rule applies and a pantheon one player takes is gone for the other
 | `Data/Europa_CityStates_Icons.xml`, `Data/Europa_CityStates_Colors.xml`, `Text/Europa_CityStates_Text_en_US.xml` | City-state icons, type colours, names and bonus text |
 | `Data/Europa_Pantheons.sql`, `Data/Europa_Pantheon_SacredCompanions.sql` | Pantheon gameplay rows; Sacred Companions is separate because it depends on the luxury resources |
 | `Data/Europa_Pantheons_Icons.xml`, `Text/Europa_Pantheons_Text_en_US.xml` | Pantheon icons (atlases from `tools/make_pantheon_icons.py`), names and descriptions |
+| `Scripts/Europa_Pantheons.lua` | Whose Preserve a tile touches (Sacred Wilderness) and whether a city's Wonder is finished (Divine Inspiration, Pillars of Creation) |
 | `Scripts/Europa_CityStates.lua` | Counts neighbours, Trade Routes and current production for the Suzerain bonuses |
 | `Scripts/Europa_Leaders.lua` | Continents (Mali), Wonder sites (China, America, France), city improvement flags (France, Cree), Cree tile claims |
 | `ArtDefs/Leaders.artdef`, `ArtDefs/FallbackLeaders.artdef` | Generated: stock leaders' art entries under our names (do not edit; run `tools/make_leader_art.py`) |

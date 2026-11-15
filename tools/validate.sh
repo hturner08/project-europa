@@ -191,6 +191,19 @@ if any("Pantheon" in p for p in paths):
         print(f"SACRED COMPANIONS LISTS A RESOURCE THAT IS NOT A CAMP LUXURY: {sorted(tagged - camp)}"); ok = False
     if camp - tagged:
         print(f"CAMP LUXURY MISSING FROM SACRED COMPANIONS: {sorted(camp - tagged)}"); ok = False
+    # The two facts the script supplies: each property a requirement reads must be written by it.
+    pantheon_lua = open("Scripts/Europa_Pantheons.lua").read()
+    props = [r[0] for r in db.execute("SELECT DISTINCT Value FROM RequirementArguments WHERE Name='PropertyName' AND Value LIKE 'EUROPA_PANTHEON_%'")]
+    if sorted(props) != ["EUROPA_PANTHEON_PRESERVE_TILE", "EUROPA_PANTHEON_WONDER_CITY"]:
+        print(f"EXPECTED THE PRESERVE AND WONDER PROPERTIES, GOT {sorted(props)}"); ok = False
+    for prop in props:
+        if f'"{prop}"' not in pantheon_lua:
+            print(f"PLOT PROPERTY NEVER WRITTEN BY LUA: {prop}"); ok = False
+    # Neither stock test may be left in: one cannot tell whose Preserve it is, the other
+    # may count a Wonder that is still being built.
+    for (rid,) in db.execute("SELECT RequirementId FROM Requirements WHERE RequirementId LIKE 'EUROPA_PANTHEON_%' AND RequirementType IN"
+                             " ('REQUIREMENT_CITY_HAS_ANY_WONDER', 'REQUIREMENT_PLOT_ADJACENT_DISTRICT_TYPE_MATCHES')"):
+        print(f"PANTHEON REQUIREMENT USES AN INEXACT STOCK TEST: {rid}"); ok = False
 # ---- city-states ------------------------------------------------------------
 # Each Suzerain bonus is a trait modifier that attaches a second modifier to the Suzerain;
 # print the attached one, with what it needs, to read against the design.
@@ -323,6 +336,9 @@ done
 grep -q 'Atlas="[A-Z_]*BELIEFS_PATHEON"' Data/Europa_Pantheons_Icons.xml || { echo "PANTHEON ATLAS NAME WILL NOT BE COPIED BY SPARE BELIEFS"; fail=1; }
 order=$(grep -A3 'id="EuropaPantheons"' ProjectEuropa.modinfo | grep -o '<LoadOrder>[0-9]*' | grep -o '[0-9]*$')
 [ "${order:-0}" -gt 100 ] && [ "${order:-0}" -lt 1000005 ] || { echo "PANTHEON LOAD ORDER MUST BE ABOVE 100 AND BELOW 1000005, IS ${order:-unset}"; fail=1; }
+
+echo "== pantheon script logic (needs the 'lupa' Python package; skipped without it)"
+python3 tools/test_pantheons.py || fail=1
 
 echo "== every city-state has a name, bonus text, pedia text, icon, colours and picker row"
 for c in $(grep -h "KIND_CIVILIZATION" Data/Europa_CityState*.sql | grep -o "CIVILIZATION_EUROPA_[A-Z_]*" | sort -u); do

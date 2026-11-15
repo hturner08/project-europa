@@ -10,8 +10,15 @@
 --   belief -> MODIFIER_ALL_PLAYERS_ATTACH_MODIFIER, limited to the player who holds the
 --   pantheon (PLAYER_HAS_PANTHEON_REQUIREMENTS) -> a player-owned modifier.
 -- So the bonus belongs to the pantheon's owner and does not depend on which religion
--- or pantheon an individual city follows. Everything is database modifiers; there is
--- no Lua, so nothing can desync or double-apply on load.
+-- or pantheon an individual city follows.
+--
+-- Two facts come from Scripts/Europa_Pantheons.lua, which writes them onto plots as
+-- properties because no stock requirement can establish them:
+--   EUROPA_PANTHEON_PRESERVE_TILE  the tile touches a working Preserve of the same player
+--   EUROPA_PANTHEON_WONDER_CITY    the city owns a completed World Wonder (one under
+--                                  construction does not count)
+-- Everything else is tested here and reacts at once. The Builder charge is granted by
+-- the engine, not the script, so it cannot be applied twice on load.
 --
 -- Load order: after the expansions, before the "Spare Beliefs" mod (1000005), which
 -- copies every belief so both players can take the same one.
@@ -40,11 +47,13 @@ INSERT INTO Requirements (RequirementId, RequirementType, Inverse) VALUES
 	('EUROPA_PANTHEON_REQ_CITY_POP_UNDER_4',       'REQUIREMENT_CITY_HAS_X_POPULATION',              1),
 	('EUROPA_PANTHEON_REQ_CITY_HAS_MARKET',        'REQUIREMENT_CITY_HAS_BUILDING',                  0),
 	('EUROPA_PANTHEON_REQ_CITY_HAS_ART_MUSEUM',    'REQUIREMENT_CITY_HAS_BUILDING',                  0),
-	('EUROPA_PANTHEON_REQ_CITY_HAS_WONDER',        'REQUIREMENT_CITY_HAS_ANY_WONDER',                0),
+	-- Set by the script on the city-centre plot, which is the plot a city requirement tests.
+	('EUROPA_PANTHEON_REQ_CITY_HAS_WONDER',        'REQUIREMENT_PLOT_PROPERTY_MATCHES',              0),
 	('EUROPA_PANTHEON_REQ_PLOT_NO_IMPROVEMENT',    'REQUIREMENT_PLOT_HAS_ANY_IMPROVEMENT',           1),
 	-- Districts, Wonders and the City Centre are all districts to the engine.
 	('EUROPA_PANTHEON_REQ_PLOT_NO_DISTRICT',       'REQUIREMENT_PLOT_HAS_ANY_DISTRICT',              1),
-	('EUROPA_PANTHEON_REQ_PLOT_NEXT_TO_PRESERVE',  'REQUIREMENT_PLOT_ADJACENT_DISTRICT_TYPE_MATCHES', 0),
+	-- Set by the script: completed, unpillaged, and the same player's.
+	('EUROPA_PANTHEON_REQ_PLOT_NEXT_TO_PRESERVE',  'REQUIREMENT_PLOT_PROPERTY_MATCHES',              0),
 	('EUROPA_PANTHEON_REQ_HAS_MEDIEVAL_FAIRES',    'REQUIREMENT_PLAYER_HAS_CIVIC',                   0);
 
 INSERT INTO RequirementArguments (RequirementId, Name, Value) VALUES
@@ -53,8 +62,10 @@ INSERT INTO RequirementArguments (RequirementId, Name, Value) VALUES
 	('EUROPA_PANTHEON_REQ_CITY_HAS_MARKET',       'MustBeFunctioning', '1'),
 	('EUROPA_PANTHEON_REQ_CITY_HAS_ART_MUSEUM',   'BuildingType',      'BUILDING_MUSEUM_ART'),
 	('EUROPA_PANTHEON_REQ_CITY_HAS_ART_MUSEUM',   'MustBeFunctioning', '1'),
-	('EUROPA_PANTHEON_REQ_PLOT_NEXT_TO_PRESERVE', 'DistrictType',      'DISTRICT_PRESERVE'),
-	('EUROPA_PANTHEON_REQ_PLOT_NEXT_TO_PRESERVE', 'MustBeFunctioning', '1'),
+	('EUROPA_PANTHEON_REQ_PLOT_NEXT_TO_PRESERVE', 'PropertyName',      'EUROPA_PANTHEON_PRESERVE_TILE'),
+	('EUROPA_PANTHEON_REQ_PLOT_NEXT_TO_PRESERVE', 'PropertyMinimum',   '1'),
+	('EUROPA_PANTHEON_REQ_CITY_HAS_WONDER',       'PropertyName',      'EUROPA_PANTHEON_WONDER_CITY'),
+	('EUROPA_PANTHEON_REQ_CITY_HAS_WONDER',       'PropertyMinimum',   '1'),
 	('EUROPA_PANTHEON_REQ_HAS_MEDIEVAL_FAIRES',   'CivicType',         'CIVIC_MEDIEVAL_FAIRES');
 
 INSERT INTO RequirementSets (RequirementSetId, RequirementSetType) VALUES

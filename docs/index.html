@@ -447,7 +447,7 @@ td.num { font-variant-numeric: tabular-nums; }
 
 		<section id="pantheons">
 			<h2>Pantheons</h2>
-			<p class="intro">Six new pantheons, offered alongside the stock and BBG ones; nothing is replaced. Any civilization can take them, the bonus belongs to whoever holds the pantheon (it does not depend on what an individual city follows) and it carries on after a religion is founded. None has an empire-wide cap. With the Spare Beliefs mod both players can take the same one. Gathering Storm ruleset only. No scripts: every effect is an ordinary modifier.</p>
+			<p class="intro">Six new pantheons, offered alongside the stock and BBG ones; nothing is replaced. Any civilization can take them, the bonus belongs to whoever holds the pantheon (it does not depend on what an individual city follows) and it carries on after a religion is founded. None has an empire-wide cap. With the Spare Beliefs mod both players can take the same one. Gathering Storm ruleset only. Every effect is an ordinary modifier; a small script supplies two facts the modifiers cannot work out (whose Preserve a tile touches, and whether a city's Wonder is finished).</p>
 
 			<article class="leader" id="first-settlers" style="--c1:#8c3b1d; --c2:#f7dccf">
 				<div class="head">
@@ -478,7 +478,7 @@ td.num { font-variant-numeric: tabular-nums; }
 				</div>
 				<ul class="abilities">
 					<li><span class="tag ok">As designed</span><p class="what">Builders trained or purchased in a city with a Market receive +1 build charge.</p>
-						<p class="note">Built the same way as Liang's Guildmaster promotion: given once when the Builder is made, kept if the Market is later pillaged, never added to Builders that already exist, and adds to Liang, Serfdom, Public Works and the Pyramids. Whether a free Builder that appears in such a city also gets it has not been tested in game; the design says it should not.</p></li>
+						<p class="note">Built the same way as Liang's Guildmaster promotion: given once when the Builder is made, kept if the Market is later pillaged, never added to Builders that already exist, and adds to Liang, Serfdom, Public Works and the Pyramids. A free Builder that appears in such a city may also get it; that is accepted.</p></li>
 				</ul>
 			</article>
 
@@ -488,8 +488,8 @@ td.num { font-variant-numeric: tabular-nums; }
 					<div class="names"><h3>Sacred Wilderness</h3><div class="civ">Pantheon &middot; Appeal</div></div>
 				</div>
 				<ul class="abilities">
-					<li><span class="tag adj">Adjusted</span><p class="what">Once you have Medieval Faires, unimproved Breathtaking tiles next to a Preserve provide <span class="y prod">+1 Production</span>.</p>
-						<p class="note">A tile yield, so a tile gets it once however many Preserves touch it, and it follows Appeal, improvements and districts as they change. Tiles holding a district, Wonder or City Centre never qualify. Adjusted in one respect: the engine's adjacency test finds a working Preserve next to the tile but cannot say whose it is, so the other player's Preserve on your border would also count for your tile. The tile and the Preserve need not be in the same city.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">Once you have Medieval Faires, unimproved Breathtaking tiles next to a Preserve provide <span class="y prod">+1 Production</span>.</p>
+						<p class="note">A tile yield, so a tile gets it once however many Preserves touch it, and it follows Appeal, improvements and districts as they change. Tiles holding a district, Wonder or City Centre never qualify. The Preserve must be yours, finished and unpillaged; the other player's Preserve on your border does not count. The engine's own adjacency test cannot tell whose Preserve it is, so a script marks the tiles: that one fact is refreshed at the start of your turn, when a district is finished, when something is pillaged and when a city changes hands. The tile and the Preserve need not be in the same city.</p></li>
 				</ul>
 			</article>
 
@@ -500,7 +500,7 @@ td.num { font-variant-numeric: tabular-nums; }
 				</div>
 				<ul class="abilities">
 					<li><span class="tag ok">As designed</span><p class="what">Cities with an Art Museum and at least one World Wonder generate <span class="y gp">+1 Great Artist point</span> per turn.</p>
-						<p class="note">Once per city however many Wonders it has; a captured Wonder counts; the museum can be empty; an Archaeological Museum does not count. Shares its name with the stock Follower belief that gives Faith from Wonders. That belief is untouched, the two are separate, and you can hold both.</p></li>
+						<p class="note">Once per city however many Wonders it has; a captured Wonder counts; the museum can be empty; an Archaeological Museum does not count. Shares its name with the stock Follower belief that gives Faith from Wonders. That belief is untouched, the two are separate, and you can hold both. A Wonder still under construction does not count: a script marks a city once its Wonder is finished.</p></li>
 				</ul>
 			</article>
 
@@ -511,7 +511,7 @@ td.num { font-variant-numeric: tabular-nums; }
 				</div>
 				<ul class="abilities">
 					<li><span class="tag ok">As designed</span><p class="what">Builders trained or purchased in a city with at least one World Wonder receive +1 build charge.</p>
-						<p class="note">Same mechanism as Guilds of the New Realm. One extra charge however many Wonders the city has; a captured Wonder city qualifies. Whether a Wonder still under construction already counts has not been tested in game; the design says it should not.</p></li>
+						<p class="note">Same mechanism as Guilds of the New Realm. One extra charge however many Wonders the city has; a captured Wonder city qualifies. A Wonder still under construction does not count: a script marks a city once its Wonder is finished.</p></li>
 				</ul>
 			</article>
 		</section>

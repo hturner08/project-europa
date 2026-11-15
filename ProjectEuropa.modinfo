@@ -62,7 +62,7 @@
 			<File>Data/Europa_CityStates_BBG.sql</File>
 		</UpdateDatabase>
 		<!-- Pantheons. Gathering Storm only. They use only our own rows and stock requirement
-		     types, so they do not need to load after Better Balanced Game. The LoadOrder is
+		     types (plus two plot properties written by Scripts/Europa_Pantheons.lua), so they do not need to load after Better Balanced Game. The LoadOrder is
 		     above Europa_Resources.sql (Sacred Companions tags those resources) and must stay
 		     below 1000005: the "Spare Beliefs" mod copies every belief at that point so both
 		     players can take the same pantheon, and anything added later is not copied.
@@ -159,6 +159,9 @@
 		</UpdateArt>
 		<AddGameplayScripts id="EuropaScripts">
 			<File>Scripts/Europa_LakeResources.lua</File>
+		</AddGameplayScripts>
+		<AddGameplayScripts id="EuropaPantheonScripts" criteria="Expansion2">
+			<File>Scripts/Europa_Pantheons.lua</File>
 		</AddGameplayScripts>
 		<AddGameplayScripts id="EuropaLeaderScripts" criteria="Expansion2">
 			<File>Scripts/Europa_Leaders.lua</File>
@@ -278,6 +281,7 @@
 		<File>Data/Europa_Pantheon_SacredCompanions.sql</File>
 		<File>Data/Europa_Pantheons_Icons.xml</File>
 		<File>Text/Europa_Pantheons_Text_en_US.xml</File>
+		<File>Scripts/Europa_Pantheons.lua</File>
 		<File>Textures/Europa_Pantheons32.dds</File>
 		<File>Textures/Europa_Pantheons50.dds</File>
 		<File>Textures/Europa_Pantheons64.dds</File>
