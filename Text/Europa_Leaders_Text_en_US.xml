@@ -68,7 +68,7 @@
 			<Text>Cities you found on Hills gain +1 [ICON_Production] Production and +10% [ICON_Production] Production toward Settlers. They also gain +25% [ICON_Production] Production toward districts until their first specialty district is complete.</Text>
 		</Replace>
 		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_LIVING_PARADISE_DESCRIPTION" Language="en_US">
-			<Text>Unimproved Rainforest tiles adjacent to a Preserve provide +1 [ICON_Culture] Culture once Medieval Faires is known. Cities with at least three Rainforest tiles gain +10% [ICON_Production] Production toward Wonders. In a city that holds at least one Wonder, each Rainforest provides a further +1 Appeal to adjacent tiles.</Text>
+			<Text>Unimproved Rainforest tiles adjacent to a Preserve provide +1 [ICON_Culture] Culture once Medieval Faires is known. Cities with at least three Rainforest tiles gain +10% [ICON_Production] Production toward Wonders. Once Medieval Faires is known, each Rainforest in a city that holds at least one Wonder provides a further +1 Appeal to adjacent tiles.</Text>
 		</Replace>
 		<Replace Tag="LOC_TRAIT_LEADER_EUROPA_BORDERLESS_EMPIRE_DESCRIPTION" Language="en_US">
 			<Text>Settlers have +1 sight. The first [ICON_TradeRoute] Trade Route sent from each city you found claims up to two unowned tiles near that city (checked at the start of your turn). International [ICON_TradeRoute] Trade Routes sent from a city with at least one Camp or Pasture provide +2 [ICON_Food] Food and +1 [ICON_Production] Production.</Text>
