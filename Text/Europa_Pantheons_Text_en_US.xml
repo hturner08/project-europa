@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Project Europa: pantheon names and descriptions.
+     "Divine Inspiration" deliberately shares its display name with the stock Follower belief
+     (LOC_BELIEF_DIVINE_INSPIRATION_NAME). The two are different beliefs with different ids and
+     a player can hold both. To tell them apart in game, change the Text of
+     LOC_BELIEF_CUSTOM_ARTISTIC_INSPIRATION_NAME below; nothing else refers to the display name. -->
+<GameData>
+	<LocalizedText>
+		<Replace Tag="LOC_BELIEF_CUSTOM_FIRST_SETTLERS_NAME" Language="en_US">
+			<Text>Hearths of the First Settlers</Text>
+		</Replace>
+		<Replace Tag="LOC_BELIEF_CUSTOM_FIRST_SETTLERS_DESCRIPTION" Language="en_US">
+			<Text>Cities you founded receive +1 [ICON_Food] Food and +1 [ICON_Production] Production while they have 3 or fewer [ICON_Citizen] Population.</Text>
+		</Replace>
+		<Replace Tag="LOC_BELIEF_CUSTOM_SACRED_COMPANIONS_NAME" Language="en_US">
+			<Text>Sacred Companions</Text>
+		</Replace>
+		<Replace Tag="LOC_BELIEF_CUSTOM_SACRED_COMPANIONS_DESCRIPTION" Language="en_US">
+			<Text>Camps over Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes and Capybaras provide +1 [ICON_Production] Production and +1 [ICON_Faith] Faith.</Text>
+		</Replace>
+		<Replace Tag="LOC_BELIEF_CUSTOM_NEW_REALM_GUILDS_NAME" Language="en_US">
+			<Text>Guilds of the New Realm</Text>
+		</Replace>
+		<Replace Tag="LOC_BELIEF_CUSTOM_NEW_REALM_GUILDS_DESCRIPTION" Language="en_US">
+			<Text>Builders trained or purchased in cities with a Market receive +1 build charge.</Text>
+		</Replace>
+		<Replace Tag="LOC_BELIEF_CUSTOM_SACRED_WILDERNESS_NAME" Language="en_US">
+			<Text>Sacred Wilderness</Text>
+		</Replace>
+		<Replace Tag="LOC_BELIEF_CUSTOM_SACRED_WILDERNESS_DESCRIPTION" Language="en_US">
+			<Text>Once you have the Medieval Faires civic, unimproved Breathtaking tiles adjacent to a Preserve provide +1 [ICON_Production] Production.</Text>
+		</Replace>
+		<Replace Tag="LOC_BELIEF_CUSTOM_ARTISTIC_INSPIRATION_NAME" Language="en_US">
+			<Text>Divine Inspiration</Text>
+		</Replace>
+		<Replace Tag="LOC_BELIEF_CUSTOM_ARTISTIC_INSPIRATION_DESCRIPTION" Language="en_US">
+			<Text>Cities with an Art Museum and at least one World Wonder generate +1 [ICON_GreatArtist] Great Artist point per turn.</Text>
+		</Replace>
+		<Replace Tag="LOC_BELIEF_CUSTOM_PILLARS_OF_CREATION_NAME" Language="en_US">
+			<Text>Pillars of Creation</Text>
+		</Replace>
+		<Replace Tag="LOC_BELIEF_CUSTOM_PILLARS_OF_CREATION_DESCRIPTION" Language="en_US">
+			<Text>Builders trained or purchased in cities with at least one World Wonder receive +1 build charge.</Text>
+		</Replace>
+	</LocalizedText>
+</GameData>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Everything the Project Europa mod for Civilization VI changes: eight custom leaders, seven luxuries, the Fish Weir and bigger deserts.">
+<meta name="description" content="Everything the Project Europa mod for Civilization VI changes: eight custom leaders, six city-states, six pantheons, seven luxuries, the Fish Weir and bigger deserts.">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Project Europa Changes</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -201,6 +201,13 @@ td.num { font-variant-numeric: tabular-nums; }
 			<a href="#ravenna">Ravenna</a>
 			<a href="#lhasa">Lhasa</a>
 			<a href="#bruges">Bruges</a>
+			<span class="group">Pantheons</span>
+			<a href="#first-settlers">Hearths of the First Settlers</a>
+			<a href="#sacred-companions">Sacred Companions</a>
+			<a href="#new-realm-guilds">Guilds of the New Realm</a>
+			<a href="#sacred-wilderness">Sacred Wilderness</a>
+			<a href="#divine-inspiration">Divine Inspiration</a>
+			<a href="#pillars-of-creation">Pillars of Creation</a>
 			<span class="group">World</span>
 			<a href="#luxuries">Luxuries</a>
 			<a href="#fish-weir">Fish Weir</a>
@@ -217,6 +224,7 @@ td.num { font-variant-numeric: tabular-nums; }
 			<ul class="facts">
 				<li><b>8</b> custom leaders</li>
 				<li><b>6</b> city-states</li>
+				<li><b>6</b> pantheons</li>
 				<li><b>7</b> luxury resources</li>
 				<li><b>1</b> new improvement</li>
 				<li><b>1</b> map generation change</li>
@@ -433,6 +441,77 @@ td.num { font-variant-numeric: tabular-nums; }
 						<p class="note">Added to the district rather than declared as adjacency, for the same reason as Syracuse.</p></li>
 					<li><span class="tag ok">As designed</span><p class="what">Cities with both districts gain <span class="y cult">+1 Culture</span> for each <span class="y trade">Trade Route</span> they send, to a maximum of +2 per city.</p>
 						<p class="note">Domestic and international routes both count, the districts need not touch, and each city is capped on its own. Counted at the start of your turn.</p></li>
+				</ul>
+			</article>
+		</section>
+
+		<section id="pantheons">
+			<h2>Pantheons</h2>
+			<p class="intro">Six new pantheons, offered alongside the stock and BBG ones; nothing is replaced. Any civilization can take them, the bonus belongs to whoever holds the pantheon (it does not depend on what an individual city follows) and it carries on after a religion is founded. None has an empire-wide cap. With the Spare Beliefs mod both players can take the same one. Gathering Storm ruleset only. No scripts: every effect is an ordinary modifier.</p>
+
+			<article class="leader" id="first-settlers" style="--c1:#8c3b1d; --c2:#f7dccf">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>H</span></div>
+					<div class="names"><h3>Hearths of the First Settlers</h3><div class="civ">Pantheon &middot; expansion</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag ok">As designed</span><p class="what">Cities you founded receive <span class="y food">+1 Food</span> and <span class="y prod">+1 Production</span> while they have 1 to 3 Population.</p>
+						<p class="note">A city yield, not a City Centre tile yield. Includes your Capital and cities founded before you took the pantheon. Captured cities never qualify. Switches off at 4 Population and back on if the city shrinks below 4.</p></li>
+				</ul>
+			</article>
+
+			<article class="leader" id="sacred-companions" style="--c1:#1d6b4f; --c2:#d3f0e3">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>S</span></div>
+					<div class="names"><h3>Sacred Companions</h3><div class="civ">Pantheon &middot; luxuries</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag ok">As designed</span><p class="what">Camps over Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes and Capybaras provide <span class="y prod">+1 Production</span> and <span class="y faith">+1 Faith</span>.</p>
+						<p class="note">Added to the tile. The five resources are an explicit list checked against the resource pack: every one is improved by a Camp. Topaz (Mine) and Discus Fish (Fish Weir) are not on it. If a listed resource is ever removed, this pantheon is not offered at all rather than offered and doing nothing. Stacks with Goddess of the Hunt.</p></li>
+				</ul>
+			</article>
+
+			<article class="leader" id="new-realm-guilds" style="--c1:#8c6d1d; --c2:#f7ecc9">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>G</span></div>
+					<div class="names"><h3>Guilds of the New Realm</h3><div class="civ">Pantheon &middot; infrastructure</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag ok">As designed</span><p class="what">Builders trained or purchased in a city with a Market receive +1 build charge.</p>
+						<p class="note">Built the same way as Liang's Guildmaster promotion: given once when the Builder is made, kept if the Market is later pillaged, never added to Builders that already exist, and adds to Liang, Serfdom, Public Works and the Pyramids. Whether a free Builder that appears in such a city also gets it has not been tested in game; the design says it should not.</p></li>
+				</ul>
+			</article>
+
+			<article class="leader" id="sacred-wilderness" style="--c1:#2f6b1d; --c2:#dcf2d3">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>W</span></div>
+					<div class="names"><h3>Sacred Wilderness</h3><div class="civ">Pantheon &middot; Appeal</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag adj">Adjusted</span><p class="what">Once you have Medieval Faires, unimproved Breathtaking tiles next to a Preserve provide <span class="y prod">+1 Production</span>.</p>
+						<p class="note">A tile yield, so a tile gets it once however many Preserves touch it, and it follows Appeal, improvements and districts as they change. Tiles holding a district, Wonder or City Centre never qualify. Adjusted in one respect: the engine's adjacency test finds a working Preserve next to the tile but cannot say whose it is, so the other player's Preserve on your border would also count for your tile. The tile and the Preserve need not be in the same city.</p></li>
+				</ul>
+			</article>
+
+			<article class="leader" id="divine-inspiration" style="--c1:#6b1d8c; --c2:#ecd3f7">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>D</span></div>
+					<div class="names"><h3>Divine Inspiration</h3><div class="civ">Pantheon &middot; Wonders and culture</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag ok">As designed</span><p class="what">Cities with an Art Museum and at least one World Wonder generate <span class="y gp">+1 Great Artist point</span> per turn.</p>
+						<p class="note">Once per city however many Wonders it has; a captured Wonder counts; the museum can be empty; an Archaeological Museum does not count. Shares its name with the stock Follower belief that gives Faith from Wonders. That belief is untouched, the two are separate, and you can hold both.</p></li>
+				</ul>
+			</article>
+
+			<article class="leader" id="pillars-of-creation" style="--c1:#1d4f8c; --c2:#cfe3f7">
+				<div class="head">
+					<div class="hex" aria-hidden="true"><span>P</span></div>
+					<div class="names"><h3>Pillars of Creation</h3><div class="civ">Pantheon &middot; Wonders</div></div>
+				</div>
+				<ul class="abilities">
+					<li><span class="tag ok">As designed</span><p class="what">Builders trained or purchased in a city with at least one World Wonder receive +1 build charge.</p>
+						<p class="note">Same mechanism as Guilds of the New Realm. One extra charge however many Wonders the city has; a captured Wonder city qualifies. Whether a Wonder still under construction already counts has not been tested in game; the design says it should not.</p></li>
 				</ul>
 			</article>
 		</section>

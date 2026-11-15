@@ -25,7 +25,7 @@ for f in Config/* Data/* Text/* Scripts/* Textures/* ArtDefs/* Maps/*.lua Maps/U
 done
 
 echo "== icon atlases referenced by the icon database exist"
-for f in $(grep -ho 'Filename="[^"]*"' Data/Europa_Icons.xml Data/Europa_CityStates_Icons.xml | cut -d'"' -f2 | sort -u); do
+for f in $(grep -ho 'Filename="[^"]*"' Data/Europa_Icons.xml Data/Europa_CityStates_Icons.xml Data/Europa_Pantheons_Icons.xml | cut -d'"' -f2 | sort -u); do
 	[ -f "Textures/$f" ] || { echo "MISSING TEXTURE: $f"; fail=1; }
 done
 
@@ -44,7 +44,9 @@ db.execute("PRAGMA foreign_keys=ON")
 # Drop rows from a previous run of this mod so the check is repeatable.
 db.execute("DELETE FROM Types WHERE Type LIKE 'RESOURCE_EUROPA_%' OR Type LIKE 'IMPROVEMENT_EUROPA_%'"
            " OR Type LIKE 'LEADER_EUROPA_%' OR Type LIKE 'TRAIT_LEADER_EUROPA_%' OR Type LIKE 'EUROPA_MODIFIER_%'"
-           " OR Type LIKE 'CIVILIZATION_EUROPA_%' OR Type LIKE 'LEADER_MINOR_CIV_EUROPA_%' OR Type LIKE 'MINOR_CIV_EUROPA_%'")
+           " OR Type LIKE 'CIVILIZATION_EUROPA_%' OR Type LIKE 'LEADER_MINOR_CIV_EUROPA_%' OR Type LIKE 'MINOR_CIV_EUROPA_%'"
+           " OR Type LIKE 'BELIEF_CUSTOM_%'")   # also removes the copies the Spare Beliefs mod makes
+db.execute("DELETE FROM Tags WHERE Tag LIKE 'CLASS_EUROPA_%'")
 db.execute("DELETE FROM LoadingInfo WHERE LeaderType LIKE 'LEADER_EUROPA_%'")
 for t, c in (("TraitModifiers", "ModifierId"), ("ModifierArguments", "ModifierId"), ("Modifiers", "ModifierId"),
              ("RequirementSetRequirements", "RequirementSetId"), ("RequirementSets", "RequirementSetId"),
@@ -54,12 +56,13 @@ ok = True
 # The game rewrites this cache at every launch, from the base rules until a game is started.
 # The leaders need Gathering Storm rows, so they can only be checked against a cache left
 # by a Gathering Storm game.
-paths = sys.argv[2:]
+# Resources first: Sacred Companions tags them. (In game the modinfo LoadOrder does this.)
+paths = sorted(sys.argv[2:], key=lambda p: "Resources" not in p)
 if not db.execute("SELECT 1 FROM Civilizations WHERE CivilizationType='CIVILIZATION_MALI'").fetchone():
     print("SKIPPED leader SQL: the cached database is base rules only (the game was launched but no")
     print("  Gathering Storm game started since). Start one, quit, and re-run to check the leaders.")
-    print("SKIPPED city-state SQL for the same reason.")
-    paths = [p for p in paths if "Leader" not in p and "CityState" not in p]
+    print("SKIPPED city-state and pantheon SQL for the same reason.")
+    paths = [p for p in paths if "Leader" not in p and "CityState" not in p and "Pantheon" not in p]
 for path in paths:
     try:
         db.executescript(open(path).read())
@@ -110,12 +113,84 @@ for (leader,) in leaders:
                 print(f"UNKNOWN MODIFIER TYPE: {row[0]}"); ok = False
 # Every EUROPA_ modifier must be attached to something, and every requirement set used.
 for (mid,) in db.execute("SELECT ModifierId FROM Modifiers WHERE ModifierId LIKE 'EUROPA_%' AND ModifierId NOT IN (SELECT ModifierId FROM TraitModifiers)"
+                         " AND ModifierId NOT IN (SELECT ModifierID FROM BeliefModifiers)"
                          " AND ModifierId NOT IN (SELECT Value FROM ModifierArguments WHERE Name='ModifierId')"):
     print(f"UNATTACHED MODIFIER: {mid}"); ok = False
 for (rs,) in db.execute("SELECT RequirementSetId FROM RequirementSets WHERE RequirementSetId LIKE 'EUROPA_%' AND RequirementSetId NOT IN (SELECT SubjectRequirementSetId FROM Modifiers WHERE SubjectRequirementSetId IS NOT NULL) AND RequirementSetId NOT IN (SELECT OwnerRequirementSetId FROM Modifiers WHERE OwnerRequirementSetId IS NOT NULL) AND RequirementSetId NOT IN (SELECT Value FROM RequirementArguments WHERE Name='RequirementSetId')"):
     print(f"UNUSED REQUIREMENT SET: {rs}"); ok = False
 for (rs,) in db.execute("SELECT RequirementSetId FROM RequirementSets WHERE RequirementSetId LIKE 'EUROPA_%' AND RequirementSetId NOT IN (SELECT RequirementSetId FROM RequirementSetRequirements)"):
     print(f"EMPTY REQUIREMENT SET: {rs}"); ok = False
+# ---- pantheons ----------------------------------------------------------------
+# Each pantheon effect is belief -> attach to the player who holds the pantheon -> (attach to
+# that player's cities ->) the effect. Print the whole chain to read against the design.
+PANTHEONS = ["BELIEF_CUSTOM_FIRST_SETTLERS", "BELIEF_CUSTOM_SACRED_COMPANIONS", "BELIEF_CUSTOM_NEW_REALM_GUILDS",
+             "BELIEF_CUSTOM_SACRED_WILDERNESS", "BELIEF_CUSTOM_ARTISTIC_INSPIRATION", "BELIEF_CUSTOM_PILLARS_OF_CREATION"]
+ARG_TABLES = {"BuildingType": ("Buildings", "BuildingType"), "DistrictType": ("Districts", "DistrictType"),
+              "CivicType": ("Civics", "CivicType"), "ImprovementType": ("Improvements", "ImprovementType"),
+              "GreatPersonClassType": ("GreatPersonClasses", "GreatPersonClassType"), "YieldType": ("Yields", "YieldType"),
+              "Tag": ("Tags", "Tag")}
+def check_arg(owner, name, value):
+    global ok
+    if name in ARG_TABLES:
+        t, c = ARG_TABLES[name]
+        if not db.execute(f"SELECT 1 FROM {t} WHERE {c}=?", (value,)).fetchone():
+            print(f"UNKNOWN {name} '{value}' in {owner}"); ok = False
+def walk(mid, depth):
+    """Print a modifier and whatever it attaches; return the modifiers at the end of the chain."""
+    global ok
+    row = db.execute("SELECT ModifierType, SubjectRequirementSetId, Permanent FROM Modifiers WHERE ModifierId=?", (mid,)).fetchone()
+    if not row:
+        print(f"MODIFIER MISSING: {mid}"); ok = False; return []
+    if not db.execute("SELECT 1 FROM DynamicModifiers WHERE ModifierType=?", (row[0],)).fetchone():
+        print(f"UNKNOWN MODIFIER TYPE: {row[0]}"); ok = False
+    args = db.execute("SELECT Name, Value FROM ModifierArguments WHERE ModifierId=?", (mid,)).fetchall()
+    for n, v in args: check_arg(mid, n, v)
+    if row[1]:
+        if not db.execute("SELECT 1 FROM RequirementSetRequirements WHERE RequirementSetId=?", (row[1],)).fetchone():
+            print(f"EMPTY OR MISSING REQUIREMENT SET: {row[1]}"); ok = False
+        for rid, rtype in db.execute("SELECT r.RequirementId, r.RequirementType FROM RequirementSetRequirements s JOIN Requirements r USING (RequirementId) WHERE s.RequirementSetId=?", (row[1],)):
+            if not db.execute("SELECT 1 FROM Types WHERE Type=? AND Kind='KIND_REQUIREMENT'", (rtype,)).fetchone():
+                print(f"UNKNOWN REQUIREMENT TYPE: {rtype}"); ok = False
+            for n, v in db.execute("SELECT Name, Value FROM RequirementArguments WHERE RequirementId=?", (rid,)): check_arg(rid, n, v)
+    print("    " + "  " * depth + f"{mid.replace('EUROPA_PANTHEON_', '')}: {row[0].replace('MODIFIER_', '')} {{{', '.join(f'{n}={v}' for n, v in args)}}}"
+          + (" permanent" if row[2] else "") + (f" if {reqset(row[1])}" if row[1] else ""))
+    inner = [v for n, v in args if n == "ModifierId"]
+    if not inner:
+        return [(mid, row[0], row[2])]
+    return [leaf for i in inner for leaf in walk(i, depth + 1)]
+if any("Pantheon" in p for p in paths):
+    found = [r[0] for r in db.execute("SELECT BeliefType FROM Beliefs WHERE BeliefType LIKE 'BELIEF_CUSTOM_%' AND BeliefClassType='BELIEF_CLASS_PANTHEON'")]
+    if sorted(found) != sorted(PANTHEONS):
+        print(f"EXPECTED THE 6 PANTHEONS, GOT {sorted(found)}"); ok = False
+    for belief in found:
+        print(f"  {belief}")
+        outers = db.execute("SELECT ModifierID FROM BeliefModifiers WHERE BeliefType=? ORDER BY 1", (belief,)).fetchall()
+        if not outers:
+            print(f"PANTHEON HAS NO EFFECT: {belief}"); ok = False
+        for (outer,) in outers:
+            otype, oreq = db.execute("SELECT ModifierType, SubjectRequirementSetId FROM Modifiers WHERE ModifierId=?", (outer,)).fetchone() or (None, None)
+            if otype != "MODIFIER_ALL_PLAYERS_ATTACH_MODIFIER" or oreq != "PLAYER_HAS_PANTHEON_REQUIREMENTS":
+                print(f"NOT LIMITED TO THE PANTHEON'S OWNER: {outer}"); ok = False
+            for leaf, ltype, permanent in walk(outer, 0):
+                # A Builder charge must be Permanent (granted once, kept by the unit), as Liang's is.
+                if "BUILDER_CHARGES" in ltype and not permanent:
+                    print(f"BUILDER CHARGE NOT PERMANENT: {leaf}"); ok = False
+    # The stock Follower belief that shares a display name with ours must be untouched.
+    stock = db.execute("SELECT BeliefClassType FROM Beliefs WHERE BeliefType='BELIEF_DIVINE_INSPIRATION'").fetchone()
+    if not stock or stock[0] != "BELIEF_CLASS_FOLLOWER" or not db.execute(
+            "SELECT 1 FROM BeliefModifiers WHERE BeliefType='BELIEF_DIVINE_INSPIRATION' AND ModifierID='DIVINE_INSPIRATION_WONDER_FAITH'").fetchone():
+        print("STOCK BELIEF_DIVINE_INSPIRATION CHANGED OR MISSING"); ok = False
+    # Sacred Companions: the tagged resources must be exactly our luxuries that a Camp improves.
+    tagged = {r[0] for r in db.execute("SELECT Type FROM TypeTags WHERE Tag='CLASS_EUROPA_SACRED_COMPANION'")}
+    camp = {r[0] for r in db.execute("SELECT i.ResourceType FROM Improvement_ValidResources i JOIN Resources r USING (ResourceType)"
+                                     " WHERE i.ImprovementType='IMPROVEMENT_CAMP' AND r.ResourceClassType='RESOURCECLASS_LUXURY' AND i.ResourceType LIKE 'RESOURCE_EUROPA_%'")}
+    print(f"  Sacred Companions resources: {', '.join(sorted(r.replace('RESOURCE_EUROPA_', '') for r in tagged)) or 'NONE'}")
+    if not tagged:
+        print("SACRED COMPANIONS IS UNUSABLE: no eligible resource"); ok = False
+    if tagged - camp:
+        print(f"SACRED COMPANIONS LISTS A RESOURCE THAT IS NOT A CAMP LUXURY: {sorted(tagged - camp)}"); ok = False
+    if camp - tagged:
+        print(f"CAMP LUXURY MISSING FROM SACRED COMPANIONS: {sorted(camp - tagged)}"); ok = False
 # ---- city-states ------------------------------------------------------------
 # Each Suzerain bonus is a trait modifier that attaches a second modifier to the Suzerain;
 # print the attached one, with what it needs, to read against the design.
@@ -236,6 +311,18 @@ done
 for prop in $(grep -ho "'EUROPA_[A-Z_]*'" Data/Europa_Leader*.sql | tr -d "'" | sort -u | while read v; do grep -q "'PropertyName', *'$v'" Data/Europa_Leader*.sql && echo "$v"; done); do
 	grep -q "\"${prop}\"" Scripts/Europa_Leaders.lua || { echo "PLOT PROPERTY NEVER WRITTEN BY LUA: $prop"; fail=1; }
 done
+
+echo "== every pantheon has a name, a description and an icon"
+for b in $(grep -ho "'BELIEF_CUSTOM_[A-Z_]*', *'KIND_BELIEF'" Data/Europa_Pantheon*.sql | grep -o "BELIEF_CUSTOM_[A-Z_]*" | sort -u); do
+	grep -q "Tag=\"LOC_${b}_NAME\"" Text/Europa_Pantheons_Text_en_US.xml        || { echo "NO NAME TEXT: $b"; fail=1; }
+	grep -q "Tag=\"LOC_${b}_DESCRIPTION\"" Text/Europa_Pantheons_Text_en_US.xml || { echo "NO DESCRIPTION TEXT: $b"; fail=1; }
+	grep -q "'LOC_${b}_NAME', *'LOC_${b}_DESCRIPTION'" Data/Europa_Pantheon*.sql  || { echo "BELIEF ROW DOES NOT USE ITS OWN TEXT KEYS: $b"; fail=1; }
+	grep -q "Name=\"ICON_${b}\"" Data/Europa_Pantheons_Icons.xml               || { echo "NO ICON: $b"; fail=1; }
+done
+# The Spare Beliefs mod only copies icons whose atlas name contains this (Firaxis's spelling).
+grep -q 'Atlas="[A-Z_]*BELIEFS_PATHEON"' Data/Europa_Pantheons_Icons.xml || { echo "PANTHEON ATLAS NAME WILL NOT BE COPIED BY SPARE BELIEFS"; fail=1; }
+order=$(grep -A3 'id="EuropaPantheons"' ProjectEuropa.modinfo | grep -o '<LoadOrder>[0-9]*' | grep -o '[0-9]*$')
+[ "${order:-0}" -gt 100 ] && [ "${order:-0}" -lt 1000005 ] || { echo "PANTHEON LOAD ORDER MUST BE ABOVE 100 AND BELOW 1000005, IS ${order:-unset}"; fail=1; }
 
 echo "== every city-state has a name, bonus text, pedia text, icon, colours and picker row"
 for c in $(grep -h "KIND_CIVILIZATION" Data/Europa_CityState*.sql | grep -o "CIVILIZATION_EUROPA_[A-Z_]*" | sort -u); do
