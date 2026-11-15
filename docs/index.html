@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Everything the Project Europa mod for Civilization VI changes: eight custom leaders, six city-states, six pantheons, seven luxuries, the Fish Weir and bigger deserts.">
+<meta name="description" content="Everything the Project Europa mod for Civilization VI changes: eight custom leaders, six city-states, six pantheons, seven luxuries, the Fish Weir, bigger deserts and great lakes.">
 <style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Project Europa Changes</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -250,6 +250,7 @@ td.num { font-variant-numeric: tabular-nums; }
 				<span class="group">Other changes</span>
 				<a href="#fish-weir">Fish Weir</a>
 				<a href="#deserts">Bigger deserts</a>
+				<a href="#lakes">Great lakes</a>
 				<a href="#rename">Renaming leaders</a>
 			</div>
 		</nav>
@@ -629,6 +630,20 @@ td.num { font-variant-numeric: tabular-nums; }
 					<li>The number of deserts never goes up, though close neighbours can merge.</li>
 					<li>It runs during map generation, so rivers, floodplains, resources and start biases all see the larger deserts.</li>
 					<li>Gathering Storm ruleset only. Works with the stock map scripts and the BBS scripts that use the standard terrain step.</li>
+				</ul>
+			</div>
+		</section>
+
+		<section id="lakes" data-tab="other">
+			<h2>Great lakes</h2>
+			<div class="plain">
+				<p>A few of the lakes the map generator places grow into great lakes of 6 to 9 tiles, so that Harbors have room and something to work. One lake is grown per 120 land tiles (at least three), and the ones chosen are as far apart as possible.</p>
+				<ul>
+					<li>Only existing lakes grow. No new lakes are added.</li>
+					<li>A grown lake never touches the sea or another lake and never passes 9 tiles, the game's limit for a lake, so it keeps fresh water and can hold Discus Fish.</li>
+					<li>Rivers and their banks, volcanoes and natural wonders are never flooded.</li>
+					<li>It runs during map generation, so features, resources and start positions all see the larger lakes. More lake tiles also means more Discus Fish.</li>
+					<li>Gathering Storm ruleset only. Works with map scripts that use the standard lake step, including stock and BBS Pangaea.</li>
 				</ul>
 			</div>
 		</section>

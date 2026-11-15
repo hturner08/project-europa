@@ -2,8 +2,8 @@
 <Mod id="7fe8ff0a-8385-4631-b121-6032c7cce1f5" version="1">
 	<Properties>
 		<Name>Project Europa</Name>
-		<Description>Seven luxury resources (Topaz, Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Discus Fish, Capybaras), the Fish Weir, bigger deserts, six city-states (Syracuse, Ubud, Sheffield, Ravenna, Lhasa, Bruges), six pantheons and eight custom leaders balanced against Better Balanced Game: Golden Expansion (Mali), Imperial Gardens (China), Highland Empire (Ethiopia), Living Paradise (Brazil), Borderless Empire (Cree), Endless Continent (Russia), Scenic Genius (America) and Palace Designer (France).</Description>
-		<Teaser>New luxuries, bigger deserts, six city-states, six pantheons, eight custom leaders.</Teaser>
+		<Description>Seven luxury resources (Topaz, Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Discus Fish, Capybaras), the Fish Weir, bigger deserts, great lakes, six city-states (Syracuse, Ubud, Sheffield, Ravenna, Lhasa, Bruges), six pantheons and eight custom leaders balanced against Better Balanced Game: Golden Expansion (Mali), Imperial Gardens (China), Highland Empire (Ethiopia), Living Paradise (Brazil), Borderless Empire (Cree), Endless Continent (Russia), Scenic Genius (America) and Palace Designer (France).</Description>
+		<Teaser>New luxuries, bigger deserts, great lakes, six city-states, six pantheons, eight custom leaders.</Teaser>
 		<Authors>Project Europa</Authors>
 		<AffectsSavedGames>1</AffectsSavedGames>
 		<CompatibleVersions>1.2,2.0</CompatibleVersions>
@@ -144,15 +144,18 @@
 			<File>Textures/Europa_Resources256_FOW.dds</File>
 			<File>Textures/Europa_FontIcons22.dds</File>
 		</ImportFiles>
-		<!-- Bigger deserts. Replaces the Gathering Storm TerrainGenerator.lua (stock file + appended
-		     hook, see tools/make_terrain_override.py), so it needs a higher LoadOrder than the
-		     expansion's own import and only applies under the Gathering Storm ruleset. -->
+		<!-- Bigger deserts and great lakes. Replaces the Gathering Storm TerrainGenerator.lua and
+		     RiversLakes.lua (stock file + appended hook, see tools/make_terrain_override.py), so it
+		     needs a higher LoadOrder than the expansion's own import and only applies under the
+		     Gathering Storm ruleset. -->
 		<ImportFiles id="EuropaMaps" criteria="Expansion2">
 			<Properties>
 				<LoadOrder>2000</LoadOrder>
 			</Properties>
 			<File>Maps/Utility/TerrainGenerator.lua</File>
 			<File>Maps/Europa_DesertGrowth.lua</File>
+			<File>Maps/Utility/RiversLakes.lua</File>
+			<File>Maps/Europa_LakeGrowth.lua</File>
 		</ImportFiles>
 		<UpdateArt id="EuropaArt">
 			<File>ProjectEuropa.dep</File>
@@ -270,6 +273,8 @@
 		<File>Scripts/Europa_LakeResources.lua</File>
 		<File>Maps/Utility/TerrainGenerator.lua</File>
 		<File>Maps/Europa_DesertGrowth.lua</File>
+		<File>Maps/Utility/RiversLakes.lua</File>
+		<File>Maps/Europa_LakeGrowth.lua</File>
 		<File>Textures/Europa_Resources32.dds</File>
 		<File>Textures/Europa_Resources38.dds</File>
 		<File>Textures/Europa_Resources50.dds</File>

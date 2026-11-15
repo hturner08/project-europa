@@ -397,11 +397,14 @@ for i in $(grep "KIND_IMPROVEMENT" Data/Europa_Resources.sql | grep -o "IMPROVEM
 	grep -q "m_Name text=\"${i}\"" ArtDefs/Improvements.artdef || { echo "NO ARTDEF: $i"; fail=1; }
 done
 
-echo "== terrain generator override is the installed stock file + our hook"
+echo "== map utility overrides are the installed stock files + our hooks"
 python3 tools/make_terrain_override.py --check || fail=1
 
 echo "== desert growth logic (needs the 'lupa' Python package; skipped without it)"
 python3 tools/test_desert_growth.py || fail=1
+
+echo "== great lakes logic (needs the 'lupa' Python package; skipped without it)"
+python3 tools/test_lake_growth.py || fail=1
 
 if command -v luac >/dev/null; then
 	echo "== Lua syntax"; luac -p Scripts/*.lua || fail=1
