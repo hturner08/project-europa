@@ -50,6 +50,12 @@ are chosen to be as far apart as possible, so they are spread across the map.
 - It runs straight after the stock lake step, so features, resources and start
   positions all see the larger lakes. More lake tiles also means more Discus Fish.
 
+Four Wonders that the stock rules ban from lakes can be built on them: the
+**Colossus**, **Great Lighthouse**, **Sydney Opera House** and **Torre de Belém**.
+Their other requirements (next to land, next to a Harbor) are unchanged, and their
+in-game descriptions still say "Coast". The Statue of Liberty (Diplomatic Victory
+Points), Venetian Arsenal and Golden Gate Bridge stay banned from lakes.
+
 Tune it in `Maps/Europa_LakeGrowth.lua` (`LandPerGreatLake`, `MinGreatLakes`,
 `MinSize`, `MaxSize`). Requires the Gathering Storm ruleset. Works with any map
 script that places lakes with the standard `AddLakes` step, which includes stock
@@ -198,6 +204,7 @@ it, the usual rule applies and a pantheon one player takes is gone for the other
 | `Scripts/Europa_LakeResources.lua` | Places Discus Fish on lakes at game start |
 | `Maps/Europa_DesertGrowth.lua` | Desert growth logic |
 | `Maps/Europa_LakeGrowth.lua` | Great lakes logic |
+| `Data/Europa_LakeWonders.sql` | Lifts the lake ban on four Wonders |
 | `Maps/Utility/TerrainGenerator.lua`, `Maps/Utility/RiversLakes.lua` | Generated: the stock Gathering Storm files plus a hook each (do not edit; run `tools/make_terrain_override.py`) |
 | `ArtDefs/*.artdef`, `ProjectEuropa.dep` | Map models, borrowed from existing resources and Fishing Boats |
 | `Textures/*.dds` | Generated icon atlases (do not edit; run `tools/make_icons.py` and `tools/make_citystate_icons.py`) |

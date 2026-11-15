@@ -144,6 +144,15 @@
 			<File>Textures/Europa_Resources256_FOW.dds</File>
 			<File>Textures/Europa_FontIcons22.dds</File>
 		</ImportFiles>
+		<!-- Lets four water Wonders be built on lakes. Gathering Storm only, like the great lakes
+		     it goes with. Loads after Better Balanced Game (last gameplay action 100000000) so the
+		     flag is not overwritten if BBG rewrites those Wonders. -->
+		<UpdateDatabase id="EuropaLakeWonders" criteria="Expansion2">
+			<Properties>
+				<LoadOrder>100000100</LoadOrder>
+			</Properties>
+			<File>Data/Europa_LakeWonders.sql</File>
+		</UpdateDatabase>
 		<!-- Bigger deserts and great lakes. Replaces the Gathering Storm TerrainGenerator.lua and
 		     RiversLakes.lua (stock file + appended hook, see tools/make_terrain_override.py), so it
 		     needs a higher LoadOrder than the expansion's own import and only applies under the
@@ -275,6 +284,7 @@
 		<File>Maps/Europa_DesertGrowth.lua</File>
 		<File>Maps/Utility/RiversLakes.lua</File>
 		<File>Maps/Europa_LakeGrowth.lua</File>
+		<File>Data/Europa_LakeWonders.sql</File>
 		<File>Textures/Europa_Resources32.dds</File>
 		<File>Textures/Europa_Resources38.dds</File>
 		<File>Textures/Europa_Resources50.dds</File>
