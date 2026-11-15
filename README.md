@@ -1,6 +1,6 @@
 # Project Europa
 
-A Civilization VI mod: seven luxury resources, the Fish Weir, bigger deserts, six
+A Civilization VI mod: seven luxury resources, the Fish Weir, bigger deserts, great lakes, six
 city-states, six pantheons, and eight custom leaders balanced against Better Balanced Game 7.5.1.
 
 Every change is listed, BBG-style, at https://hturner08.github.io/project-europa/
@@ -35,6 +35,26 @@ biases all see the larger deserts. Tune it in `Maps/Europa_DesertGrowth.lua`
 
 Requires the Gathering Storm ruleset. Works with the stock map scripts and the BBS
 ones that use the standard terrain step.
+
+## Great lakes
+
+Stock lakes are nearly all one tile, which leaves a Harbor with one possible spot
+and nothing to work. A few of the lakes the map generator places (one per 120 land
+tiles, at least three) are grown into great lakes of 6 to 9 tiles. The ones grown
+are chosen to be as far apart as possible, so they are spread across the map.
+
+- Only existing lakes grow; no new ones are added.
+- A grown lake never touches the sea or another lake and never passes 9 tiles, the
+  game's limit for a lake, so it keeps fresh water and can hold Discus Fish.
+- Rivers and their banks, volcanoes and natural wonders are never flooded.
+- It runs straight after the stock lake step, so features, resources and start
+  positions all see the larger lakes. More lake tiles also means more Discus Fish.
+
+Tune it in `Maps/Europa_LakeGrowth.lua` (`LandPerGreatLake`, `MinGreatLakes`,
+`MinSize`, `MaxSize`). Requires the Gathering Storm ruleset. Works with any map
+script that places lakes with the standard `AddLakes` step, which includes stock
+and BBS Pangaea; the Lakes map and the BBS "DW" scripts use their own and are not
+affected.
 
 ## Custom leaders
 
@@ -177,10 +197,11 @@ it, the usual rule applies and a pantheon one player takes is gone for the other
 | `docs/index.html` | The changes page |
 | `Scripts/Europa_LakeResources.lua` | Places Discus Fish on lakes at game start |
 | `Maps/Europa_DesertGrowth.lua` | Desert growth logic |
-| `Maps/Utility/TerrainGenerator.lua` | Generated: the stock Gathering Storm file plus a hook (do not edit; run `tools/make_terrain_override.py`) |
+| `Maps/Europa_LakeGrowth.lua` | Great lakes logic |
+| `Maps/Utility/TerrainGenerator.lua`, `Maps/Utility/RiversLakes.lua` | Generated: the stock Gathering Storm files plus a hook each (do not edit; run `tools/make_terrain_override.py`) |
 | `ArtDefs/*.artdef`, `ProjectEuropa.dep` | Map models, borrowed from existing resources and Fishing Boats |
 | `Textures/*.dds` | Generated icon atlases (do not edit; run `tools/make_icons.py` and `tools/make_citystate_icons.py`) |
-| `tools/` | `make_icons.py`, `make_citystate_icons.py`, `make_terrain_override.py`, `make_leader_art.py`, `test_desert_growth.py`, `test_leaders.py`, `test_citystates.py`, `validate.sh`, `install.sh` |
+| `tools/` | `make_icons.py`, `make_citystate_icons.py`, `make_terrain_override.py`, `make_leader_art.py`, `test_desert_growth.py`, `test_lake_growth.py`, `test_leaders.py`, `test_citystates.py`, `validate.sh`, `install.sh` |
 
 ## Use
 
