@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="1024" height="1024">
+<defs>
+<clipPath id="gem"><path d="M22,104 L62,58 L196,54 L238,98 L134,226 Z"/></clipPath>
+<filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="2.2"/></filter>
+<filter id="softer" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5"/></filter>
+<filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3.5"/></filter>
+<linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe9a8"/><stop offset="1" stop-color="#f6a12c"/></linearGradient>
+<linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f39a1f"/><stop offset="1" stop-color="#a84a08"/></linearGradient>
+</defs>
+<g filter="url(#rough)">
+<path d="M22,104 L62,58 L196,54 L238,98 L134,226 Z" fill="#e8861a"/>
+<g clip-path="url(#gem)">
+ <!-- crown -->
+ <path d="M78,78 L182,75 L206,100 L52,104 Z" fill="url(#g1)"/>
+ <path d="M62,58 L196,54 L182,75 L78,78 Z" fill="#fff3c9"/>
+ <path d="M22,104 L62,58 L78,78 L52,104 Z" fill="#f7b548"/>
+ <path d="M238,98 L196,54 L182,75 L206,100 Z" fill="#d9730f"/>
+ <path d="M62,58 L110,57 L78,78 Z" fill="#ffd36e"/>
+ <path d="M150,55 L196,54 L182,75 Z" fill="#f2a63a"/>
+ <!-- pavilion -->
+ <path d="M22,104 L52,104 L134,226 Z" fill="#f19a22"/>
+ <path d="M52,104 L112,103 L134,226 Z" fill="#ffc558"/>
+ <path d="M112,103 L162,101 L134,226 Z" fill="#e07a12"/>
+ <path d="M162,101 L206,100 L134,226 Z" fill="#b9560a"/>
+ <path d="M206,100 L238,98 L134,226 Z" fill="#8f3d07"/>
+ <!-- painted reflections -->
+ <path d="M60,112 L96,110 L112,160 Z" fill="#ffe7a3" opacity=".85" filter="url(#soft)"/>
+ <path d="M120,110 L150,108 L138,170 Z" fill="#f9b84a" opacity=".7" filter="url(#soft)"/>
+ <path d="M170,108 L196,107 L150,186 Z" fill="#732c04" opacity=".55" filter="url(#soft)"/>
+ <path d="M90,82 L130,80 L120,96 L84,98 Z" fill="#ffffff" opacity=".8" filter="url(#soft)"/>
+ <path d="M150,82 L176,81 L190,96 L160,97 Z" fill="#e58a1c" opacity=".8" filter="url(#soft)"/>
+ <path d="M30,104 L46,84 L52,96 Z" fill="#fff0c0" opacity=".7" filter="url(#soft)"/>
+ <ellipse cx="134" cy="200" rx="26" ry="30" fill="#7a3205" opacity=".35" filter="url(#softer)"/>
+ <ellipse cx="80" cy="70" rx="40" ry="14" fill="#fff" opacity=".35" filter="url(#softer)"/>
+ <!-- facet edges -->
+ <g fill="none" stroke="#fff6d8" stroke-width="1.6" stroke-linejoin="round" opacity=".75">
+  <path d="M52,104 L206,100"/><path d="M78,78 L182,75"/><path d="M52,104 L134,226"/><path d="M112,103 L134,226"/>
+ </g>
+ <g fill="none" stroke="#7a3205" stroke-width="1.4" opacity=".5">
+  <path d="M162,101 L134,226"/><path d="M206,100 L134,226"/><path d="M182,75 L206,100"/>
+ </g>
+</g>
+</g>
+<!-- sparkle -->
+<path d="M74,44 L78,62 L96,66 L78,70 L74,88 L70,70 L52,66 L70,62 Z" fill="#fffdf0"/>
+</svg>

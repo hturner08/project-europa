@@ -244,9 +244,10 @@ and cropped (`docs/img/`). Each card on the page links to the original.
   Pygmy Rabbits and Capybaras = Truffles, Discus Fish = Fish), and the Fish Weir
   uses the Fishing Boats model and build icon. New 3D art needs
   the Windows-only ModBuddy asset pipeline.
-- **Icons are generated placeholders.** Put a 512x512 `art/<key>.png`
-  (`topaz`, `peacocks`, `pallas_cats`, `pygmy_rabbits`, `tibetan_foxes`,
-  `discus_fish`, `capybaras`) and re-run `tools/make_icons.py` to replace one.
+- **Resource icons are hand-drawn, not Firaxis art.** Each one is a vector
+  drawing in `art/resources/<key>.svg`, composed onto a rebuilt stock frame as
+  `art/<key>.png`, then packed by `tools/make_icons.py`. To change one, edit the
+  SVG, re-compose it and re-run the packer.
 - **"Woods" means any woods.** The engine checks features independently of
   terrain, so Peacocks can also appear in tundra woods (as Deer and Furs do).
 - **Monopolies and Corporations mode**: no industries, corporations or products
