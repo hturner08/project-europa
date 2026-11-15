@@ -47,7 +47,7 @@ BBG) defines. Gathering Storm ruleset only. BBG is optional.
 | Golden Expansion | Mali | Settlers cost 10% less Gold. Domestic Trade Routes sent from a Suguba city give +2 Production. +1 Trade Route capacity per continent with three cities you founded (max +4). |
 | Imperial Gardens | China | +1 Appeal on every tile of a city with a Wonder. In a Grove city, +5% Wonder Production per Breathtaking tile next to the Wonder being built (max +20%). Great Wall next to Great Wall: +1 Faith. |
 | Highland Empire | Ethiopia | Cities you found on Hills: +1 Production, +10% toward Settlers, +25% toward districts until the first specialty district is complete. |
-| Living Paradise | Brazil | Unimproved Rainforest next to a Preserve: +1 Culture after Medieval Faires. Cities with three Rainforest tiles: +10% Wonder Production. In a city with a Wonder, Rainforest gives +1 more Appeal to adjacent tiles. |
+| Living Paradise | Brazil | Unimproved Rainforest next to a Preserve: +1 Culture after Medieval Faires. Cities with three Rainforest tiles: +10% Wonder Production. After Medieval Faires, Rainforest in a city with a Wonder gives +1 more Appeal to adjacent tiles. |
 | Borderless Empire | Cree | Settlers +1 sight. The first Trade Route from each city you found claims up to two unowned tiles near it. International Trade Routes from a city with a Camp or Pasture: +2 Food, +1 Production. |
 | Endless Continent | Russia | Lavra cities: +20% toward Settlers. Cities founded on Tundra or Tundra Hills get a free Builder. Tundra Woods: +1 Food. |
 | Scenic Genius | America | +30% toward Preserves. +10% toward a Wonder next to a Breathtaking tile. Unimproved Breathtaking tiles next to a Wonder: +1 Culture. +1 Appeal on every tile of a city with a National Park. |

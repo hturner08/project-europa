@@ -48,6 +48,7 @@ INSERT INTO RequirementArguments (RequirementId, Name, Value) VALUES
 
 INSERT INTO RequirementSets (RequirementSetId, RequirementSetType) VALUES
 	('EUROPA_REQSET_WILD_RAINFOREST_BY_PRESERVE', 'REQUIREMENTSET_TEST_ALL'),
+	('EUROPA_REQSET_WONDER_CITY_AFTER_FAIRES',    'REQUIREMENTSET_TEST_ALL'),
 	('EUROPA_REQSET_CITY_HAS_3_RAINFOREST',       'REQUIREMENTSET_TEST_ALL');
 
 INSERT INTO RequirementSetRequirements (RequirementSetId, RequirementId) VALUES
@@ -55,6 +56,8 @@ INSERT INTO RequirementSetRequirements (RequirementSetId, RequirementId) VALUES
 	('EUROPA_REQSET_WILD_RAINFOREST_BY_PRESERVE', 'EUROPA_REQ_PLOT_HAS_NO_IMPROVEMENT'),
 	('EUROPA_REQSET_WILD_RAINFOREST_BY_PRESERVE', 'EUROPA_REQ_PLOT_NEXT_TO_PRESERVE'),
 	('EUROPA_REQSET_WILD_RAINFOREST_BY_PRESERVE', 'EUROPA_REQ_PLAYER_HAS_MEDIEVAL_FAIRES'),
+	('EUROPA_REQSET_WONDER_CITY_AFTER_FAIRES',    'EUROPA_REQ_CITY_HAS_ANY_WONDER'),
+	('EUROPA_REQSET_WONDER_CITY_AFTER_FAIRES',    'EUROPA_REQ_PLAYER_HAS_MEDIEVAL_FAIRES'),
 	('EUROPA_REQSET_CITY_HAS_3_RAINFOREST',       'EUROPA_REQ_CITY_HAS_3_RAINFOREST');
 
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES
@@ -65,7 +68,9 @@ INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES
 	-- Wonders make Rainforest more appealing. The engine has no per-tile Appeal
 	-- modifier, so: in a city with a Wonder, each Rainforest gives +1 more Appeal
 	-- to the tiles around it (on top of Brazil's own Rainforest Appeal).
-	('EUROPA_BRAZIL_WONDER_RAINFOREST_APPEAL',    'MODIFIER_PLAYER_CITIES_ADJUST_FEATURE_APPEAL_MODIFIER', 'EUROPA_REQSET_CITY_HAS_ANY_WONDER');
+	-- Gated on Medieval Faires: before it, the extra Appeal made early Grove tiles
+	-- Breathtaking (+2 Culture each) as soon as the city had one Wonder.
+	('EUROPA_BRAZIL_WONDER_RAINFOREST_APPEAL',    'MODIFIER_PLAYER_CITIES_ADJUST_FEATURE_APPEAL_MODIFIER', 'EUROPA_REQSET_WONDER_CITY_AFTER_FAIRES');
 
 INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES
 	('EUROPA_BRAZIL_PRESERVE_RAINFOREST_CULTURE',  'YieldType',   'YIELD_CULTURE'),
