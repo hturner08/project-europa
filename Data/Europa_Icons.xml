@@ -37,7 +37,5 @@
 		<Row Name="RESOURCE_EUROPA_TIBETAN_FOXES" Atlas="ICON_ATLAS_EUROPA_FONT_ICONS" Index="4"/>
 		<Row Name="RESOURCE_EUROPA_DISCUS_FISH"   Atlas="ICON_ATLAS_EUROPA_FONT_ICONS" Index="5"/>
 		<Row Name="RESOURCE_EUROPA_CAPYBARAS"     Atlas="ICON_ATLAS_EUROPA_FONT_ICONS" Index="6"/>
-		<!-- Fish Weir borrows the stock Fishing Boats icon (same atlas cell). -->
-		<Row Name="ICON_IMPROVEMENT_EUROPA_FISH_WEIR" Atlas="ICON_ATLAS_UNIT_ACTIONS" Index="4"/>
 	</IconDefinitions>
 </GameInfo>

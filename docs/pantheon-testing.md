@@ -39,7 +39,7 @@ game function the script needs is missing.
 ## Sacred Companions
 
 - [ ] Camp on Peacocks (and each of Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Capybaras): +1 Production, +1 Faith on the tile.
-- [ ] Topaz Mine and Discus Fish Fish Weir: nothing. A Camp on a stock resource (Deer, Furs): nothing.
+- [ ] Topaz Mine and Discus Fish Fishing Boats: nothing. A Camp on a stock resource (Deer, Furs): nothing.
 - [ ] **(open)** Pillage the Camp: both bonuses go until it is repaired.
 - [ ] With Goddess of the Hunt held by the same player (Spare Beliefs cannot do this; skip unless a way exists): both apply.
 

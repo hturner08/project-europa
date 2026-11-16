@@ -9,7 +9,7 @@
 -- and quietly doing nothing. tools/validate.sh also checks that every resource on the
 -- list really is improved by a Camp and that no Camp luxury of ours is left off it.
 --
--- Not on the list, on purpose: Topaz (Mine) and Discus Fish (Fish Weir).
+-- Not on the list, on purpose: Topaz (Mine) and Discus Fish (Fishing Boats).
 
 INSERT INTO Types (Type, Kind) VALUES
 	('BELIEF_CUSTOM_SACRED_COMPANIONS', 'KIND_BELIEF');

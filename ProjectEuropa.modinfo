@@ -2,7 +2,7 @@
 <Mod id="7fe8ff0a-8385-4631-b121-6032c7cce1f5" version="1">
 	<Properties>
 		<Name>Project Europa</Name>
-		<Description>Seven luxury resources (Topaz, Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Discus Fish, Capybaras), the Fish Weir, bigger deserts, great lakes, six city-states (Syracuse, Ubud, Sheffield, Ravenna, Lhasa, Bruges), six pantheons and eight custom leaders balanced against Better Balanced Game: Golden Expansion (Mali), Imperial Gardens (China), Highland Empire (Ethiopia), Living Paradise (Brazil), Borderless Empire (Cree), Endless Continent (Russia), Scenic Genius (America) and Palace Designer (France).</Description>
+		<Description>Seven luxury resources (Topaz, Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Discus Fish, Capybaras), bigger deserts, great lakes, six city-states (Syracuse, Ubud, Sheffield, Ravenna, Lhasa, Bruges), six pantheons and eight custom leaders balanced against Better Balanced Game: Golden Expansion (Mali), Imperial Gardens (China), Highland Empire (Ethiopia), Living Paradise (Brazil), Borderless Empire (Cree), Endless Continent (Russia), Scenic Genius (America) and Palace Designer (France).</Description>
 		<Teaser>New luxuries, bigger deserts, great lakes, six city-states, six pantheons, eight custom leaders.</Teaser>
 		<Authors>Project Europa</Authors>
 		<AffectsSavedGames>1</AffectsSavedGames>
@@ -259,7 +259,6 @@
 		<File>Textures/Europa_CityStates200.dds</File>
 		<File>Textures/Europa_CityStates256.dds</File>
 		<File>ArtDefs/Resources.artdef</File>
-		<File>ArtDefs/Improvements.artdef</File>
 		<File>ArtDefs/Leaders.artdef</File>
 		<File>ArtDefs/FallbackLeaders.artdef</File>
 		<File>Config/Europa_Leaders_Config.sql</File>

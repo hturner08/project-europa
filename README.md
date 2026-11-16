@@ -1,6 +1,6 @@
 # Project Europa
 
-A Civilization VI mod: seven luxury resources, the Fish Weir, bigger deserts, great lakes, six
+A Civilization VI mod: seven luxury resources, bigger deserts, great lakes, six
 city-states, six pantheons, and eight custom leaders balanced against Better Balanced Game 7.5.1.
 
 Every change is listed, BBG-style, at https://hturner08.github.io/project-europa/
@@ -15,12 +15,12 @@ Every change is listed, BBG-style, at https://hturner08.github.io/project-europa
 | Pallas's Cats | Plains / Grassland / Tundra Hills | Camp | +1 Culture, +1 Gold |
 | Pygmy Rabbits | Plains, Plains Hills | Camp | +1 Food, +1 Culture |
 | Tibetan Foxes | Plains / Tundra / Desert Hills | Camp | +1 Culture, +1 Production |
-| Discus Fish | Lakes | Fish Weir (new) | +1 Culture, +1 Gold |
+| Discus Fish | Lakes | Fishing Boats | +1 Culture, +1 Gold |
 | Capybaras | Marsh, Floodplains | Camp | +1 Food, +1 Culture |
 
-All give +4 Amenities like standard luxuries. The **Fish Weir** is a new improvement
-that can only be built on Discus Fish; it unlocks at Sailing and has the same stats
-and later-era upgrades as Fishing Boats (+1 Food, 0.5 Housing). Works with the base game and both
+All give +4 Amenities like standard luxuries. Discus Fish are improved by the stock
+**Fishing Boats**, so everything that rewards Fishing Boats (the Celestial Navigation
+boost, God of the Sea, balance-mod yields) counts them too. Works with the base game and both
 expansions; the Gathering Storm floodplain variants are picked up automatically.
 
 ## Bigger deserts
@@ -183,7 +183,7 @@ it, the usual rule applies and a pantheon one player takes is gone for the other
 | Path | Purpose |
 |---|---|
 | `ProjectEuropa.modinfo` | Mod manifest: which file feeds which game system |
-| `Data/Europa_Resources.sql` | Gameplay database rows (resources and the Fish Weir improvement) |
+| `Data/Europa_Resources.sql` | Gameplay database rows (resources) |
 | `Data/Europa_Icons.xml` | Icon atlas and icon definitions |
 | `Text/Europa_Text_en_US.xml` | Names and Civilopedia text |
 | `Data/Europa_LeaderCommon.sql`, `Data/Europa_Leader_<Civ>.sql` | Leader gameplay rows, one file per leader so a missing DLC only drops that leader |
@@ -284,8 +284,7 @@ and cropped (`docs/img/`). Each card on the page links to the original.
 
 - **Map models are placeholders.** Each resource borrows an existing model
   (Topaz = Diamonds, Peacocks = Deer, Pallas's Cats and Tibetan Foxes = Furs,
-  Pygmy Rabbits and Capybaras = Truffles, Discus Fish = Fish), and the Fish Weir
-  uses the Fishing Boats model and build icon. New 3D art needs
+  Pygmy Rabbits and Capybaras = Truffles, Discus Fish = Fish). New 3D art needs
   the Windows-only ModBuddy asset pipeline.
 - **Resource icons are hand-drawn, not Firaxis art.** Each one is a vector
   drawing in `art/resources/<key>.svg`, composed onto a rebuilt stock frame as

@@ -265,14 +265,6 @@
 			<LoadsLibraries>false</LoadsLibraries>
 		</Element>
 		<Element>
-			<ConsumerName text="Improvements"/>
-			<ArtDefDependencyPaths>
-				<Element text="Improvements.artdef"/>
-			</ArtDefDependencyPaths>
-			<LibraryDependencies/>
-			<LoadsLibraries>false</LoadsLibraries>
-		</Element>
-		<Element>
 			<ConsumerName text="WorldView_Translate"/>
 			<ArtDefDependencyPaths/>
 			<LibraryDependencies/>
@@ -400,10 +392,6 @@
 	<ArtDefDependencies>
 		<Element>
 			<ArtDefPath text="Resources.artdef"/>
-			<ArtDefDependencyPaths/>
-		</Element>
-		<Element>
-			<ArtDefPath text="Improvements.artdef"/>
 			<ArtDefDependencyPaths/>
 		</Element>
 		<Element>

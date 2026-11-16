@@ -73,40 +73,17 @@ INSERT INTO Resource_YieldChanges (ResourceType, YieldType, YieldChange) VALUES
 	('RESOURCE_EUROPA_CAPYBARAS',     'YIELD_FOOD',       1),
 	('RESOURCE_EUROPA_CAPYBARAS',     'YIELD_CULTURE',    1);
 
--- Fish Weir: the lake improvement for Discus Fish. It has no valid terrains or
--- features of its own, so (like Fishing Boats) it can only be built on its resource,
--- and Discus Fish only exist on lakes. Stats mirror Fishing Boats.
-INSERT INTO Types (Type, Kind) VALUES
-	('IMPROVEMENT_EUROPA_FISH_WEIR', 'KIND_IMPROVEMENT');
-
-INSERT INTO Improvements (ImprovementType, Name, Description, Icon, PrereqTech, Buildable, Domain,
-                          PlunderType, PlunderAmount, Housing, TilesRequired, SameAdjacentValid) VALUES
-	('IMPROVEMENT_EUROPA_FISH_WEIR', 'LOC_IMPROVEMENT_EUROPA_FISH_WEIR_NAME', 'LOC_IMPROVEMENT_EUROPA_FISH_WEIR_DESCRIPTION',
-	 'ICON_IMPROVEMENT_EUROPA_FISH_WEIR', 'TECH_SAILING', 1, 'DOMAIN_SEA', 'PLUNDER_HEAL', 50, 1, 2, 1);
-
-INSERT INTO Improvement_ValidBuildUnits (ImprovementType, UnitType) VALUES
-	('IMPROVEMENT_EUROPA_FISH_WEIR', 'UNIT_BUILDER');
-
-INSERT INTO Improvement_YieldChanges (ImprovementType, YieldType, YieldChange) VALUES
-	('IMPROVEMENT_EUROPA_FISH_WEIR', 'YIELD_FOOD', 1);
-
--- Later-era yield upgrades and tourism are copied from Fishing Boats as loaded,
--- so the Fish Weir stays in step with it under any ruleset or balance mod.
-INSERT INTO Improvement_BonusYieldChanges (ImprovementType, YieldType, BonusYieldChange, PrereqTech, PrereqCivic)
-	SELECT 'IMPROVEMENT_EUROPA_FISH_WEIR', YieldType, BonusYieldChange, PrereqTech, PrereqCivic
-	FROM Improvement_BonusYieldChanges WHERE ImprovementType = 'IMPROVEMENT_FISHING_BOATS';
-
-INSERT INTO Improvement_Tourism (ImprovementType, TourismSource, PrereqTech, ScalingFactor)
-	SELECT 'IMPROVEMENT_EUROPA_FISH_WEIR', TourismSource, PrereqTech, ScalingFactor
-	FROM Improvement_Tourism WHERE ImprovementType = 'IMPROVEMENT_FISHING_BOATS';
-
+-- Discus Fish are improved by the stock Fishing Boats. Fishing Boats have no valid
+-- terrains or features of their own, so they can only be built on a listed resource,
+-- and Discus Fish only exist on lakes. Everything that keys off Fishing Boats (tech
+-- boost, pantheons, adjacencies, balance-mod yields) therefore applies to them too.
 INSERT INTO Improvement_ValidResources (ImprovementType, ResourceType, MustRemoveFeature) VALUES
 	('IMPROVEMENT_MINE',          'RESOURCE_EUROPA_TOPAZ',         0),
 	('IMPROVEMENT_CAMP',          'RESOURCE_EUROPA_PEACOCKS',      0),
 	('IMPROVEMENT_CAMP',          'RESOURCE_EUROPA_PALLAS_CATS',   0),
 	('IMPROVEMENT_CAMP',          'RESOURCE_EUROPA_PYGMY_RABBITS', 0),
 	('IMPROVEMENT_CAMP',          'RESOURCE_EUROPA_TIBETAN_FOXES', 0),
-	('IMPROVEMENT_EUROPA_FISH_WEIR', 'RESOURCE_EUROPA_DISCUS_FISH', 0),
+	('IMPROVEMENT_FISHING_BOATS', 'RESOURCE_EUROPA_DISCUS_FISH',   0),
 	('IMPROVEMENT_CAMP',          'RESOURCE_EUROPA_CAPYBARAS',     0);
 
 -- CLASS_* tags mirror the yields; the AI and several pantheons/abilities key off them.
