@@ -47,6 +47,10 @@ db.execute("DELETE FROM Types WHERE Type LIKE 'RESOURCE_EUROPA_%' OR Type LIKE '
            " OR Type LIKE 'CIVILIZATION_EUROPA_%' OR Type LIKE 'LEADER_MINOR_CIV_EUROPA_%' OR Type LIKE 'MINOR_CIV_EUROPA_%'"
            " OR Type LIKE 'BELIEF_CUSTOM_%'")   # also removes the copies the Spare Beliefs mod makes
 db.execute("DELETE FROM Tags WHERE Tag LIKE 'CLASS_EUROPA_%'")
+# Leaders_XP2 (Gathering Storm) has no foreign key on LeaderType, so deleting the Types rows
+# leaves the city-states' rows behind. The table is absent from a base-rules-only cache.
+if db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='Leaders_XP2'").fetchone():
+    db.execute("DELETE FROM Leaders_XP2 WHERE LeaderType LIKE 'LEADER_MINOR_CIV_EUROPA_%'")
 db.execute("DELETE FROM LoadingInfo WHERE LeaderType LIKE 'LEADER_EUROPA_%'")
 for t, c in (("TraitModifiers", "ModifierId"), ("ModifierArguments", "ModifierId"), ("Modifiers", "ModifierId"),
              ("RequirementSetRequirements", "RequirementSetId"), ("RequirementSets", "RequirementSetId"),
