@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "wins": {
+      "games": {
+        ".read": true,
+        "$game": {
+          ".write": "!data.exists() || !newData.exists()",
+          ".validate": "newData.hasChildren(['date', 'winner', 'size', 'stinky', 'added'])",
+          "date": { ".validate": "newData.isString() && newData.val().matches(/^20[0-9][0-9]-[01][0-9]-[0-3][0-9]$/)" },
+          "winner": { ".validate": "newData.val() === 'H' || newData.val() === 'A'" },
+          "size": { ".validate": "newData.val() === 'tiny' || newData.val() === 'small' || newData.val() === 'normal' || newData.val() === 'big'" },
+          "stinky": { ".validate": "newData.isBoolean()" },
+          "added": { ".validate": "newData.isNumber() && newData.val() <= now" },
+          "$other": { ".validate": false }
+        }
+      }
+    }
+  }
+}

@@ -200,7 +200,8 @@ it, the usual rule applies and a pantheon one player takes is gone for the other
 | `Scripts/Europa_CityStates.lua` | Counts neighbours, Trade Routes and current production for the Suzerain bonuses |
 | `Scripts/Europa_Leaders.lua` | Continents (Mali), Wonder sites (China, America, France), city improvement flags (France, Cree), Cree tile claims |
 | `ArtDefs/Leaders.artdef`, `ArtDefs/FallbackLeaders.artdef` | Generated: stock leaders' art entries under our names (do not edit; run `tools/make_leader_art.py`) |
-| `docs/index.html` | The changes page |
+| `docs/index.html` | The changes page, plus the Wins tab (crown board) |
+| `firebase/database.rules.json` | Security rules for the Wins tab's database (see below) |
 | `Scripts/Europa_LakeResources.lua` | Places Discus Fish on lakes at game start |
 | `Maps/Europa_DesertGrowth.lua` | Desert growth logic |
 | `Maps/Europa_LakeGrowth.lua` | Great lakes logic |
@@ -218,6 +219,20 @@ it, the usual rule applies and a pantheon one player takes is gone for the other
 ```
 
 Then enable the mod under Additional Content and start a **new** game.
+
+## Wins tab
+
+The site's Wins tab is the crown whiteboard: one crown per game in the winner's
+column, in four sizes, with optional stink lines. It is shared and survives
+redeploys because the games live in a Firebase Realtime Database
+(`project-europa-wins`, free Spark plan), not in the repo. The page talks to it
+over the REST API at `https://project-europa-wins-default-rtdb.firebaseio.com/wins/games`.
+
+Anyone with the page can read, add or remove a game. The rules in
+`firebase/database.rules.json` only accept well-formed games and stop anyone
+editing one in place or replacing the whole list at once. Changing that file
+does nothing by itself: paste it into Firebase console > Realtime Database >
+Rules and publish. To back up the board, open the URL above with `.json` on the end.
 
 ## Photo credits
 
