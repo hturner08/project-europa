@@ -10,6 +10,8 @@ Checks, on a synthetic hex map:
   * no desert is created that does not touch an original desert region
   * the number of separate deserts never goes up
   * only grass/plains (and their mountains) are converted; water, tundra and snow never
+  * with no desert civilization among the major players, terrain is exactly stock
+    (a desert-biased city-state does not count)
   * a fault inside the growth step does not stop terrain from being applied
 """
 import random
@@ -76,7 +78,7 @@ def make_map(rng):
     return plot, terrain
 
 
-def runtime(applied, rng, break_growth=False):
+def runtime(applied, rng, break_growth=False, majors=("CIVILIZATION_MALI", "CIVILIZATION_FRANCE")):
     lua = lupa.LuaRuntime(unpack_returned_tuples=True)
     g = lua.globals()
     for name, value in T.items():
@@ -86,6 +88,24 @@ def runtime(applied, rng, break_growth=False):
     g.print = lambda *args: None
     g.DirectionTypes = lua.table_from({"NUM_DIRECTION_TYPES": 6})
     lua.execute("function GetGameInfoIndex() return 0 end")
+
+    # Start biases as the loaded ruleset has them: one desert major, one desert city-state.
+    lua.execute('''
+        local kBiases = {
+            { CivilizationType = "CIVILIZATION_MALI",   TerrainType = "TERRAIN_DESERT" },
+            { CivilizationType = "CIVILIZATION_MALI",   TerrainType = "TERRAIN_DESERT_HILLS" },
+            { CivilizationType = "CIVILIZATION_NAZCA",  TerrainType = "TERRAIN_DESERT" },
+            { CivilizationType = "CIVILIZATION_RUSSIA", TerrainType = "TERRAIN_TUNDRA" },
+        };
+        GameInfo = { StartBiasTerrains = function()
+            local i = 0;
+            return function() i = i + 1; return kBiases[i]; end
+        end };
+    ''')
+    civs = list(majors) + ["CIVILIZATION_NAZCA"]          # player 2 is a city-state
+    g.PlayerManager = lua.table_from({"GetAliveMajorIDs": lambda: lua.table_from(list(range(len(majors))))})
+    g.PlayerConfigurations = lua.table_from(
+        {i: lua.table_from({"GetCivilizationTypeName": lambda self, name=name: name}) for i, name in enumerate(civs)})
 
     def plot_object(i):
         return lua.table_from({"GetIndex": lambda self: i, "_i": i})
@@ -169,12 +189,21 @@ def main():
     rng = random.Random(0)
     plot, terrain = make_map(rng)
     applied = {}
+    lua = runtime(applied, rng, majors=("CIVILIZATION_RUSSIA", "CIVILIZATION_FRANCE"))
+    lua.globals().ApplyBaseTerrain(to_lua(lua, plot), to_lua(lua, terrain), W, H)
+    assert [applied[i] for i in range(W * H)] == [t + (1 if p == P["HILLS"] else 0) for p, t in zip(plot, terrain)], \
+        "deserts grew with no desert civilization among the major players"
+
+    rng = random.Random(0)
+    plot, terrain = make_map(rng)
+    applied = {}
     lua = runtime(applied, rng, break_growth=True)
     lua.globals().ApplyBaseTerrain(to_lua(lua, plot), to_lua(lua, terrain), W, H)
     assert [applied[i] for i in range(W * H)] == [t + (1 if p == P["HILLS"] else 0) for p, t in zip(plot, terrain)], \
         "a fault in the growth step changed or blocked stock terrain"
 
     was, now = sum(g[0] for g in growth), sum(g[1] for g in growth)
+    print("no desert civilization: terrain is stock")
     print(f"desert growth OK over {len(growth)} synthetic maps: {was / len(growth):.0f} -> {now / len(growth):.0f} "
           f"desert tiles on average ({now / was:.1f}x); deserts per map {growth[0][2]} -> "
           f"{min(g[3] for g in growth)}-{max(g[3] for g in growth)}")

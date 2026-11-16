@@ -16,7 +16,7 @@
 			<Text>Sacred Companions</Text>
 		</Replace>
 		<Replace Tag="LOC_BELIEF_CUSTOM_SACRED_COMPANIONS_DESCRIPTION" Language="en_US">
-			<Text>Camps over Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes and Capybaras provide +1 [ICON_Production] Production and +1 [ICON_Faith] Faith.</Text>
+			<Text>Camps provide +1 [ICON_Production] Production and +1 [ICON_Faith] Faith.</Text>
 		</Replace>
 		<Replace Tag="LOC_BELIEF_CUSTOM_NEW_REALM_GUILDS_NAME" Language="en_US">
 			<Text>Guilds of the New Realm</Text>

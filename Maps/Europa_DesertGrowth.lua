@@ -1,5 +1,8 @@
 -- Project Europa: bigger deserts
 --
+-- Only when a desert civilization is playing (see Europa_DesertCivInGame); in any
+-- other game the deserts are left exactly as the map generator made them.
+--
 -- Grows every desert the map generator has already laid out, without creating
 -- new ones: only tiles touching an existing desert can turn into desert, so the
 -- number of deserts can never go up (neighbouring deserts may merge).
@@ -11,7 +14,30 @@
 EUROPA_DESERT_GROWTH = {
 	FullRings         = 1,    -- rings of tiles added around each desert, guaranteed
 	PartialRingChance = 50,   -- percent chance per tile for one further, ragged ring (0 = off)
+	OnlyWithDesertCiv = true, -- false = grow deserts in every game
 };
+
+-- The name of a major civilization in this game that has a desert start bias in the
+-- loaded ruleset (TERRAIN_DESERT, _HILLS or _MOUNTAIN in StartBiasTerrains), or nil.
+-- Read from the database rather than a list here, so it follows whatever stock, BBG
+-- or another mod says. City-states are ignored: several have a desert bias and some
+-- are in every game. Random leaders are already resolved when the map is generated.
+function Europa_DesertCivInGame()
+	local bDesertCiv = {};
+	for row in GameInfo.StartBiasTerrains() do
+		if string.find(row.TerrainType, "TERRAIN_DESERT", 1, true) == 1 then
+			bDesertCiv[row.CivilizationType] = true;
+		end
+	end
+	for _, iPlayer in ipairs(PlayerManager.GetAliveMajorIDs()) do
+		local pConfig = PlayerConfigurations[iPlayer];
+		local sCiv = pConfig and pConfig:GetCivilizationTypeName();
+		if sCiv ~= nil and bDesertCiv[sCiv] then
+			return sCiv;
+		end
+	end
+	return nil;
+end
 
 local function DefaultNeighbors(i, iW)
 	local aNeighbors = {};
@@ -36,6 +62,15 @@ end
 function Europa_GrowDeserts(plotTypes, terrainTypes, iW, iH, fnNeighbors, fnRandom)
 	fnNeighbors = fnNeighbors or DefaultNeighbors;
 	fnRandom = fnRandom or DefaultRandom;
+
+	if EUROPA_DESERT_GROWTH.OnlyWithDesertCiv then
+		local sCiv = Europa_DesertCivInGame();
+		if sCiv == nil then
+			print("Europa: no desert civilization in this game; deserts left as generated.");
+			return 0;
+		end
+		print("Europa: desert civilization in this game (" .. sCiv .. "); growing deserts.");
+	end
 
 	local kBecomes = {
 		[g_TERRAIN_TYPE_GRASS]           = g_TERRAIN_TYPE_DESERT,

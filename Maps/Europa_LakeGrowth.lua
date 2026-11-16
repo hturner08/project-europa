@@ -19,8 +19,8 @@
 EUROPA_LAKE_GROWTH = {
 	LandPerGreatLake = 120,   -- one great lake per this many land tiles on the map
 	MinGreatLakes    = 3,     -- but never aim for fewer than this
-	MinSize          = 6,     -- each great lake aims for a random size in MinSize..MaxSize
-	MaxSize          = 9,     -- capped at LAKE_MAX_AREA_SIZE whatever is written here
+	MinSize          = 4,     -- each great lake aims for a random size in MinSize..MaxSize
+	MaxSize          = 5,     -- capped at LAKE_MAX_AREA_SIZE whatever is written here
 };
 
 local function Neighbors(pPlot)
