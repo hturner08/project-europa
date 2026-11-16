@@ -25,13 +25,17 @@ expansions; the Gathering Storm floodplain variants are picked up automatically.
 
 ## Bigger deserts
 
-Every desert the map generator lays out is grown outward: one guaranteed ring of
+Only when a desert civilization is in the game: at least one major player whose
+civilization has a desert start bias in the loaded ruleset (Mali, under BBG). City-states
+do not count. Otherwise deserts are left exactly as the map generator made them.
+
+When it applies, every desert the map generator lays out is grown outward: one guaranteed ring of
 tiles, plus a ragged second ring where each tile has a 50% chance. Only grassland
 and plains next to an existing desert convert, so the number of deserts never goes
 up (close neighbours can merge), and tundra, snow and water are never touched.
 Because it runs during map generation, rivers, floodplains, resources and start
 biases all see the larger deserts. Tune it in `Maps/Europa_DesertGrowth.lua`
-(`FullRings`, `PartialRingChance`).
+(`FullRings`, `PartialRingChance`, `OnlyWithDesertCiv`).
 
 Requires the Gathering Storm ruleset. Works with the stock map scripts and the BBS
 ones that use the standard terrain step.
@@ -40,12 +44,12 @@ ones that use the standard terrain step.
 
 Stock lakes are nearly all one tile, which leaves a Harbor with one possible spot
 and nothing to work. A few of the lakes the map generator places (one per 120 land
-tiles, at least three) are grown into great lakes of 6 to 9 tiles. The ones grown
+tiles, at least three) are grown into great lakes of 4 or 5 tiles. The ones grown
 are chosen to be as far apart as possible, so they are spread across the map.
 
 - Only existing lakes grow; no new ones are added.
-- A grown lake never touches the sea or another lake and never passes 9 tiles, the
-  game's limit for a lake, so it keeps fresh water and can hold Discus Fish.
+- A grown lake never touches the sea or another lake, and stays well under 9 tiles,
+  the game's limit for a lake, so it keeps fresh water and can hold Discus Fish.
 - Rivers and their banks, volcanoes and natural wonders are never flooded.
 - It runs straight after the stock lake step, so features, resources and start
   positions all see the larger lakes. More lake tiles also means more Discus Fish.
@@ -133,7 +137,7 @@ civilization can take them. Gathering Storm ruleset only. BBG is optional.
 | Pantheon | Effect |
 |---|---|
 | Hearths of the First Settlers | Cities you founded: +1 Food and +1 Production while at 1-3 Population. |
-| Sacred Companions | Camps over Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes and Capybaras: +1 Production, +1 Faith. |
+| Sacred Companions | Every Camp: +1 Production, +1 Faith. |
 | Guilds of the New Realm | Builders trained or purchased in a city with a Market: +1 build charge. |
 | Sacred Wilderness | After Medieval Faires, unimproved Breathtaking tiles next to a Preserve: +1 Production. |
 | Divine Inspiration | Cities with an Art Museum and a World Wonder: +1 Great Artist point per turn. |
@@ -194,7 +198,7 @@ it, the usual rule applies and a pantheon one player takes is gone for the other
 | `Data/Europa_CityStates_BBG.sql` | Copies BBG's per-city-state rows (made for Fez) under our city-states' names; does nothing without BBG |
 | `Config/Europa_CityStates_Config.sql` | City-state picker rows |
 | `Data/Europa_CityStates_Icons.xml`, `Data/Europa_CityStates_Colors.xml`, `Text/Europa_CityStates_Text_en_US.xml` | City-state icons, type colours, names and bonus text |
-| `Data/Europa_Pantheons.sql`, `Data/Europa_Pantheon_SacredCompanions.sql` | Pantheon gameplay rows; Sacred Companions is separate because it depends on the luxury resources |
+| `Data/Europa_Pantheons.sql`, `Data/Europa_Pantheon_SacredCompanions.sql` | Pantheon gameplay rows |
 | `Data/Europa_Pantheons_Icons.xml`, `Text/Europa_Pantheons_Text_en_US.xml` | Pantheon icons (atlases from `tools/make_pantheon_icons.py`), names and descriptions |
 | `Scripts/Europa_Pantheons.lua` | Whose Preserve a tile touches (Sacred Wilderness) and whether a city's Wonder is finished (Divine Inspiration, Pillars of Creation) |
 | `Scripts/Europa_CityStates.lua` | Counts neighbours, Trade Routes and current production for the Suzerain bonuses |

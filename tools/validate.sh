@@ -56,7 +56,7 @@ ok = True
 # The game rewrites this cache at every launch, from the base rules until a game is started.
 # The leaders need Gathering Storm rows, so they can only be checked against a cache left
 # by a Gathering Storm game.
-# Resources first: Sacred Companions tags them. (In game the modinfo LoadOrder does this.)
+# Resources first, as the modinfo LoadOrder does in game.
 paths = sorted(sys.argv[2:], key=lambda p: "Resources" not in p)
 if not db.execute("SELECT 1 FROM Civilizations WHERE CivilizationType='CIVILIZATION_MALI'").fetchone():
     print("SKIPPED leader SQL: the cached database is base rules only (the game was launched but no")
@@ -180,17 +180,14 @@ if any("Pantheon" in p for p in paths):
     if not stock or stock[0] != "BELIEF_CLASS_FOLLOWER" or not db.execute(
             "SELECT 1 FROM BeliefModifiers WHERE BeliefType='BELIEF_DIVINE_INSPIRATION' AND ModifierID='DIVINE_INSPIRATION_WONDER_FAITH'").fetchone():
         print("STOCK BELIEF_DIVINE_INSPIRATION CHANGED OR MISSING"); ok = False
-    # Sacred Companions: the tagged resources must be exactly our luxuries that a Camp improves.
-    tagged = {r[0] for r in db.execute("SELECT Type FROM TypeTags WHERE Tag='CLASS_EUROPA_SACRED_COMPANION'")}
-    camp = {r[0] for r in db.execute("SELECT i.ResourceType FROM Improvement_ValidResources i JOIN Resources r USING (ResourceType)"
-                                     " WHERE i.ImprovementType='IMPROVEMENT_CAMP' AND r.ResourceClassType='RESOURCECLASS_LUXURY' AND i.ResourceType LIKE 'RESOURCE_EUROPA_%'")}
-    print(f"  Sacred Companions resources: {', '.join(sorted(r.replace('RESOURCE_EUROPA_', '') for r in tagged)) or 'NONE'}")
-    if not tagged:
-        print("SACRED COMPANIONS IS UNUSABLE: no eligible resource"); ok = False
-    if tagged - camp:
-        print(f"SACRED COMPANIONS LISTS A RESOURCE THAT IS NOT A CAMP LUXURY: {sorted(tagged - camp)}"); ok = False
-    if camp - tagged:
-        print(f"CAMP LUXURY MISSING FROM SACRED COMPANIONS: {sorted(camp - tagged)}"); ok = False
+    # Sacred Companions: every Camp, so the only plot test is the improvement, with no resource filter.
+    reqs = db.execute("SELECT r.RequirementType, group_concat(a.Name || '=' || a.Value) FROM RequirementSetRequirements s"
+                      " JOIN Requirements r USING (RequirementId) LEFT JOIN RequirementArguments a USING (RequirementId)"
+                      " WHERE s.RequirementSetId='EUROPA_PANTHEON_REQSET_CAMP' GROUP BY r.RequirementId").fetchall()
+    if reqs != [("REQUIREMENT_PLOT_IMPROVEMENT_TYPE_MATCHES", "ImprovementType=IMPROVEMENT_CAMP")]:
+        print(f"SACRED COMPANIONS DOES NOT APPLY TO EVERY CAMP: {reqs}"); ok = False
+    camps = [r[0] for r in db.execute("SELECT ResourceType FROM Improvement_ValidResources WHERE ImprovementType='IMPROVEMENT_CAMP' ORDER BY 1")]
+    print(f"  Sacred Companions applies to Camps on: {', '.join(c.replace('RESOURCE_', '') for c in camps)}")
     # The two facts the script supplies: each property a requirement reads must be written by it.
     pantheon_lua = open("Scripts/Europa_Pantheons.lua").read()
     props = [r[0] for r in db.execute("SELECT DISTINCT Value FROM RequirementArguments WHERE Name='PropertyName' AND Value LIKE 'EUROPA_PANTHEON_%'")]

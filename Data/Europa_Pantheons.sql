@@ -1,6 +1,5 @@
 -- Project Europa: custom pantheons that need only the stock game.
--- (Sacred Companions depends on our luxury resources and lives in its own file,
--- Europa_Pantheon_SacredCompanions.sql, so a problem there cannot drop these five.)
+-- (Sacred Companions, the sixth, lives in Europa_Pantheon_SacredCompanions.sql.)
 --
 -- Additions only: no stock or Better Balanced Game belief is touched. The beliefs use
 -- BELIEF_CUSTOM_* ids; in particular "Divine Inspiration" is BELIEF_CUSTOM_ARTISTIC_INSPIRATION

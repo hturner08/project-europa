@@ -63,11 +63,10 @@
 		</UpdateDatabase>
 		<!-- Pantheons. Gathering Storm only. They use only our own rows and stock requirement
 		     types (plus two plot properties written by Scripts/Europa_Pantheons.lua), so they do not need to load after Better Balanced Game. The LoadOrder is
-		     above Europa_Resources.sql (Sacred Companions tags those resources) and must stay
+		     above Europa_Resources.sql and must stay
 		     below 1000005: the "Spare Beliefs" mod copies every belief at that point so both
 		     players can take the same pantheon, and anything added later is not copied.
-		     Sacred Companions is its own action so a problem with the resource list cannot
-		     drop the other five. -->
+		     Sacred Companions is its own action so a problem in it cannot drop the other five. -->
 		<UpdateDatabase id="EuropaPantheons" criteria="Expansion2">
 			<Properties>
 				<LoadOrder>1000</LoadOrder>
