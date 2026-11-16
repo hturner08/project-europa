@@ -40,7 +40,7 @@ game function the script needs is missing.
 
 - [ ] Camp on one of our luxuries (Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Capybaras): +1 Production, +1 Faith on the tile.
 - [ ] Camp on a stock resource (Deer, Furs, Ivory, Truffles, Honey): the same.
-- [ ] Topaz Mine and Discus Fish Fish Weir: nothing.
+- [ ] Topaz Mine and Discus Fish Fishing Boats: nothing.
 - [ ] **(open)** Pillage the Camp: both bonuses go until it is repaired.
 - [ ] With Goddess of the Hunt held by the same player (Spare Beliefs cannot do this; skip unless a way exists): both apply.
 

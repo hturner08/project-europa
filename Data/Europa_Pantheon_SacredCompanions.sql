@@ -4,7 +4,7 @@
 -- Any Camp counts, whatever it is built over: the stock Camp resources (Deer, Furs,
 -- Ivory, Truffles, Honey), our own animal luxuries, and anything another mod adds.
 -- The only test is the improvement on the tile, so there is no resource list to keep
--- in step. Topaz (Mine) and Discus Fish (Fish Weir) are not Camps and get nothing.
+-- in step. Topaz (Mine) and Discus Fish (Fishing Boats) are not Camps and get nothing.
 --
 -- Same test as the stock Goddess of the Hunt, but attached to the pantheon's owner
 -- instead of to cities following it, like the other Europa pantheons.

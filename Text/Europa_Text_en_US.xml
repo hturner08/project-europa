@@ -24,14 +24,6 @@
 			<Text>Capybaras</Text>
 		</Replace>
 
-		<!-- Improvement -->
-		<Replace Tag="LOC_IMPROVEMENT_EUROPA_FISH_WEIR_NAME" Language="en_US">
-			<Text>Fish Weir</Text>
-		</Replace>
-		<Replace Tag="LOC_IMPROVEMENT_EUROPA_FISH_WEIR_DESCRIPTION" Language="en_US">
-			<Text>Unlocks the Builder ability to construct a Fish Weir.[NEWLINE][NEWLINE]+1 [ICON_Food] Food. Can only be built on [ICON_RESOURCE_EUROPA_DISCUS_FISH] Discus Fish, which are found in lakes.[NEWLINE][NEWLINE]The city will gain use of that resource.</Text>
-		</Replace>
-
 		<!-- Civilopedia -->
 		<Replace Tag="LOC_PEDIA_RESOURCES_PAGE_RESOURCE_EUROPA_TOPAZ_CHAPTER_HISTORY_PARA_1" Language="en_US">
 			<Text>Topaz is a hard silicate gemstone found in granite and rhyolite country, most prized in its golden "imperial" form. For centuries almost any yellow stone was sold under the name, and courts from Lisbon to Saint Petersburg paid handsomely for the real thing.</Text>
