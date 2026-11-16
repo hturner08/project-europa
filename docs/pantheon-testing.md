@@ -3,7 +3,7 @@
 `tools/validate.sh` checks everything that can be checked without the game: the SQL
 loads against the game's own database with foreign keys on, every modifier and
 requirement type exists, each effect is limited to the pantheon's owner, the Builder
-charges are permanent, the Sacred Companions list matches the Camp luxuries, the stock
+charges are permanent, Sacred Companions tests for a Camp and nothing else, the stock
 Divine Inspiration belief is untouched, and text, icons and load order are in place.
 
 With the `lupa` package installed it also runs `Scripts/Europa_Pantheons.lua` against
@@ -38,8 +38,9 @@ game function the script needs is missing.
 
 ## Sacred Companions
 
-- [ ] Camp on Peacocks (and each of Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Capybaras): +1 Production, +1 Faith on the tile.
-- [ ] Topaz Mine and Discus Fish Fishing Boats: nothing. A Camp on a stock resource (Deer, Furs): nothing.
+- [ ] Camp on one of our luxuries (Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes, Capybaras): +1 Production, +1 Faith on the tile.
+- [ ] Camp on a stock resource (Deer, Furs, Ivory, Truffles, Honey): the same.
+- [ ] Topaz Mine and Discus Fish Fishing Boats: nothing.
 - [ ] **(open)** Pillage the Camp: both bonuses go until it is repaired.
 - [ ] With Goddess of the Hunt held by the same player (Spare Beliefs cannot do this; skip unless a way exists): both apply.
 

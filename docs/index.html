@@ -561,11 +561,11 @@ td.num { font-variant-numeric: tabular-nums; }
 			<article class="leader" id="sacred-companions" style="--c1:#1d6b4f; --c2:#d3f0e3">
 				<div class="head">
 					<div class="hex" aria-hidden="true"><span>S</span></div>
-					<div class="names"><h3>Sacred Companions</h3><div class="civ">Pantheon &middot; luxuries</div></div>
+					<div class="names"><h3>Sacred Companions</h3><div class="civ">Pantheon &middot; Camps</div></div>
 				</div>
 				<ul class="abilities">
-					<li><span class="tag ok">As designed</span><p class="what">Camps over Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes and Capybaras provide <span class="y prod">+1 Production</span> and <span class="y faith">+1 Faith</span>.</p>
-						<p class="note">Added to the tile. The five resources are an explicit list checked against the resource pack: every one is improved by a Camp. Topaz (Mine) and Discus Fish (Fishing Boats) are not on it. If a listed resource is ever removed, this pantheon is not offered at all rather than offered and doing nothing. Stacks with Goddess of the Hunt.</p></li>
+					<li><span class="tag ok">As designed</span><p class="what">Every Camp provides <span class="y prod">+1 Production</span> and <span class="y faith">+1 Faith</span>.</p>
+						<p class="note">Added to the tile. Any Camp counts, whatever it is built over: Deer, Furs, Ivory, Truffles and Honey as well as Peacocks, Pallas's Cats, Pygmy Rabbits, Tibetan Foxes and Capybaras. Topaz (Mine) and Discus Fish (Fishing Boats) are not Camps and get nothing. Stacks with Goddess of the Hunt.</p></li>
 				</ul>
 			</article>
 
@@ -688,11 +688,13 @@ td.num { font-variant-numeric: tabular-nums; }
 		<section id="deserts" data-tab="other">
 			<h2>Bigger deserts</h2>
 			<div class="plain">
-				<p>Every desert the map generator lays out grows outward by one full ring of tiles, plus a ragged second ring in which each tile has a 50% chance. In testing on synthetic maps, deserts came out about three times larger.</p>
+				<p>Only when a desert civilization is in the game: at least one of the two players has a civilization with a desert start bias (Mali or Nubia, with BBG loaded). City-states do not count. Otherwise deserts are left as the map generator made them.</p>
+				<p>When it applies, every desert the map generator lays out grows outward by one full ring of tiles, plus a ragged second ring in which each tile has a 50% chance. In testing on synthetic maps, deserts came out about three times larger.</p>
 				<ul>
 					<li>Only grassland and plains next to an existing desert convert. Tundra, snow and water are never touched.</li>
 					<li>The number of deserts never goes up, though close neighbours can merge.</li>
 					<li>It runs during map generation, so rivers, floodplains, resources and start biases all see the larger deserts.</li>
+					<li>Nubia starts in the desert again: its stock desert start bias (Desert and Desert Hills, Tier 2), which BBG and BBS remove, is put back. BBG's Plains bias for Nubia is unchanged.</li>
 					<li>Gathering Storm ruleset only. Works with the stock map scripts and the BBS scripts that use the standard terrain step.</li>
 				</ul>
 			</div>
@@ -701,10 +703,10 @@ td.num { font-variant-numeric: tabular-nums; }
 		<section id="lakes" data-tab="other">
 			<h2>Great lakes</h2>
 			<div class="plain">
-				<p>A few of the lakes the map generator places grow into great lakes of 6 to 9 tiles, so that Harbors have room and something to work. One lake is grown per 120 land tiles (at least three), and the ones chosen are as far apart as possible.</p>
+				<p>A few of the lakes the map generator places grow into great lakes of 4 or 5 tiles, so that Harbors have room and something to work. One lake is grown per 120 land tiles (at least three), and the ones chosen are as far apart as possible.</p>
 				<ul>
 					<li>Only existing lakes grow. No new lakes are added.</li>
-					<li>A grown lake never touches the sea or another lake and never passes 9 tiles, the game's limit for a lake, so it keeps fresh water and can hold Discus Fish.</li>
+					<li>A grown lake never touches the sea or another lake, and stays well under 9 tiles, the game's limit for a lake, so it keeps fresh water and can hold Discus Fish.</li>
 					<li>Rivers and their banks, volcanoes and natural wonders are never flooded.</li>
 					<li>It runs during map generation, so features, resources and start positions all see the larger lakes. More lake tiles also means more Discus Fish.</li>
 					<li>The Colossus, Great Lighthouse, Sydney Opera House and Torre de Belém can be built on lakes. Their other requirements are unchanged, and their in-game descriptions still say "Coast". The Statue of Liberty, Venetian Arsenal and Golden Gate Bridge still cannot.</li>

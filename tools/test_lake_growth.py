@@ -28,6 +28,7 @@ except ImportError:
 ROOT = Path(__file__).resolve().parent.parent
 W, H = 60, 38                     # a Tiny map
 LAKE_MAX, COAST, VOLCANO = 9, 15, 7
+MIN_SIZE, MAX_SIZE = 4, 5              # EUROPA_LAKE_GROWTH.MinSize / MaxSize
 OFFSETS = lambda shift: [(-1 + shift, 1), (shift, 1), (1, 0), (shift, -1), (-1 + shift, -1), (-1, 0)]
 
 
@@ -165,8 +166,10 @@ def main():
             r"Europa: grew (\d+) of (\d+) lakes by (\d+) tiles; .*\((\d+) land tiles\)", summary).groups())
         assert tiles == len(added)
         assert grown == min(lakes, max(3, round(land / 120))), summary
-        great = [b for b in after if b != sea and len(b) >= 6]
-        assert len(great) >= grown * 0.7, f"only {len(great)} of {grown} chosen lakes reached 6 tiles"
+        great = [b for b in after if b != sea and len(b) >= MIN_SIZE]
+        assert len(great) >= grown * 0.7, f"only {len(great)} of {grown} chosen lakes reached {MIN_SIZE} tiles"
+        for body in after:                     # a stock lake that was already larger is left alone
+            assert not body & added or len(body) <= MAX_SIZE, f"a lake was grown to {len(body)} tiles"
         assert {min(b) % W < W // 2 for b in great} == {True, False}, "great lakes are all in one half of the map"
         results.append((len(before) - 1, grown, len(added), sorted(len(b) for b in great)))
 
