@@ -697,12 +697,13 @@ td.num { font-variant-numeric: tabular-nums; }
 		<section id="deserts" data-tab="other">
 			<h2>Bigger deserts</h2>
 			<div class="plain">
-				<p>Only when a desert civilization is in the game: at least one of the two players has a civilization with a desert start bias (Mali, with BBG loaded). City-states do not count. Otherwise deserts are left as the map generator made them.</p>
+				<p>Only when a desert civilization is in the game: at least one of the two players has a civilization with a desert start bias (Mali or Nubia, with BBG loaded). City-states do not count. Otherwise deserts are left as the map generator made them.</p>
 				<p>When it applies, every desert the map generator lays out grows outward by one full ring of tiles, plus a ragged second ring in which each tile has a 50% chance. In testing on synthetic maps, deserts came out about three times larger.</p>
 				<ul>
 					<li>Only grassland and plains next to an existing desert convert. Tundra, snow and water are never touched.</li>
 					<li>The number of deserts never goes up, though close neighbours can merge.</li>
 					<li>It runs during map generation, so rivers, floodplains, resources and start biases all see the larger deserts.</li>
+					<li>Nubia starts in the desert again: its stock desert start bias (Desert and Desert Hills, Tier 2), which BBG and BBS remove, is put back. BBG's Plains bias for Nubia is unchanged.</li>
 					<li>Gathering Storm ruleset only. Works with the stock map scripts and the BBS scripts that use the standard terrain step.</li>
 				</ul>
 			</div>

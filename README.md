@@ -26,8 +26,8 @@ expansions; the Gathering Storm floodplain variants are picked up automatically.
 ## Bigger deserts
 
 Only when a desert civilization is in the game: at least one major player whose
-civilization has a desert start bias in the loaded ruleset (Mali, under BBG). City-states
-do not count. Otherwise deserts are left exactly as the map generator made them.
+civilization has a desert start bias in the loaded ruleset (Mali and Nubia, under BBG).
+City-states do not count. Otherwise deserts are left exactly as the map generator made them.
 
 When it applies, every desert the map generator lays out is grown outward: one guaranteed ring of
 tiles, plus a ragged second ring where each tile has a 50% chance. Only grassland
@@ -36,6 +36,10 @@ up (close neighbours can merge), and tundra, snow and water are never touched.
 Because it runs during map generation, rivers, floodplains, resources and start
 biases all see the larger deserts. Tune it in `Maps/Europa_DesertGrowth.lua`
 (`FullRings`, `PartialRingChance`, `OnlyWithDesertCiv`).
+
+Nubia's desert start bias (Desert and Desert Hills, Tier 2, as in stock Gathering Storm)
+is restored: BBG and BBS both delete it, and `Data/Europa_StartBiases.sql` loads after
+them and puts it back. BBG's Plains bias for Nubia is left as it is.
 
 Requires the Gathering Storm ruleset. Works with the stock map scripts and the BBS
 ones that use the standard terrain step.
@@ -210,6 +214,7 @@ it, the usual rule applies and a pantheon one player takes is gone for the other
 | `Maps/Europa_DesertGrowth.lua` | Desert growth logic |
 | `Maps/Europa_LakeGrowth.lua` | Great lakes logic |
 | `Data/Europa_LakeWonders.sql` | Lifts the lake ban on four Wonders |
+| `Data/Europa_StartBiases.sql` | Restores Nubia's desert start bias after BBG and BBS remove it |
 | `Maps/Utility/TerrainGenerator.lua`, `Maps/Utility/RiversLakes.lua` | Generated: the stock Gathering Storm files plus a hook each (do not edit; run `tools/make_terrain_override.py`) |
 | `ArtDefs/*.artdef`, `ProjectEuropa.dep` | Map models, borrowed from existing resources and Fishing Boats |
 | `Textures/*.dds` | Generated icon atlases (do not edit; run `tools/make_icons.py` and `tools/make_citystate_icons.py`) |

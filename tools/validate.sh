@@ -180,6 +180,14 @@ if any("Pantheon" in p for p in paths):
     if not stock or stock[0] != "BELIEF_CLASS_FOLLOWER" or not db.execute(
             "SELECT 1 FROM BeliefModifiers WHERE BeliefType='BELIEF_DIVINE_INSPIRATION' AND ModifierID='DIVINE_INSPIRATION_WONDER_FAITH'").fetchone():
         print("STOCK BELIEF_DIVINE_INSPIRATION CHANGED OR MISSING"); ok = False
+    # Desert growth runs only with one of these in the game (same test as Europa_DesertCivInGame).
+    desert = [r[0] for r in db.execute("SELECT DISTINCT s.CivilizationType FROM StartBiasTerrains s JOIN Civilizations c USING (CivilizationType)"
+                                       " WHERE s.TerrainType LIKE 'TERRAIN_DESERT%' AND c.StartingCivilizationLevelType='CIVILIZATION_LEVEL_FULL_CIV' ORDER BY 1")]
+    print(f"  Desert civilizations (deserts grow when one is playing): {', '.join(d.replace('CIVILIZATION_', '') for d in desert) or 'NONE'}")
+    if db.execute("SELECT 1 FROM Civilizations WHERE CivilizationType='CIVILIZATION_NUBIA'").fetchone():
+        nubia = dict(db.execute("SELECT TerrainType, Tier FROM StartBiasTerrains WHERE CivilizationType='CIVILIZATION_NUBIA' AND TerrainType LIKE 'TERRAIN_DESERT%'"))
+        if nubia != {"TERRAIN_DESERT": 2, "TERRAIN_DESERT_HILLS": 2}:
+            print(f"NUBIA DESERT START BIAS NOT RESTORED: {nubia}"); ok = False
     # Sacred Companions: every Camp, so the only plot test is the improvement, with no resource filter.
     reqs = db.execute("SELECT r.RequirementType, group_concat(a.Name || '=' || a.Value) FROM RequirementSetRequirements s"
                       " JOIN Requirements r USING (RequirementId) LEFT JOIN RequirementArguments a USING (RequirementId)"
